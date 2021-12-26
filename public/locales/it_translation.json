@@ -1,0 +1,156 @@
+{
+	"installApp": "Installa L'App",
+	"error": "Un errore è accaduto, Prova di nuovo",
+	"yes": "Si",
+	"somethingWentWrong": "Qualcosa è andato storto",
+	"validationError": "Errore nell'invio dei dati",
+	"close": "Chiudi",
+	"cookieConsentDrawer": {
+		"text": "Questo sito utilizza un cookie tecnico per consentire la corretta navigazione. Confermando accetti il suo utilizzo. Per saperne di più e leggere come disabilitarne l'uso, consulta la ",
+		"ok": "Ok"
+	},
+	"feedback": {
+		"sendAFeedback": "Invia un Feedback",
+		"send": "Invia",
+		"text": "Scrivi un feedback sulla piattaforma",
+		"type": "Tipo",
+		"includeScreenshot": "Includi uno Screenshot della pagina",
+		"thankYouForTheFeedback": "Grazie per il Feedback"
+	},
+	"theme": {
+		"darkTheme": "Tema Scuro",
+		"lightTheme": "Tema Chiaro"
+	},
+	"profileButton": {
+		"welcome": "Benvenuto",
+		"profile": "Profilo",
+		"changeTheme": "Cambia Tema"
+	},
+	"dashboard": {
+		"dashboard": "Dashboard"
+	},
+	"enhancedTable": {
+		"page": "Pagina",
+		"rows": "Righe",
+		"moreThan": "Più di",
+		"of": "di",
+		"search": "Cerca",
+		"filtersList": "Lista Filtri",
+		"nextPage": "Pagina Successiva",
+		"previousPage": "Pagina Precedente",
+		"elementSelected": "Elemento Selezionato",
+		"elementsSelected": "Elementi Selezionati"
+	},
+	"auth": {
+		"errorOnSocialLogin": "Errore durante l'accesso social",
+		"logout": "Esci",
+		"alreadyHaveAnAccount": "Hai già un Account?",
+		"error": "Un errore è accaduto, Prova di nuovo",
+		"restorePassword": {
+			"title": "Ripristina Password",
+			"resetPasswordEmailSent": "Email di Ripristino Password Inviata"
+		},
+		"resetPassword": {
+			"title": "Resetta la tua Password",
+			"resettedSuccessfully": "Password Resettata Con Successo",
+			"insertNewPassword": "Inserisci la Nuova Password",
+			"insertNewPasswordAgain": "Inserisci la Nuova Password di Nuovo",
+			"goToApp": "Accedi all'app",
+			"resettedPasswordText": "Password Resettata Correttamente"
+		},
+		"User not found": "Utente Non Trovato",
+		"signedupSuccessfully": "Ti sei registrato correttamente, riceverai un'email di attivazione, controlla la tua email per attivare il tuo account.",
+		"User is already registered": "L'utente è Già Registrato",
+		"User is not activated": "L'utente non è Attivato",
+		"signup": "Registrati",
+		"user doesn't exist": "L'utente Non Esiste",
+		"wrongEmailOrPassword": "Email o passowrd errati",
+		"login": "Accedi",
+		"auth": "Autenticazione",
+		"activateAccount": "Attiva l'Account",
+		"loginWithFacebook": "Facebook",
+		"loginWithGoogle": "Google",
+		"loginWithThirdParty": "Oppure Accedi con un Servizio di Terze Parti",
+		"signupWithThirdParty": "Oppure Registrati con un Servizio di Terze Parti",
+		"loginSuccess": "Onboarding",
+		"signUp": "Registrati",
+		"confirmPassword": "Conferma Password",
+		"forgotPassword": "Password Dimenticata?",
+		"insertInformation": "Inserisci le Informazioni",
+		"activation": {
+			"activatedText": "Il tuo account è stato attivato",
+			"User not found": "Utente da attivare non trovato",
+			"retry": "Riprova",
+			"title": "Attiva il tuo Account",
+			"activatingText": "Stiamo attivando il tuo account",
+			"goToApp": "Accedi all'app"
+		}
+	},
+	"page": "Pagina",
+	"yup": {
+		"invalidField": "Campo non Valido",
+		"required": "Campo Obbligatorio",
+		"email": "Il campo {{email}} dovrebbe essere un'email",
+		"minString": "Il campo {{path}} deve essere lungo almeno {{num}} caratteri",
+		"minNumber": "{{path}} deve essere maggiore o uguale a {{num}}",
+		"maxNumber": "{{path}} deve essere minore o uguale a {{num}}",
+		"RefEqualTo": "{{path}} Deve Essere Uguale A {{reference}}",
+		"equalTo": "I Campi Devono Essere Uguali"
+	},
+	"placeholder": {
+		"errorNoInternet": "Error No Internet",
+		"backToHomepage": "Torna indietro",
+		"cannotFindPage": "Ooops! Ti sei perso!",
+		"notFound": "Pagina Non Trovata",
+		"errorInternalServer": "Oh No! Il server non risponde",
+		"youAreNotAuthorized": "Non sei Autorizzato!"
+	},
+	"profile": {
+		"profileImage": "Immagine Profilo",
+		"remindPassword": "Ricorda Password",
+		"dontRememberPassword": "Non ricordi la tua password?",
+		"dontRememberPasswordText": "Verrà inviata un'email per ricordare la tua password",
+		"emailSent": "Email Inviata",
+		"disable": "Disabilita",
+		"disableAccount": "Disabilita Account",
+		"activateNow": "Attivale ora",
+		"passwordInsertedIsWrong": "La Password inserita non è Corretta",
+		"passwordIsWrong": "La Password Attuale non è Corretta",
+		"upload": "Scegli File",
+		"uploadImageText": "JPG, GIF o PNG",
+		"personalInformation": "Informazioni Personali",
+		"changeYourPassword": "Cambia La Tua Password",
+		"back": "Indietro",
+		"change": "Modifica",
+		"currentPassword": "Password Attuale",
+		"newPassword": "Nuova Password",
+		"preferredLanguageText": "Cambiando lingua cambierà il linguaggio della piattaforma",
+		"language": "Lingua",
+		"changePassword": "Cambia Password",
+		"changePasswordText": "Dovresti cambiare la password ogni mese per evitare problemi di sicurezza",
+		"profile": "Profilo",
+		"continue": "Continua",
+		"firstname": "Nome",
+		"lastname": "Cognome",
+		"cancel": "Cancella",
+		"passwordMustMatch": "Le password devono coincidere",
+		"passwordChanged": "La Password è stata cambiata",
+		"changePersonalInformation": "Modifica Informazioni Personali"
+	},
+	"apiErrors": {
+		"userDoesntHaveRightPermission": "Non Hai l'Autorizzazione Adatta",
+		"youDontHaveThePermissionDueToYourUserRole": "Non Hai l'Autorizzazione a Causa del Tuo Ruolo Utente",
+		"networkError": "Errore di Connessione",
+		"loginAgain": "Accedi alla Piattaforma"
+	},
+	"newUpdateAlert": {
+		"title": "Nuovo aggiornamento!",
+		"message": "È arrivato un nuovo aggiornamento"
+	},
+	"publicAppBar": {
+		"goToApp": "Accedi all'App"
+	},
+	"tos": {
+		"termsAndConditions": "Termini e Condizioni d'Uso"
+	}
+}

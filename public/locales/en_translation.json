@@ -1,0 +1,156 @@
+{
+	"installApp": "Install App",
+	"error": "An Error Has Occurred, Try Again",
+	"yes": "Yes",
+	"somethingWentWrong": "Something Went Wrong",
+	"validationError": "Error sending data",
+	"close": "Close",
+	"cookieConsentDrawer": {
+		"text": "This site uses a technical cookie to allow correct navigation. By confirming you accept its use. To find out more and read how to disable its use, see the ",
+		"ok": "Ok"
+	},
+	"theme": {
+		"darkTheme": "Dark Theme",
+		"lightTheme": "Light Theme"
+	},
+	"profileButton": {
+		"welcome": "Welcome",
+		"profile": "Profile",
+		"changeTheme": "Change Theme"
+	},
+	"dashboard": {
+		"dashboard": "Dashboard"
+	},
+	"enhancedTable": {
+		"page": "Page",
+		"rows": "Rows",
+		"moreThan": "More than",
+		"of": "of",
+		"search": "Search",
+		"filtersList": "Filters List",
+		"nextPage": "Next Page",
+		"previousPage": "Previous Page",
+		"elementSelected": "Element Selected",
+		"elementsSelected": "Elements Selected"
+	},
+	"feedback": {
+		"sendAFeedback": "Send A Feedback",
+		"send": "Send",
+		"text": "Write a feedback about the application",
+		"type": "Type",
+		"includeScreenshot": "Include screenshot of the page",
+		"thankYouForTheFeedback": "Thank you For the Feedback"
+	},
+	"auth": {
+		"errorOnSocialLogin": "Error on Social Login",
+		"alreadyHaveAnAccount": "Do You Already Have an Account?",
+		"error": "An Error Has Occurred, Try Again",
+		"user doesn't exist": "User Doesn't Exist",
+		"restorePassword": {
+			"title": "Restore Password",
+			"resetPasswordEmailSent": "Restore Password Email Sent"
+		},
+		"resetPassword": {
+			"title": "Reset your Password",
+			"resettedSuccessfully": "Restore Password Email Sent",
+			"insertNewPassword": "Insert New Password",
+			"insertNewPasswordAgain": "Insert New Password Again",
+			"goToApp": "Login to the App",
+			"resettedPasswordText": "Resetted Password Successfully"
+		},
+		"User not found": "User Not Found",
+		"signedupSuccessfully": "You Signed Up successfully, you will receive an activation email, check your inbox to activate your account",
+		"User is already registered": "User is Already Registered",
+		"User is not activated": "User is Not Activated",
+		"signup": "Signup",
+		"logout": "logout",
+		"wrongEmailOrPassword": "Wrong Email or Password",
+		"auth": "Authentication",
+		"login": "Login",
+		"loginWithFacebook": "Facebook",
+		"loginWithGoogle": "Google",
+		"activateAccount": "Activate Account",
+		"loginWithThirdParty": "Or Login with a 3rd Party Service",
+		"signupWithThirdParty": "Or Signup with a 3rd Party Service",
+		"loginSuccess": "Onboarding",
+		"signUp": "Sign Up",
+		"confirmPassword": "Confirm Password",
+		"forgotPassword": "Forgot Password?",
+		"insertInformation": "Insert Information",
+		"activation": {
+			"activatedText": "Your account has been activated",
+			"User not found": "User to activate not found",
+			"retry": "Retry",
+			"goToApp": "Login to the App",
+			"title": "Activate your Account",
+			"activatingText": "We are activating your account"
+		}
+	},
+	"page": "Page",
+	"yup": {
+		"invalidField": "Invalid Field",
+		"required": "Required Field",
+		"email": "The field {{email}} should be an email",
+		"minString": "The field {{path}} must be at least {{num}} characters",
+		"minNumber": "{{path}} must be greater than or equal to {{num}}",
+		"maxNumber": "{{path}} must be less than or equal to {{num}}",
+		"RefEqualTo": "{{path}} must be the same as {{reference}}",
+		"equalTo": "Fields Must Be The Same"
+	},
+	"placeholder": {
+		"errorNoInternet": "No Internet",
+		"backToHomepage": "Back to Dashboard",
+		"cannotFindPage": "Ooops! You seem lost!",
+		"notFound": "Page Not Found",
+		"errorInternalServer": "Oh No! The server is Down",
+		"youAreNotAuthorized": "You Are not Authorized!"
+	},
+	"profile": {
+		"profileImage": "Profile Image",
+		"remindPassword": "Remind Password",
+		"dontRememberPassword": "Don't you remember your password?",
+		"dontRememberPasswordText": "An email will be sent to remember your password",
+		"emailSent": "Email Sent",
+		"disable": "Disable",
+		"disableAccount": "Disable Account",
+		"activateNow": "Activate them now",
+		"passwordChanged": "Password Has Been Changed",
+		"passwordInsertedIsWrong": "Password Inserted is Wrong",
+		"passwordIsWrong": "Current Password is Wrong",
+		"upload": "Choose File",
+		"uploadImageText": "JPG, GIF or PNG",
+		"profile": "Profile",
+		"type": "Type",
+		"preferredLanguageText": "Selecting this will change the language of your dashboard",
+		"changePassword": "Change Password",
+		"changePasswordText": "You should change your password every month to avoid security issues.",
+		"language": "Language",
+		"delete": "Delete",
+		"changeYourPassword": "Change Your Password",
+		"currentPassword": "Current Password",
+		"back": "Back",
+		"change": "Change",
+		"newPassword": "New Password",
+		"firstname": "Firstname",
+		"cancel": "Cancel",
+		"changePersonalInformation": "Change Personal Information",
+		"lastname": "Lastname",
+		"personalInformation": "Personal Information"
+	},
+	"apiErrors": {
+		"userDoesntHaveRightPermission": "You Don't Have the Right Permission",
+		"youDontHaveThePermissionDueToYourUserRole": "You Don't Have The Permission Due to Your User Role",
+		"networkError": "Network Error",
+		"loginAgain": "Login in the Platform"
+	},
+	"newUpdateAlert": {
+		"title": "New Update!",
+		"message": "A new Update has been release"
+	},
+	"publicAppBar": {
+		"goToApp": "Go To App"
+	},
+	"tos": {
+		"termsAndConditions": "Terms and Conditions"
+	}
+}

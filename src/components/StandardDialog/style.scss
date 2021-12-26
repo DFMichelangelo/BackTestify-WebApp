@@ -1,0 +1,76 @@
+@import "../../configuration/variables.scss";
+
+.standard-dialog {
+  .MuiPaper-root.MuiDialog-paper.MuiDialog-paperScrollPaper.MuiDialog-paperWidthMd.MuiPaper-elevation24.MuiPaper-rounded {
+    border-radius: $standardBorderRadius !important;
+  }
+
+  &.error {
+    .iconTitleColor {
+      color: $errorColor;
+    }
+  }
+
+  &.info {
+    .iconTitleColor {
+      color: $infoColor;
+    }
+  }
+
+  &.success {
+    .iconTitleColor {
+      color: $successColor;
+    }
+  }
+
+  &.warning {
+    .iconTitleColor {
+      color: $warningColor;
+    }
+  }
+
+  &.confirm {
+    .title {
+      background: $confirmColor;
+    }
+  }
+
+  .content-text {
+    padding-left: 24px;
+    padding-right: 24px;
+    margin-bottom: 0px;
+  }
+
+  .title {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .text {
+      padding-left: 10px;
+    }
+    h2 {
+      display: flex;
+      flex: 1;
+      flex-direction: row;
+      align-items: center;
+
+
+    }
+  }
+
+  .content {
+    padding-top: 15px;
+    padding-bottom: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
+
+    .more-info {
+      padding-left: 24px;
+      padding-right: 24px;
+      border-top: 1px solid #ccc;
+      font-size: 0.75em;
+      color: #777;
+      margin-top: 1em;
+      text-align: right;
+    }
+  }
+}

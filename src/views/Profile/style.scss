@@ -1,0 +1,40 @@
+@import "../../configuration/variables.scss";
+
+.singleInfo {
+	display: flex;
+	align-items: baseline;
+}
+
+#personalInformationBox,
+#UploadProfileImageBox,
+#languageBox {
+	margin-bottom: $itemMargin;
+}
+#languageBox,
+#soNotRememberPasswordBox,
+#changePasswordBox,
+#doNotRememberPasswordBox {
+	margin-top: $itemMargin;
+}
+
+@media only screen and (max-width: $mobileWidth) {
+	.topSide {
+		flex-direction: column;
+	}
+	.profileTab,
+	.accountTab {
+		flex-direction: column !important;
+		.leftBox,
+		.rightBox {
+			width: 100%;
+			margin-left: 0px;
+			margin-right: 0px;
+		}
+		#UploadProfileImageBox {
+			margin-top: $itemMargin;
+		}
+		#changePasswordBox {
+			margin-bottom: $itemMargin;
+		}
+	}
+}

@@ -1,0 +1,21 @@
+$mobileWidth: 800px;
+$itemMargin: 10px;
+$standardMargin: 20px;
+$standardBorderRadius: 10px;
+$errorColor: red;
+$infoColor: #00b1ec;
+$confirmColor: rgb(86, 211, 253);
+$successColor: rgb(76, 175, 80);
+$warningColor: rgb(231, 197, 1);
+
+@mixin buttonSize($side) {
+  max-width: $side;
+  min-width: $side;
+  width: $side;
+  max-height: $side;
+  min-height: $side;
+  height: $side;
+}
+
+@media only screen and (max-width: $mobileWidth) {
+}
