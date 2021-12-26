@@ -45,7 +45,7 @@ function ProfileButton(props) {
           <Avatar
             sx={{ width: 32, height: 32 }}
             src={userContext.user.profileImageUrl &&
-              process.env.REACT_APP_API_PUBLIC_URL +
+              process.env.REACT_APP_API_URL + "/public/" +
               userContext.user.profileImageUrl
             }
           ></Avatar>

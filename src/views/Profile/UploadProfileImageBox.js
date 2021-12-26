@@ -59,7 +59,7 @@ function UploadProfileImageBox(props) {
             <Avatar
               className={classes.large}
               src={userContext.user.profileImageUrl &&
-                process.env.REACT_APP_API_PUBLIC_URL +
+                process.env.REACT_APP_API_URL + "/public/" +
                 userContext.user.profileImageUrl
               }
             ></Avatar>
