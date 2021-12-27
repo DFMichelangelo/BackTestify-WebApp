@@ -23,7 +23,7 @@ import useFetch from "hooks/useFetch";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import config from "configuration/config";
 import Endpoints from "Endpoints";
-
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 function ProfileButton(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const themeContext = useContext(ThemeContext);
@@ -44,7 +44,7 @@ function ProfileButton(props) {
         >
           <Avatar
             sx={{ width: 32, height: 32 }}
-            src={userContext.user.profileImageUrl &&
+            src={userContext?.user?.profileImageUrl &&
               process.env.REACT_APP_API_URL + "/public/" +
               userContext.user.profileImageUrl
             }
@@ -82,7 +82,7 @@ function ProfileButton(props) {
         onClose={handleClose}
         id="profileMenu"
       >
-        <MenuItem
+        {userContext?.user?.profileImageUrl && <MenuItem
           onClick={() => {
             history.push("/account/profile");
             setAnchorEl(false);
@@ -99,7 +99,7 @@ function ProfileButton(props) {
               <Trans>profileButton.profile</Trans>
             </Typography>
           </span>
-        </MenuItem>
+        </MenuItem>}
 
         <MenuItem onClick={themeContext.toggleMuiType} dense={true}>
           <span className="menuItem">
@@ -121,11 +121,11 @@ function ProfileButton(props) {
             </Typography>
           </span>
         </MenuItem>
-        <Feedback closeMenu={() => setAnchorEl(false)} />
+        {userContext?.user && <Feedback closeMenu={() => setAnchorEl(false)} />}
         <InstallPWAButton />
 
         <Divider variant="middle" />
-        <MenuItem
+        {userContext?.user && <MenuItem
           onClick={async () => {
             try {
               await fetch({
@@ -148,7 +148,23 @@ function ProfileButton(props) {
               <Trans>auth.logout</Trans>
             </Typography>
           </span>
-        </MenuItem>
+        </MenuItem>}
+
+        {!userContext?.user && <MenuItem
+          onClick={() => history.push("/auth/login")}
+          dense={true}
+        >
+          <span className="menuItem">
+            <LoginOutlinedIcon
+              className="menuProfileIcon"
+              color="action"
+              fontSize="small"
+            />
+            <Typography color="textSecondary" variant="body2">
+              <Trans>auth.login</Trans>
+            </Typography>
+          </span>
+        </MenuItem>}
       </Menu>
     </div>
   );

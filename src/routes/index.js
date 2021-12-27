@@ -1,4 +1,4 @@
-import React, { lazy, useState, Suspense, useEffect, useContext } from "react";
+import React, { lazy, useEffect, useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 import RoutingApp from "./App";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
@@ -6,7 +6,7 @@ import RoutingAuth from "./Auth";
 import i18n from "i18n";
 import CookieConsentDrawer from "theme/CookieConsentDrawer";
 import { DateTime } from "luxon";
-
+import Theme from "theme";
 const ErrorInternalServer = lazy(() =>
   import("views/Placeholders/ErrorInternalServer")
 );
@@ -60,7 +60,11 @@ function App(props) {
         <Route path="/error/403" component={ErrorNotAuthorized} />
         <Route path="/error/500" component={ErrorInternalServer} />
         <Route path="/auth*" component={RoutingAuth} />
-        <Route path="/*" component={RoutingApp} />
+        <Theme>
+          <Switch>
+            <Route path="/*" exact component={RoutingApp} />
+          </Switch>
+        </Theme>
       </Switch>
     </span>
   );
