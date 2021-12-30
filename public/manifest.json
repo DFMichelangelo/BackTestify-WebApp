@@ -7,10 +7,10 @@
 	"background_color": "#ffffff",
 	"shortcuts": [
 		{
-			"name": "Dashboard",
+			"name": "Backtester",
 			"short_name": "Board",
-			"description": "Summary of the Platform",
-			"url": "/dashboard",
+			"description": "Backtester",
+			"url": "/backtester",
 			"icons": [
 				{
 					"src": "img/icons/dashboardIcon-144.png",

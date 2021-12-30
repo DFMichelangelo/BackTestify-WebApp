@@ -8,14 +8,15 @@ import CookieConsentDrawer from "theme/CookieConsentDrawer";
 import { DateTime } from "luxon";
 import Theme from "theme";
 const ErrorInternalServer = lazy(() =>
-  import("views/Placeholders/ErrorInternalServer")
+  import("theme/views/Placeholders/ErrorInternalServer")
 );
 const ErrorNotAuthorized = lazy(() =>
-  import("views/Placeholders/ErrorNotAuthorized")
+  import("theme/views/Placeholders/ErrorNotAuthorized")
 );
-const ErrorNotFound = lazy(() => import("views/Placeholders/ErrorNotFound"));
-const PrivacyPolicy = lazy(() => import("views/TOS/PrivacyPolicy"));
-const TermsAndConditions = lazy(() => import("views/TOS/TermsAndConditions"));
+const ErrorNotFound = lazy(() => import("theme/views/Placeholders/ErrorNotFound"));
+const PrivacyPolicy = lazy(() => import("theme/views/TOS/PrivacyPolicy"));
+const TermsAndConditions = lazy(() => import("theme/views/TOS/TermsAndConditions"));
+const Backtester = lazy(() => import("views/Backtester"));
 
 
 
@@ -62,6 +63,7 @@ function App(props) {
         <Route path="/auth*" component={RoutingAuth} />
         <Theme>
           <Switch>
+            <Route path="/backtester" component={Backtester} />
             <Route path="/*" exact component={RoutingApp} />
           </Switch>
         </Theme>

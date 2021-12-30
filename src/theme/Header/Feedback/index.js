@@ -131,7 +131,7 @@ function Feedback(props) {
   };
 
   let button = (
-    <MenuItem onClick={openFeedbackPopover} dense={true}>
+    <MenuItem disabled={props.disabled} onClick={openFeedbackPopover} dense={true}>
       <span className="menuItem">
         <BugReportOutlinedIcon
           className="menuProfileIcon"

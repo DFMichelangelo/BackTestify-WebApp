@@ -94,7 +94,7 @@ function Header(props) {
         </IconButtonMenu>
         <span className="flex  items-center w-full">
           {icon}
-          <span className="mt-1">
+          <span className="">
             <Typography
               variant="h6"
               sx={{

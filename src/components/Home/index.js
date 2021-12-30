@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 function Home(props) {
   const history = useHistory();
   useEffect(() => {
-    history.push("/dashboard");
+    history.push("/backtester");
   }, []);
   return <></>;
 }

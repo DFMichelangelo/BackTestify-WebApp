@@ -14,10 +14,8 @@ import Endpoints from "Endpoints";
 import RoundLoader from "components/RoundLoader";
 import { useHistory } from "react-router-dom";
 import useFetch from "hooks/useFetch";
-const ErrorNotFound = lazy(() => import("views/Placeholders/ErrorNotFound"));
-const Home = lazy(() => import("views/Home"));
-const Dashboard = lazy(() => import("views/Dashboard"));
-const Helpers = lazy(() => import("views/Helpers"));
+const ErrorNotFound = lazy(() => import("theme/views/Placeholders/ErrorNotFound"));
+const Home = lazy(() => import("theme/views/Home"));
 
 function App(props) {
   const userContext = useContext(UserContext);
@@ -57,8 +55,6 @@ function App(props) {
     <Theme>
       <Suspense fallback={<RoundLoader />}>
         <Switch>
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/helpers" component={Helpers} />
           <Route path="/account*" exact component={Account} />
           <Route exact path="/" component={Home} />
           <Route component={ErrorNotFound} />

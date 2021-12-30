@@ -3,12 +3,12 @@ import { Route, Switch } from "react-router-dom";
 //Auth Components
 import PublicTemplate from "components/PublicTemplate";
 
-const Activation = lazy(() => import("views/Auth/Activation"));
-const Login = lazy(() => import("views/Auth/Login"));
-const Signup = lazy(() => import("views/Auth/Signup"));
-const RestorePassword = lazy(() => import("views/Auth/RestorePassword"));
-const ResetPassword = lazy(() => import("views/Auth/ResetPassword"));
-const Home = lazy(() => import("views/Home"));
+const Activation = lazy(() => import("theme/views/Auth/Activation"));
+const Login = lazy(() => import("theme/views/Auth/Login"));
+const Signup = lazy(() => import("theme/views/Auth/Signup"));
+const RestorePassword = lazy(() => import("theme/views/Auth/RestorePassword"));
+const ResetPassword = lazy(() => import("theme/views/Auth/ResetPassword"));
+const Home = lazy(() => import("theme/views/Home"));
 function Auth(props) {
   return (
     <PublicTemplate>

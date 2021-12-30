@@ -121,7 +121,7 @@ function ProfileButton(props) {
             </Typography>
           </span>
         </MenuItem>
-        {userContext?.user && <Feedback closeMenu={() => setAnchorEl(false)} />}
+        <Feedback disabled={userContext?.user} closeMenu={() => setAnchorEl(false)} />
         <InstallPWAButton />
 
         <Divider variant="middle" />
