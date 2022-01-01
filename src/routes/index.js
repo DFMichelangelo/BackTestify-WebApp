@@ -1,12 +1,15 @@
-import React, { lazy, useEffect, useContext } from "react";
+import React, { lazy, useEffect, useContext, useState, useCallback } from "react";
 import { Route, Switch } from "react-router-dom";
 import RoutingApp from "./App";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
+import { UserContext } from "contexts/Providers/UserProvider";
 import RoutingAuth from "./Auth";
 import i18n from "i18n";
 import CookieConsentDrawer from "theme/CookieConsentDrawer";
 import { DateTime } from "luxon";
 import Theme from "theme";
+import useFetch from "hooks/useFetch";
+import Endpoints from "Endpoints";
 const ErrorInternalServer = lazy(() =>
   import("theme/views/Placeholders/ErrorInternalServer")
 );
@@ -22,11 +25,38 @@ const Backtester = lazy(() => import("views/Backtester"));
 
 function App(props) {
   const themeContext = useContext(ThemeContext);
-
+  const userContext = useContext(UserContext);
+  const { fetch } = useFetch();
   useEffect(() => {
     window.addEventListener("app-update", onAppUpdate);
     window.addEventListener("beforeinstallprompt", onBeforeInstallPrompt);
+    checkUserIdentity();
   }, []);
+
+  const checkUserIdentity = useCallback(async () => {
+    if (userContext.user) {
+      //setLoading(false);
+      return;
+    }
+    // ? qui non ho l'utente
+    try {
+      const data = await fetch({
+        method: "GET",
+        url: Endpoints.user.profile,
+        redirectToPage500: true,
+      });
+      userContext.setUser(data);
+      //setLoading(false);
+    } catch (e) {
+      if (e?.status == 404) {
+        //history.push("auth/login?returnUrl=" + history.location.pathname);
+        //themeContext.showWarningSnackbar({ message: "loginAgain" })
+      }
+      //history.push("auth?returnUrl=" + history.location.pathname)
+    }
+  }, []);
+
+
 
   const onBeforeInstallPrompt = (e) => {
     if (!e) return;

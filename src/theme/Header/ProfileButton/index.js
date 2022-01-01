@@ -1,29 +1,29 @@
-import React, { useState, useContext } from "react";
-import Avatar from "@mui/material/Avatar";
-import "./style.scss";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import { Trans } from "react-i18next";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined";
-import Divider from "@mui/material/Divider";
+import Brightness3OutlinedIcon from "@mui/icons-material/Brightness3Outlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { useHistory } from "react-router-dom";
-import { ThemeContext } from "contexts/Providers/ThemeProvider";
-import Brightness3OutlinedIcon from "@mui/icons-material/Brightness3Outlined";
-import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
-import { UserContext } from "contexts/Providers/UserProvider";
-import InstallPWAButton from "theme/Header/InstallPWAButton";
-import Feedback from "theme/Header/Feedback";
-import useFetch from "hooks/useFetch";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import config from "configuration/config";
+import { ThemeContext } from "contexts/Providers/ThemeProvider";
+import { UserContext } from "contexts/Providers/UserProvider";
 import Endpoints from "Endpoints";
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
+import useFetch from "hooks/useFetch";
+import React, { useContext, useState } from "react";
+import { Trans } from "react-i18next";
+import { useHistory } from "react-router-dom";
+import Feedback from "theme/Header/Feedback";
+import InstallPWAButton from "theme/Header/InstallPWAButton";
+import "./style.scss";
 function ProfileButton(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const themeContext = useContext(ThemeContext);
@@ -82,7 +82,8 @@ function ProfileButton(props) {
         onClose={handleClose}
         id="profileMenu"
       >
-        {userContext?.user?.profileImageUrl && <MenuItem
+        <MenuItem
+          disabled={Boolean(!userContext?.user)}
           onClick={() => {
             history.push("/account/profile");
             setAnchorEl(false);
@@ -99,8 +100,7 @@ function ProfileButton(props) {
               <Trans>profileButton.profile</Trans>
             </Typography>
           </span>
-        </MenuItem>}
-
+        </MenuItem>
         <MenuItem onClick={themeContext.toggleMuiType} dense={true}>
           <span className="menuItem">
             {themeContext.muiType === "light" ? (
@@ -121,7 +121,7 @@ function ProfileButton(props) {
             </Typography>
           </span>
         </MenuItem>
-        <Feedback disabled={userContext?.user} closeMenu={() => setAnchorEl(false)} />
+        <Feedback disabled={Boolean(!userContext?.user)} closeMenu={() => setAnchorEl(false)} />
         <InstallPWAButton />
 
         <Divider variant="middle" />
@@ -165,6 +165,7 @@ function ProfileButton(props) {
             </Typography>
           </span>
         </MenuItem>}
+
       </Menu>
     </div>
   );

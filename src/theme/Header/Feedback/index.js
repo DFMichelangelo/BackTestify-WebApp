@@ -1,29 +1,21 @@
-import React, { useState, useContext } from "react";
-import {
-  Dialog,
-  DialogContent,
-  Button,
-  DialogActions,
-  DialogTitle,
-  TextField,
-  Checkbox,
-  Select,
-} from "@mui/material";
-import { useFormik } from "formik";
-import _ from "lodash";
-import useFetch from "hooks/useFetch";
-import Endpoints from "Endpoints";
-import "./style.scss";
-import { ThemeContext } from "contexts/Providers/ThemeProvider";
-import html2canvas from "html2canvas";
-import { Trans, useTranslation } from "react-i18next";
 import BugReportOutlinedIcon from "@mui/icons-material/BugReportOutlined";
+import {
+  Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, Select, TextField
+} from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
+import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import { UserContext } from "contexts/Providers/UserProvider";
+import Endpoints from "Endpoints";
+import { useFormik } from "formik";
+import useFetch from "hooks/useFetch";
+import html2canvas from "html2canvas";
+import React, { useContext, useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
+import "./style.scss";
 function Feedback(props) {
   const [open, setOpen] = useState(false);
   const { fetch } = useFetch();
