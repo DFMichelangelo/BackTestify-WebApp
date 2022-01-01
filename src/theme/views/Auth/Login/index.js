@@ -1,31 +1,26 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
-import config from "configuration/config";
-import Helmet from "react-helmet";
-import { Trans, useTranslation } from "react-i18next";
-import "./style.scss";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
-import Chip from "@mui/material/Chip";
-import { useHistory } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import { useFormik } from "formik";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import InputAdornment from "@mui/material/InputAdornment";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
-import * as Yup from "yup";
-import useFetch from "hooks/useFetch";
-import Endpoints from "Endpoints";
+import InputAdornment from "@mui/material/InputAdornment";
+import Link from "@mui/material/Link";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import RoundLoader from "components/RoundLoader";
+import config from "configuration/config";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import { UserContext } from "contexts/Providers/UserProvider";
-import {
-  FacebookLoginButton,
-  GoogleLoginButton,
-} from "react-social-login-buttons";
-import Divider from "@mui/material/Divider";
-import RoundLoader from "components/RoundLoader";
+import Endpoints from "Endpoints";
+import { useFormik } from "formik";
+import useFetch from "hooks/useFetch";
 import _ from "lodash";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import Helmet from "react-helmet";
+import { Trans, useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
+import * as Yup from "yup";
+import "./style.scss";
 
 function Login(props) {
   let [disableButton, setDisableButton] = useState(true);
@@ -214,7 +209,7 @@ function Login(props) {
             </Button>
           </div>
         </form>
-        <span className="mb-3 mt-10">
+        {/*<span className="mb-3 mt-10">
           <Divider />
           <span className="flex justify-center mt-1">
             <Typography variant="body2">
@@ -237,7 +232,7 @@ function Login(props) {
           >
             <Trans>auth.loginWithGoogle</Trans>
           </GoogleLoginButton>
-        </div>
+            </div>*/}
 
         <div id="auxiliaryLinks">
           <span className="mr-1">

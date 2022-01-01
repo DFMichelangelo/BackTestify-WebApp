@@ -1,12 +1,16 @@
-import React, { lazy, useEffect, useContext } from "react";
-import { Route, Switch } from "react-router-dom";
-import RoutingApp from "./App";
+import RoundLoader from "components/RoundLoader";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
-import RoutingAuth from "./Auth";
+import { UserContext } from "contexts/Providers/UserProvider";
+import Endpoints from "Endpoints";
+import useFetch from "hooks/useFetch";
 import i18n from "i18n";
-import CookieConsentDrawer from "theme/CookieConsentDrawer";
 import { DateTime } from "luxon";
+import React, { lazy, useCallback, useContext, useEffect, useState } from "react";
+import { Route, Switch } from "react-router-dom";
 import Theme from "theme";
+import CookieConsentDrawer from "theme/CookieConsentDrawer";
+import RoutingApp from "./App";
+import RoutingAuth from "./Auth";
 const ErrorInternalServer = lazy(() =>
   import("theme/views/Placeholders/ErrorInternalServer")
 );
@@ -22,10 +26,36 @@ const Backtester = lazy(() => import("views/Backtester"));
 
 function App(props) {
   const themeContext = useContext(ThemeContext);
-
+  const userContext = useContext(UserContext);
+  const { fetch } = useFetch();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     window.addEventListener("app-update", onAppUpdate);
     window.addEventListener("beforeinstallprompt", onBeforeInstallPrompt);
+    checkUserIdentity();
+  }, []);
+
+  const checkUserIdentity = useCallback(async () => {
+    if (userContext.user) {
+      setLoading(false);
+      return;
+    }
+    // ? qui non ho l'utente
+    try {
+      const data = await fetch({
+        method: "GET",
+        url: Endpoints.user.profile,
+        redirectToPage500: true,
+      });
+      userContext.setUser(data);
+      setLoading(false);
+    } catch (e) {
+      if (e?.status == 404) {
+        //history.push("auth/login?returnUrl=" + history.location.pathname);
+        //themeContext.showWarningSnackbar({ message: "loginAgain" })
+      }
+      //history.push("auth?returnUrl=" + history.location.pathname)
+    }
   }, []);
 
   const onBeforeInstallPrompt = (e) => {
@@ -50,6 +80,7 @@ function App(props) {
     });
   };
 
+  if (loading) return <RoundLoader />;
   return (
     <span>
       <CookieConsentDrawer />
