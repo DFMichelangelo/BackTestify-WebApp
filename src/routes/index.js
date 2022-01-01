@@ -1,16 +1,30 @@
+<<<<<<< HEAD
 import RoundLoader from "components/RoundLoader";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import { UserContext } from "contexts/Providers/UserProvider";
 import Endpoints from "Endpoints";
 import useFetch from "hooks/useFetch";
+=======
+import React, { lazy, useEffect, useContext, useState, useCallback } from "react";
+import { Route, Switch } from "react-router-dom";
+import RoutingApp from "./App";
+import { ThemeContext } from "contexts/Providers/ThemeProvider";
+import { UserContext } from "contexts/Providers/UserProvider";
+import RoutingAuth from "./Auth";
+>>>>>>> a76d69f762b8e142386960f2eedf669700332c1d
 import i18n from "i18n";
 import { DateTime } from "luxon";
 import React, { lazy, useCallback, useContext, useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import Theme from "theme";
+<<<<<<< HEAD
 import CookieConsentDrawer from "theme/CookieConsentDrawer";
 import RoutingApp from "./App";
 import RoutingAuth from "./Auth";
+=======
+import useFetch from "hooks/useFetch";
+import Endpoints from "Endpoints";
+>>>>>>> a76d69f762b8e142386960f2eedf669700332c1d
 const ErrorInternalServer = lazy(() =>
   import("theme/views/Placeholders/ErrorInternalServer")
 );
@@ -28,7 +42,6 @@ function App(props) {
   const themeContext = useContext(ThemeContext);
   const userContext = useContext(UserContext);
   const { fetch } = useFetch();
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
     window.addEventListener("app-update", onAppUpdate);
     window.addEventListener("beforeinstallprompt", onBeforeInstallPrompt);
@@ -37,7 +50,7 @@ function App(props) {
 
   const checkUserIdentity = useCallback(async () => {
     if (userContext.user) {
-      setLoading(false);
+      //setLoading(false);
       return;
     }
     // ? qui non ho l'utente
@@ -48,7 +61,7 @@ function App(props) {
         redirectToPage500: true,
       });
       userContext.setUser(data);
-      setLoading(false);
+      //setLoading(false);
     } catch (e) {
       if (e?.status == 404) {
         //history.push("auth/login?returnUrl=" + history.location.pathname);
@@ -57,6 +70,8 @@ function App(props) {
       //history.push("auth?returnUrl=" + history.location.pathname)
     }
   }, []);
+
+
 
   const onBeforeInstallPrompt = (e) => {
     if (!e) return;
