@@ -34,16 +34,13 @@ function App(props) {
   }, []);
 
   const checkUserIdentity = useCallback(async () => {
-    if (userContext.user) {
-      //setLoading(false);
-      return;
-    }
+    if (userContext.user) return;
     // ? qui non ho l'utente
     try {
       const data = await fetch({
         method: "GET",
         url: Endpoints.user.profile,
-        redirectToPage500: true,
+        redirectToLogin: false,
       });
       userContext.setUser(data);
       //setLoading(false);

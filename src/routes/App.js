@@ -52,15 +52,13 @@ function App(props) {
 
   if (loading) return <RoundLoader />;
   return (
-    <Theme>
-      <Suspense fallback={<RoundLoader />}>
-        <Switch>
-          <Route path="/account*" exact component={Account} />
-          <Route exact path="/" component={Home} />
-          <Route component={ErrorNotFound} />
-        </Switch>
-      </Suspense>
-    </Theme>
+    <Suspense fallback={<RoundLoader />}>
+      <Switch>
+        <Route path="/account*" exact component={Account} />
+        <Route exact path="/" component={Home} />
+        <Route component={ErrorNotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 
