@@ -30,6 +30,7 @@
 		"react-router-dom": "5.2.0",
 		"react-scripts": "5.0.0",
 		"react-social-login-buttons": "^3.6.0",
+		"recharts": "^2.1.8",
 		"sass": "^1.45.0",
 		"tinycolor2": "^1.4.2",
 		"url-pattern": "^1.0.3",
