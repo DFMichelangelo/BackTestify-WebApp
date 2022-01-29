@@ -4,7 +4,7 @@ const SidebarMenu = [
   {
     type: "item",
     id: "Backtester",
-    to: "/backtester",
+    to: "/p/backtester",
     icon: <AccessTimeOutlinedIcon />,
     exact: true,
   },

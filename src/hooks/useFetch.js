@@ -142,7 +142,8 @@ function useFetcher(props) {
           else if (err.response.data.message == "RefreshToken Not Found") {
             if (
               history.location.pathname != "/" &&
-              !history.location.pathname.includes("/auth")
+              !history.location.pathname.includes("/auth") &&
+              !history.location.pathname.includes("/p/")
             )
               themeContext.showWarningSnackbar({
                 message: "apiErrors.loginAgain",

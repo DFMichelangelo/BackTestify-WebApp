@@ -16,7 +16,13 @@ function CookieConsentDrawer(props) {
   };
 
   return (
-    <Drawer variant="persistent" anchor="bottom" open={cookieConsentOpen}>
+    <Drawer
+      sx={{
+        "& .MuiPaper-root": {
+          zIndex: 1201,
+        }
+      }}
+      variant="persistent" anchor="bottom" open={cookieConsentOpen}>
       <div className="flex justify-center mt-4 mb-4 ml-2 mr-2 items-center">
         <div>
           <Typography variant="body2">

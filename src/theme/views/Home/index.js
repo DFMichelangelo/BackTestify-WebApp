@@ -14,7 +14,7 @@ function Home(props) {
     if (!_.isEmpty(localStorage.returnUrl)) {
       history.push(localStorage.returnUrl);
       localStorage.removeItem("returnUrl")
-    } else history.push("/backtester");
+    } else history.push("/p/backtester");
     /*    if (userContext.user) {
             history.push('/dashboard')
         } else {

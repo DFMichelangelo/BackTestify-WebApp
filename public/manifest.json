@@ -10,7 +10,7 @@
 			"name": "Backtester",
 			"short_name": "Board",
 			"description": "Backtester",
-			"url": "/backtester",
+			"url": "/p/backtester",
 			"icons": [
 				{
 					"src": "img/icons/dashboardIcon-144.png",

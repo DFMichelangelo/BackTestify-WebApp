@@ -4,6 +4,7 @@ import RoutingApp from "./App";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import { UserContext } from "contexts/Providers/UserProvider";
 import RoutingAuth from "./Auth";
+import RoutingPublic from "./Public";
 import i18n from "i18n";
 import { DateTime } from "luxon";
 import Theme from "theme";
@@ -19,7 +20,6 @@ const ErrorNotAuthorized = lazy(() =>
 const ErrorNotFound = lazy(() => import("theme/views/Placeholders/ErrorNotFound"));
 const PrivacyPolicy = lazy(() => import("theme/views/TOS/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("theme/views/TOS/TermsAndConditions"));
-const Backtester = lazy(() => import("views/Backtester"));
 
 
 
@@ -90,7 +90,7 @@ function App(props) {
         <Route path="/auth*" component={RoutingAuth} />
         <Theme>
           <Switch>
-            <Route path="/backtester" component={Backtester} />
+            <Route exact strict path="/p/*" component={RoutingPublic} />
             <Route path="/*" exact component={RoutingApp} />
           </Switch>
         </Theme>
