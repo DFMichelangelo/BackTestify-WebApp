@@ -3,7 +3,7 @@ import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 const SidebarMenu = [
   {
     type: "item",
-    id: "Backtester",
+    id: "backtester.backtester",
     to: "/p/backtester",
     icon: <AccessTimeOutlinedIcon />,
     exact: true,

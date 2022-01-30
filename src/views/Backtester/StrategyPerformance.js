@@ -4,6 +4,7 @@ import GenericCard from "components/GenericCard";
 import OverPeriodAnnualizedCard from "components/OverPeriodAnnualizedCard";
 import { LineChart, Line, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
 const data = [{ name: 'Page A', uv: 800, pv: 400, amt: 1400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 700, pv: 400, amt: 4400 }];
+
 function StrategyPerformance(props) {
     return (<div className="flex flex-col w-full">
         <div className="flex flex-row">

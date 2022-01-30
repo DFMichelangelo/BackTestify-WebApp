@@ -152,5 +152,8 @@
 	},
 	"tos": {
 		"termsAndConditions": "Terms and Conditions"
+	},
+	"backtester": {
+		"backtester": "Backtester"
 	}
 }

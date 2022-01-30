@@ -53,7 +53,8 @@ function useFetcher(props) {
     const redirectToPage500 = _.get(options, "redirectToPage500", false);
     const showErrorSnackBar = _.get(options, "showErrorSnackBar", true);
     const redirectToLogin = _.get(options, "redirectToLogin", true);
-    const addBaseUrl = _.get(options, "addBaseUrl", true);
+    let addBaseUrl = _.get(options, "addBaseUrl", true);
+    addBaseUrl = options?.baseUrl ? false : addBaseUrl;
     const addHeadersForFiles = _.get(options, "addHeadersForFiles", false);
     const CORSHeaders =
       addHeaders == true
@@ -76,7 +77,7 @@ function useFetcher(props) {
 
     // ? Create custom axios instance
     const axiosGateway = axios.create({
-      baseURL: addBaseUrl == true ? process.env.REACT_APP_API_URL : null,
+      baseURL: addBaseUrl == true ? process.env.REACT_APP_API_URL : options?.baseUrl,
       timeout: 30000,
       json: true,
       headers,
