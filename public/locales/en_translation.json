@@ -154,6 +154,25 @@
 		"termsAndConditions": "Terms and Conditions"
 	},
 	"backtester": {
-		"backtester": "Backtester"
+		"backtester": "Backtester",
+		"backtest": "Backtest",
+		"hourly": "Hourly",
+		"daily": "Daily",
+		"input": "Input",
+		"orders": "Orders",
+		"portfolio": "Portfolio",
+		"performance": "Performance",
+		"logs": "Logs",
+		"startDate": "Start Date",
+		"endDate": "End Date",
+		"initialPortfolioValue": "Initial Portfolio Value",
+		"riskFreeRate": "Risk Free Rate",
+		"financialInstrumentName": "Financial Instrument Name",
+		"benchmarkFinancialInstrumentName": "Benchmark Instrument",
+		"timeframe": "Timeframe",
+		"strategy": "Strategy",
+		"exogenVariables": "Exogen Variables",
+		"dataInput": "Data Input",
+		"rawData": "Raw Data"
 	}
 }

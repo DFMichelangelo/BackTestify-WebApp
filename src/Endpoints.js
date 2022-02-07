@@ -25,7 +25,8 @@ let Endpoints = {
     getTermsAndConditions: "/v1/app/gdpr/terms-and-conditions"
   },
   backtester: {
-    getStrategies: "/get_strategies" // ? GET
+    getStrategies: "/get_strategies", // ? GET
+    backtestStrategy: "/backtest_strategy" // ? POST
   }
 }
 

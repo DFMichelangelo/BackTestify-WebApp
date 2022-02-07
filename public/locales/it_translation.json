@@ -152,5 +152,27 @@
 	},
 	"tos": {
 		"termsAndConditions": "Termini e Condizioni d'Uso"
+	},
+	"backtester": {
+		"backtester": "Backtester",
+		"backtest": "Backtest",
+		"hourly": "Orario",
+		"daily": "Giornaliero",
+		"input": "Input",
+		"orders": "Ordini",
+		"portfolio": "Portafoglio",
+		"performance": "Performance",
+		"logs": "Logs",
+		"startDate": "Data d'Inizio",
+		"endDate": "Data di Fine",
+		"initialPortfolioValue": "Valore Iniziale del Portafoglio",
+		"riskFreeRate": "Tasso Risk-Free",
+		"financialInstrumentName": "Nome dello Strumento Finanziario",
+		"benchmarkFinancialInstrumentName": "Nome Strumento di Benchmark",
+		"timeframe": "Timeframe",
+		"strategy": "Strategia",
+		"exogenVariables": "Variabili Eseogene",
+		"dataInput": "Dati di Input",
+		"rawData": "Dati Raw"
 	}
 }

@@ -10,6 +10,8 @@ import StandardDialog from "components/StandardDialog";
 import ErrorBoundary from "components/ErrorBoundary";
 import yupConfig from "auxiliaries/yupConfig";
 import { Settings } from "luxon";
+import AdapterLuxon from '@mui/lab/AdapterLuxon';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 let locale = window.navigator.userLanguage || window.navigator.language;
 
 
@@ -19,15 +21,19 @@ function App() {
   return (
     <ErrorBoundary>
       <Provider>
-        <MUIThemeHandler>
-          <React.Suspense fallback={<RoundLoader />}>
-            <Router>
-              <Routes />
-              <SnackBar />
-              <StandardDialog />
-            </Router>
-          </React.Suspense>
-        </MUIThemeHandler>
+        <LocalizationProvider dateAdapter={AdapterLuxon} locale={localStorage.getItem("i18nextLng").split("-")[0] || locale}>
+          <MUIThemeHandler>
+            <React.Suspense fallback={<RoundLoader />}>
+
+              <Router>
+                <Routes />
+                <SnackBar />
+                <StandardDialog />
+              </Router>
+
+            </React.Suspense>
+          </MUIThemeHandler>
+        </LocalizationProvider>
       </Provider>
     </ErrorBoundary>
   );

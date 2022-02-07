@@ -154,7 +154,7 @@ function useFetcher(props) {
             throw err;
           }
         } else if (
-          counter.current[err.config.url + JSON.stringify(err.config.data)] >= 3
+          counter.current[err.config.url + JSON.stringify(err.config.data)] >= 1
         ) {
           if ((err.response?.status == 500 || err.message.toString() == "Network Error") && redirectToPage500 === true) history.push("/error/500?returnUrl=" + history.location.pathname);
           if ((err.response?.status == 500 || err.message.toString() == "Network Error") && redirectToPage500 === false && showErrorSnackBar === true) themeContext.showErrorSnackbar({ message: "somethingWentWrong" });
@@ -268,7 +268,7 @@ function useFetcher(props) {
         err?.response?.status === 500 ||
         err.message.toString() == "Network Error"
       ) {
-        if (counter.current[options.url + JSON.stringify(options.data)] < 3) {
+        if (counter.current[options.url + JSON.stringify(options.data)] < 1) {
           counter.current[options.url + JSON.stringify(options.data)] =
             counter.current[options.url + JSON.stringify(options.data)] + 1;
           await new Promise((resolve) => setTimeout(resolve, 500));

@@ -132,7 +132,7 @@ function NavVerticalCollapse(props) {
         {item.badge && <NavBadge className="mr-4" badge={item.badge} />}
         <Icon
           className={classNames(
-            "w-32  p-0 flex",
+            "w-32  p-0 flex collapseIcon",
             styledClasses.bigCollapseIcon,
             {
               [styledClasses.bigCollapseIconShift]: themeContext.sidebarOpen,

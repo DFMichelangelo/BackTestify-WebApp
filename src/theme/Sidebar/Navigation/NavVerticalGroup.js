@@ -8,7 +8,9 @@ import { Trans } from "react-i18next";
 import Typography from "@mui/material/Typography";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import { makeStyles } from "@mui/styles";
+import Skeleton from '@mui/material/Skeleton';
 import classnames from "classnames";
+import "./style.scss"
 const useStyles = makeStyles((theme) => ({
   uppercaseText: {
     textTransform: "uppercase",
@@ -25,7 +27,7 @@ function NavVerticalGroup(props) {
     nestedLevel > 0 ? "pl-" + (paddingValue > 80 ? 80 : paddingValue) : "";
   return (
     <>
-      {themeContext.sidebarOpen && (
+      {themeContext.sidebarOpen ? (
         <ListSubheader disableSticky={true}>
           <span className={classnames(classes.uppercaseText)}>
             <Typography variant="body2">
@@ -35,7 +37,13 @@ function NavVerticalGroup(props) {
             </Typography>
           </span>
         </ListSubheader>
-      )}
+      )
+        : <div className="navGroup">
+          <Typography variant="body2" align="center">
+            <Skeleton animation={false} width={40} />
+          </Typography>
+        </div>
+      }
 
       {item.children && (
         <>
