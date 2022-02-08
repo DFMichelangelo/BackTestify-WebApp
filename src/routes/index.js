@@ -72,7 +72,7 @@ function App(props) {
       title: i18n.t("newUpdateAlert.title"),
       message: i18n.t("newUpdateAlert.message"),
       onClose: () => {
-        & window.location.reload();
+        window.location.reload();
       },
     });
   };
