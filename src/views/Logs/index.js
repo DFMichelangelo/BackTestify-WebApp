@@ -3,15 +3,15 @@ import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import useFetch from "hooks/useFetch";
 import { useTranslation } from "react-i18next";
 import RoundLoader from "components/RoundLoader";
-import MarkAsUnreadOutlinedIcon from '@mui/icons-material/MarkAsUnreadOutlined';
+import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
 
-function Orders(props) {
+function Logs(props) {
     const themeContext = useContext(ThemeContext);
-    const [t, i18n] = useTranslation();
+    const { t } = useTranslation();
     const { fetch, loading, data } = useFetch();
 
     useEffect(() => {
-        themeContext.setTitle("backtester.orders", <MarkAsUnreadOutlinedIcon />);
+        themeContext.setTitle("backtester.logs", <ListAltOutlinedIcon />);
     }, []);
 
 
@@ -22,4 +22,4 @@ function Orders(props) {
         </div>)
 }
 
-export default Orders;
+export default Logs;

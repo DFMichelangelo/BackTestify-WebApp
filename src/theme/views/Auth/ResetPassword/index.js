@@ -20,7 +20,7 @@ import Link from "@mui/material/Link";
 function RestorePassword(props) {
   let history = useHistory();
   const themeContext = useContext(ThemeContext);
-  const [t, i18n] = useTranslation();
+  const { t } = useTranslation();
   const { fetch, loading, error } = useFetch();
   const [restorePasswordStatus, setRestorePasswordStatus] = useState("RESET");
   let [disableButton, setDisableButton] = useState(true);

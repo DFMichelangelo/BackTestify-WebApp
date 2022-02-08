@@ -25,7 +25,7 @@ import "./style.scss";
 function Login(props) {
   let [disableButton, setDisableButton] = useState(true);
   let [showPassword, setShowPassword] = useState(false);
-  const [t, i18n] = useTranslation();
+  const { t } = useTranslation();
   let [loadingRedirect, setLoadingRedirect] = useState(false)
   const themeContext = useContext(ThemeContext);
   const userContext = useContext(UserContext);

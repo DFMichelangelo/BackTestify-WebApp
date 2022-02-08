@@ -3,23 +3,21 @@ import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import useFetch from "hooks/useFetch";
 import { useTranslation } from "react-i18next";
 import RoundLoader from "components/RoundLoader";
-import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
-
-function Logs(props) {
+import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+import ShowChartOutlinedIcon from '@mui/icons-material/ShowChartOutlined';
+function Timeseries(props) {
     const themeContext = useContext(ThemeContext);
-    const [t, i18n] = useTranslation();
-    const { fetch, loading, data } = useFetch();
+    const { t } = useTranslation();
 
     useEffect(() => {
-        themeContext.setTitle("backtester.logs", <ListAltOutlinedIcon />);
+        themeContext.setTitle("backtester.timeseries", <ShowChartOutlinedIcon />);
     }, []);
 
 
-    if (loading) return <RoundLoader />;
     return (
         <div>
 
         </div>)
 }
 
-export default Logs;
+export default Timeseries;

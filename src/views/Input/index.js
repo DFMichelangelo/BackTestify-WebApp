@@ -18,6 +18,11 @@ import DatePicker from '@mui/lab/DatePicker';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
+import Switch from '@mui/material/Switch';
+import { Typography } from "@mui/material";
+import Divider from '@mui/material/Divider';
+import LoadingButton from '@mui/lab/LoadingButton';
+import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
 function Input(props) {
   const themeContext = useContext(ThemeContext);
   const backtesterContext = useContext(BacktesterContext);
@@ -27,6 +32,7 @@ function Input(props) {
   const { t } = useTranslation();
   const { fetch, loading } = useFetch();
   const [validationTrigger, setValidationTrigger] = useState(false);
+  const [typeStartDate, setTypeStartDate] = useState("date");
   const [initialValues, setInitialValues] = useState({
     initial: {
       startDate: DateTime.now().minus({ years: 1 }),
@@ -37,6 +43,8 @@ function Input(props) {
       timeframe: "1d",
       strategy: strategySelected || "",
       benchmarkFinancialInstrumentName: "SPY",
+      durationType: "years",
+      durationAmount: 1
     },
     additional: {}
   });
@@ -56,6 +64,8 @@ function Input(props) {
     endDate: Yup.date().required(),
     initialPortfolioValue: Yup.number().min(1).required(),
     riskFreeRate: Yup.number().required(),
+    durationAmount: Yup.number().min(0).required(),
+    durationType: Yup.string().required(),
     financialInstrumentName: Yup.string().required(),
     strategy: Yup.object().required(),
   });
@@ -95,7 +105,9 @@ function Input(props) {
       console.log(indicators_parameters)
       //INFO - Creation of the object to send
       let payload = {
-        start_date: values.startDate.set({ hours: 0, minutes: 0, seconds: 0 }).toFormat("d/MM/y HH:mm:ss"),
+        start_date: typeStartDate == "date" ?
+          values.startDate.set({ hours: 0, minutes: 0, seconds: 0 }).toFormat("d/MM/y HH:mm:ss")
+          : values.endDate.set({ hours: 0, minutes: 0, seconds: 0 }).minus({ days: values.days, months: values.months, years: values.years }).toFormat("d/MM/y HH:mm:ss"),
         end_date: values.endDate.set({ hours: 0, minutes: 0, seconds: 0 }).toFormat("d/MM/y HH:mm:ss"),
         initial_portfolio_value: values.initialPortfolioValue,
         risk_free_rate: values.riskFreeRate,
@@ -115,7 +127,7 @@ function Input(props) {
         data: payload
       });
       console.log(result)
-      backtesterContext.setBacktestResults(result)
+      backtesterContext.setBacktesterResults(result)
     },
     validationSchema,
     validate: (values) => {
@@ -131,16 +143,59 @@ function Input(props) {
     <div>
       <form onSubmit={inputBacktesterFormik.handleSubmit} >
         <div className="flex flex-wrap">
-          <GenericCard title="backtester.dataInput" className="flex flex-col">
-            <DatePicker
-              id="startDate"
-              label={t("backtester.startDate")}
-              maxDate={DateTime.now()}
-              value={inputBacktesterFormik.values.startDate}
-              onChange={(e) => inputBacktesterFormik.setFieldValue("startDate", e)}
-              renderInput={(params) => <TextField {...params} />}
-            />
+          <GenericCard title="backtester.dataInput" classNameContent="flex flex-col" width="300px">
+            <div className="flex justify-center">
+              <Typography variant="overline">{t("backtester.date")}</Typography>
+              <Switch
+                checked={typeStartDate === "date" ? false : true}
+                onChange={(e) => setTypeStartDate(typeStartDate === "date" ? "duration" : "date")}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
+              <Typography variant="overline">{t("backtester.duration")}</Typography>
+            </div>
+            {typeStartDate == "duration" ?
+              <div className="flex">
+                <TextField
+                  error={
+                    inputBacktesterFormik.touched.durationAmount && Boolean(inputBacktesterFormik.errors.durationAmount)
+                  }
+                  style={{ width: "45%" }}
+                  id="durationAmount"
+                  label={t("backtester.durationAmount")}
+                  type="number"
+                  onChange={inputBacktesterFormik.handleChange}
+                  onBlur={inputBacktesterFormik.handleBlur}
+                  value={inputBacktesterFormik.values.durationAmount}
+                  helperText={
+                    inputBacktesterFormik.touched.durationAmount &&
+                    t(inputBacktesterFormik.errors.durationAmount)
+                  }
+                />
 
+                <TextField
+                  style={{ width: "45%" }}
+                  select
+                  id="duration"
+                  onChange={(newValue) => inputBacktesterFormik.setFieldValue("dirationType", newValue.target.value)}
+                  value={inputBacktesterFormik.values.durationType}
+                  label={t("backtester.durationType")}
+                >
+                  <MenuItem value={"days"}>{t("backtester.days")}</MenuItem>
+                  <MenuItem value={"months"}>{t("backtester.months")}</MenuItem>
+                  <MenuItem value={"years"}>{t("backtester.years")}</MenuItem>
+                </TextField>
+              </div>
+              :
+              <DatePicker
+                id="startDate"
+                label={t("backtester.startDate")}
+                maxDate={DateTime.now()}
+                value={inputBacktesterFormik.values.startDate}
+                onChange={(e) => inputBacktesterFormik.setFieldValue("startDate", e)}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            }
+            <Divider variant="middle" />
             <DatePicker
               id="endDate"
               label={t("backtester.endDate")}
@@ -153,9 +208,7 @@ function Input(props) {
             <TextField
               select
               id="timeframe"
-              style={{ width: "260px" }}
-              onChange={(newValue) => inputBacktesterFormik.setFieldValue("timeframe", newValue.target.value)
-              }
+              onChange={(newValue) => inputBacktesterFormik.setFieldValue("timeframe", newValue.target.value)}
               value={inputBacktesterFormik.values.timeframe}
               label={t("backtester.timeframe")}
               disabled
@@ -194,48 +247,50 @@ function Input(props) {
               }
             />
           </GenericCard>
-          <GenericCard title="backtester.portfolio" className="flex flex-col">
-            <TextField
-              error={
-                inputBacktesterFormik.touched.initialPortfolioValue && Boolean(inputBacktesterFormik.errors.initialPortfolioValue)
-              }
-              id="initialPortfolioValue"
-              label={t("backtester.initialPortfolioValue")}
-              type="number"
-              onChange={inputBacktesterFormik.handleChange}
-              onBlur={inputBacktesterFormik.handleBlur}
-              value={inputBacktesterFormik.values.initialPortfolioValue}
-              helperText={
-                inputBacktesterFormik.touched.initialPortfolioValue &&
-                t(inputBacktesterFormik.errors.initialPortfolioValue)
-              }
-            />
-          </GenericCard>
-          <GenericCard title="backtester.exogenVariables" className="flex flex-col">
-            <TextField
-              error={
-                inputBacktesterFormik.touched.riskFreeRate && Boolean(inputBacktesterFormik.errors.riskFreeRate)
-              }
-              id="riskFreeRate"
-              label={t("backtester.riskFreeRate")}
-              type="number"
-              onChange={inputBacktesterFormik.handleChange}
-              onBlur={inputBacktesterFormik.handleBlur}
-              value={inputBacktesterFormik.values.riskFreeRate}
-              InputProps={{
-                endAdornment: <InputAdornment position="end">%</InputAdornment>,
-              }}
-              helperText={
-                inputBacktesterFormik.touched.riskFreeRate &&
-                t(inputBacktesterFormik.errors.riskFreeRate)
-              }
-            />
-          </GenericCard>
-          <GenericCard title="backtester.strategy" className="flex flex-col">
+          <div className="flex flex-col">
+            <GenericCard title="backtester.portfolio" classNameContent="flex flex-col">
+              <TextField
+                error={
+                  inputBacktesterFormik.touched.initialPortfolioValue && Boolean(inputBacktesterFormik.errors.initialPortfolioValue)
+                }
+                id="initialPortfolioValue"
+                label={t("backtester.initialPortfolioValue")}
+                type="number"
+                onChange={inputBacktesterFormik.handleChange}
+                onBlur={inputBacktesterFormik.handleBlur}
+                value={inputBacktesterFormik.values.initialPortfolioValue}
+                helperText={
+                  inputBacktesterFormik.touched.initialPortfolioValue &&
+                  t(inputBacktesterFormik.errors.initialPortfolioValue)
+                }
+              />
+            </GenericCard>
+            <GenericCard title="backtester.exogenVariables" classNameContent="flex flex-col">
+              <TextField
+                error={
+                  inputBacktesterFormik.touched.riskFreeRate && Boolean(inputBacktesterFormik.errors.riskFreeRate)
+                }
+                id="riskFreeRate"
+                label={t("backtester.riskFreeRate")}
+                type="number"
+                onChange={inputBacktesterFormik.handleChange}
+                onBlur={inputBacktesterFormik.handleBlur}
+                value={inputBacktesterFormik.values.riskFreeRate}
+                InputProps={{
+                  endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                }}
+                helperText={
+                  inputBacktesterFormik.touched.riskFreeRate &&
+                  t(inputBacktesterFormik.errors.riskFreeRate)
+                }
+              />
+            </GenericCard>
+          </div>
+          <GenericCard title="backtester.strategy" classNameContent="flex flex-col">
             <TextField
               select
               id="strategy"
-              style={{ width: "300px" }}
+
               onChange={(newValue) => {
                 setStrategySelected(newValue.target.value)
                 let obj = {}
@@ -279,24 +334,19 @@ function Input(props) {
             )}
           </GenericCard>
         </div>
-
-        <Button
+        <LoadingButton
           style={{ margin: "10px" }}
           size="large"
+          loading={inputBacktesterFormik.isSubmitting}
+          endIcon={<UpdateOutlinedIcon />}
           type="submit"
           variant="contained"
-          disabled={disableButton || inputBacktesterFormik.isSubmitting
-          }
+          disabled={disableButton}
+          loadingPosition="end"
         >
           {t("backtester.backtest")}
-        </Button>
-
+        </LoadingButton>
       </form>
-
-
-
-
-
     </div >)
 }
 

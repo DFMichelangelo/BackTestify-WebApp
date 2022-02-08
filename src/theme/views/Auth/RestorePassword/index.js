@@ -18,7 +18,7 @@ function RestorePassword(props) {
   let [disableButton, setDisableButton] = useState(true);
   const themeContext = useContext(ThemeContext);
   const { fetch, loading, error, data } = useFetch();
-  const [t, i18n] = useTranslation();
+  const { t } = useTranslation();
   const [restorePasswordStatus, setRestorePasswordStatus] = useState(
     "INSERTING_EMAIL"
   );

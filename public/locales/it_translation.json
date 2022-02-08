@@ -173,6 +173,13 @@
 		"strategy": "Strategia",
 		"exogenVariables": "Variabili Eseogene",
 		"dataInput": "Dati di Input",
-		"rawData": "Dati Raw"
+		"rawData": "Dati Raw",
+		"duration": "Durata",
+		"date": "Data",
+		"years": "Anni",
+		"months": "Mesi",
+		"days": "Giorni",
+		"durationAmount": "Quantità Durata",
+		"durationType": "Tipo di Durata"
 	}
 }

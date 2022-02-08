@@ -21,7 +21,7 @@ function Feedback(props) {
   const { fetch } = useFetch();
   const themeContext = useContext(ThemeContext);
   const userContext = useContext(UserContext);
-  const [t, i18n] = useTranslation();
+  const { t } = useTranslation();
   const openFeedbackPopover = () => {
     props.closeMenu();
     setOpen(true);

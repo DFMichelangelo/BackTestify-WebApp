@@ -62,7 +62,7 @@ function Header(props) {
   const themeContext = useContext(ThemeContext);
   const { handleDrawerOpenOnClick } = props;
   const { icon, title, headerVisible } = themeContext;
-  const [t, i18n] = useTranslation();
+  const { t } = useTranslation();
   const matches = useMediaQuery("(max-width:" + config.mobileScreenWidth + ")");
   if (!headerVisible) return null;
   return (

@@ -13,7 +13,7 @@ const data = [{ name: 'Page A', uv: 800, pv: 400, amt: 1400 }, { name: 'Page A',
 
 function Performance(props) {
     const themeContext = useContext(ThemeContext);
-    const [t, i18n] = useTranslation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         themeContext.setTitle("backtester.performance", <SpeedOutlinedIcon />);

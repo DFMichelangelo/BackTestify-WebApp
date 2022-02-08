@@ -7,11 +7,11 @@ import { useTranslation } from "react-i18next";
 import "./style.scss"
 
 function ChartCard(props) {
-    const { title, subtitle, className, showSubtitle } = props;
-    const [t, i18n] = useTranslation();
+    const { title, subtitle, classNameContent, showSubtitle } = props;
+    const { t } = useTranslation();
     return (
         <div className="genericCard">
-            <Card sx={{ width: "fit-content", padding: "15px" }}>
+            <Card sx={{ width: props.width, padding: "15px" }}>
                 <Typography variant="subtitle1">
                     <span style={{
                         fontWeight: "bold",
@@ -26,7 +26,7 @@ function ChartCard(props) {
                         {subtitle ? t(subtitle) : <br />}
                     </span>
                 </Typography>}
-                <div className={className}>
+                <div className={classNameContent}>
                     {props.children}
                 </div>
             </Card>

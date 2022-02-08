@@ -5,6 +5,7 @@ import MarkAsUnreadOutlinedIcon from '@mui/icons-material/MarkAsUnreadOutlined';
 import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
 import RawOnOutlinedIcon from '@mui/icons-material/RawOnOutlined';
+import ShowChartOutlinedIcon from '@mui/icons-material/ShowChartOutlined';
 const SidebarMenu = [
   {
     type: "group",
@@ -15,6 +16,13 @@ const SidebarMenu = [
         id: "backtester.input",
         to: "/p/backtester/input",
         icon: <InputOutlinedIcon />,
+        exact: true,
+      },
+      {
+        type: "item",
+        id: "backtester.timeseries",
+        to: "/p/backtester/timeseries",
+        icon: <ShowChartOutlinedIcon />,
         exact: true,
       },
       {
@@ -52,14 +60,14 @@ const SidebarMenu = [
         children: [{
           type: "item",
           id: "backtester.orders",
-          to: "/p/backtester/orders",
+          to: "/p/backtester/raw-data/orders",
           icon: <MarkAsUnreadOutlinedIcon />,
           exact: true,
         },
         {
           type: "item",
           id: "backtester.portfolio",
-          to: "/p/backtester/portfolio",
+          to: "/p/backtester/raw-data/portfolio",
           icon: <AccountBalanceWalletOutlinedIcon />,
           exact: true,
         },]

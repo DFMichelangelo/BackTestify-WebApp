@@ -18,7 +18,7 @@ function Activation(props) {
   let history = useHistory();
   const themeContext = useContext(ThemeContext);
   const userContext = useContext(UserContext);
-  const [t, i18n] = useTranslation();
+  const { t } = useTranslation();
   const { fetch, loading, error } = useFetch();
   const [activationStatus, setActivationStatus] = useState("ACTIVATION");
 

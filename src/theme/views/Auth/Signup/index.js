@@ -31,7 +31,7 @@ function Signup(props) {
   let [showPassword, setShowPassword] = useState(false);
   let [isSignupSucceded, setIsSignupSucceded] = useState(false);
   let [loadingRedirect, setLoadingRedirect] = useState(false)
-  const [t, i18n] = useTranslation();
+  const { t } = useTranslation();
   const themeContext = useContext(ThemeContext);
   const userContext = useContext(UserContext);
   const history = useHistory();

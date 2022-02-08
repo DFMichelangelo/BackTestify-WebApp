@@ -271,6 +271,7 @@ function EnhancedTable(props) {
       page * rowsPerPage + rowsPerPage
     );
   };
+  { console.log(page) }
   return (
     <div className={classnames(classes.root, "enhancedTable")}>
       <EnhancedTableToolbar
@@ -358,10 +359,11 @@ function EnhancedTable(props) {
             <ClickAwayListener onClickAway={() => {
               if (_.isEmpty(formiktextFieldPage.values.page)) formiktextFieldPage.setFieldValue("page", page + 1)
             }}>
+
               <TextField
                 variant="filled"
                 type="number"
-                disabled={page <= 1 ? true : false}
+                disabled={rows.length < rowsPerPage}
                 error={Boolean(formiktextFieldPage.errors.page)}
                 helperText={
                   <Trans>{formiktextFieldPage.errors.page}</Trans>

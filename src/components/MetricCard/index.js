@@ -7,7 +7,7 @@ import classnames from "classnames";
 import "./style.scss"
 function MetricCard(props) {
     const { title, subtitle, metricValue, classname, multiMetricData } = props;
-    const [t, i18n] = useTranslation();
+    const { t } = useTranslation();
     return (
         <div className="metricCard">
             <GenericCard title={title} subtitle={subtitle} classname={classname} showSubtitle={multiMetricData ? false : true}>
