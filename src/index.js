@@ -15,11 +15,13 @@ ReactDOM.render(
 
 serviceWorkerRegistration.register({
   onUpdate: function (registration) {
+    console.log("I am in the onUpdate function");
     let appUpdateEvent = new Event('app-update');
     window.dispatchEvent(appUpdateEvent);
     registration.waiting.postMessage({ type: 'SKIP_WAITING' })
   },
   onSuccess: function (registration) {
+    console.log("I am in the onSuccess function");
     let appUpdateEvent = new Event('app-update');
     window.dispatchEvent(appUpdateEvent);
     registration.waiting.postMessage({ type: 'SKIP_WAITING' })
