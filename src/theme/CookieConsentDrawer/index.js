@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import "./style.scss";
 import { getCookie, setCookie } from "auxiliaries/cookies";
 function CookieConsentDrawer(props) {
+  const { t } = useTranslation();
   const [cookieConsentOpen, setCookieConsentOpen] = useState(
     !getCookie("acceptedCookies")
   );
@@ -26,14 +27,11 @@ function CookieConsentDrawer(props) {
       <div className="flex justify-center mt-4 mb-4 ml-2 mr-2 items-center">
         <div>
           <Typography variant="body2">
-            <Trans>cookieConsentDrawer.text</Trans>
+            {t("cookieConsentDrawer.text")}
             <Link href="/privacy-policy">Privacy Policy</Link>
           </Typography>
         </div>
         <span className="flex" id="cookie-consent-buttons">
-          {/*<div className="ml-3 mr-3">
-                    <Button size="small"><Trans>cookieConsentDrawer.reject</Trans></Button>
-                </div>*/}
           <div className="ml-2 mr-2">
             <Button
               size="small"
@@ -41,7 +39,7 @@ function CookieConsentDrawer(props) {
               color="primary"
               onClick={createAcceptCookieConsent}
             >
-              <Trans>cookieConsentDrawer.ok</Trans>
+              {t("cookieConsentDrawer.ok")}
             </Button>
           </div>
         </span>

@@ -179,6 +179,10 @@
 		"years": "Years",
 		"months": "Months",
 		"days": "Days",
-		"durationAmount": "Duration Amount"
+		"durationAmount": "Duration Amount",
+		"timeseries": "Timeseries",
+		"liquidity": "Liquidity",
+		"assetsValue": "Assets Value",
+		"totalValue": "Total Value"
 	}
 }

@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
-import { styled, useTheme } from '@mui/material/styles';
-import classnames from "classnames";
+import { styled } from '@mui/material/styles';
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { makeStyles } from "@mui/styles";
 import config from "configuration/config";
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -92,7 +90,6 @@ function Sidebar(props) {
     handleDrawerOpenOnClick,
     handleDrawerCloseOnClick,
   } = props;
-  const theme = useTheme();
   const themeContext = useContext(ThemeContext);
 
   return (

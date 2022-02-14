@@ -5,7 +5,7 @@ import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import BottomNavigation from "theme/BottomNavigation";
 import config from "configuration/config";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 
 export default function Theme(props) {
@@ -16,11 +16,11 @@ export default function Theme(props) {
   const handleDrawerCloseOnClick = () => isOpen(false, "click");
   const matches = useMediaQuery("(max-width:" + config.mobileScreenWidth + ")");
 
-  const theme = useTheme();
+
   const isOpen = (value, openType) => {
     if (
       themeContext.sidebarOpenedEvent === "click" &&
-      openType == "hover" &&
+      openType === "hover" &&
       themeContext.sidebarOpen === true
     )
       return;

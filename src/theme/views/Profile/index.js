@@ -6,14 +6,13 @@ import ProfileBox from "./ProfileBox";
 import DisableUserBox from "./DisableAccountBox";
 import ChangePasswordBox from "./ChangePasswordBox";
 import DoNotRememberPassword from "./DoNotRememberPassword";
-import _ from "lodash";
 import TopSide from "./TopSide";
 import { makeStyles } from "@mui/styles";
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import TabPanel from "components/TabPanel";
 import UploadProfileImageBox from "./UploadProfileImageBox";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
@@ -42,7 +41,7 @@ function Profile(props) {
   const themeContext = useContext(ThemeContext);
   const [value, setValue] = useState(0);
   const classes = useStyles();
-
+  const { t } = useTranslation();
   const handleChange = (event, newValue) => setValue(newValue);
 
   useEffect(() => {
@@ -67,7 +66,7 @@ function Profile(props) {
               className={classes.tab}
               label={
                 <Typography variant="h6">
-                  <Trans>profile.profile</Trans>
+                  {t("profile.profile")}
                 </Typography>
               }
             />
@@ -75,7 +74,7 @@ function Profile(props) {
               className={classes.tab}
               label={
                 <Typography variant="h6">
-                  <Trans>Account</Trans>
+                  {t("Account")}
                 </Typography>
               }
             />

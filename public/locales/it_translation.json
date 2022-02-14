@@ -180,6 +180,10 @@
 		"months": "Mesi",
 		"days": "Giorni",
 		"durationAmount": "Quantità Durata",
-		"durationType": "Tipo di Durata"
+		"durationType": "Tipo di Durata",
+		"timeseries": "Serie Temporale",
+		"liquidity": "Liquidità",
+		"assetsValue": "Valore degli Assets",
+		"totalValue": "Valore Totale"
 	}
 }

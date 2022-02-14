@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography } from "@mui/material";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 function FieldAndValue(props) {
     const { field, value } = props
@@ -8,7 +8,7 @@ function FieldAndValue(props) {
     return (
         <Typography component={'span'} >
             <Box fontWeight='fontWeightBold' display='inline'>
-                <Trans>{field}</Trans>:{" "}
+                {t(field)}:{" "}
             </Box>
             {value}
         </Typography>

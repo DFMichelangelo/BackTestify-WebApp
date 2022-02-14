@@ -1,7 +1,5 @@
 import React from "react";
-import classnames from "classnames";
 import Card from '@mui/material/Card';
-import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from "react-i18next";
 import "./style.scss"

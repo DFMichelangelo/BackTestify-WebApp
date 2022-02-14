@@ -14,10 +14,10 @@ import { UserContext } from "contexts/Providers/UserProvider";
 import Endpoints from "Endpoints";
 import { useFormik } from "formik";
 import useFetch from "hooks/useFetch";
-import _ from "lodash";
+
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import Helmet from "react-helmet";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import "./style.scss";
@@ -26,7 +26,7 @@ function Login(props) {
   let [disableButton, setDisableButton] = useState(true);
   let [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
-  let [loadingRedirect, setLoadingRedirect] = useState(false)
+  let [loadingRedirect,] = useState(false)
   const themeContext = useContext(ThemeContext);
   const userContext = useContext(UserContext);
   const history = useHistory();
@@ -37,14 +37,14 @@ function Login(props) {
     password: Yup.string().required(),
   });
 
-  const socialLogin = type => event => {
+  /*const socialLogin = type => event => {
     setLoadingRedirect(true)
     const usp = new URLSearchParams(props.location.search)
     const returnUrl = usp.get('returnUrl')
     if (!_.isEmpty(returnUrl)) localStorage.returnUrl = returnUrl
     window.location.href = process.env.REACT_APP_API_URL + "/v1/auth/login/" + type
   }
-
+*/
 
   useEffect(() => {
     isUserLogged();
@@ -89,11 +89,11 @@ function Login(props) {
         userContext.setUser(data.user);
         pushInsideApp();
       } catch (err) {
-        if (err.status == 403)
+        if (err.status === 403)
           themeContext.showErrorSnackbar({
             message: "auth.wrongEmailOrPassword",
           });
-        else if (err.status == 404)
+        else if (err.status === 404)
           themeContext.showErrorSnackbar({
             message: "auth." + err.data.message,
           });
@@ -114,7 +114,7 @@ function Login(props) {
   };
 
 
-  if (loading || loadingRedirect == true) return <RoundLoader />;
+  if (loading || loadingRedirect === true) return <RoundLoader />;
   return (
     <div id="login">
       <Helmet title={`${config.name.short} - ${t("auth.login")}`} />
@@ -127,11 +127,11 @@ function Login(props) {
           alt="Main logo"
         />
         <Typography align="center" variant="h3" gutterBottom>
-          <Trans>auth.login</Trans>
+          {t("auth.login")}
         </Typography>
         <div className="flex w-full justify-end">
           <Chip
-            label={<Trans>auth.signup</Trans>}
+            label={t("auth.signup")}
             variant="outlined"
             color="primary"
             onClick={() => {
@@ -155,9 +155,7 @@ function Login(props) {
               onBlur={loginFormik.handleBlur}
               value={loginFormik.values.email}
               helperText={
-                loginFormik.touched.email && (
-                  <Trans>{loginFormik.errors.email}</Trans>
-                )
+                loginFormik.touched.email && t(loginFormik.errors.email)
               }
             />
 
@@ -175,9 +173,8 @@ function Login(props) {
               onBlur={loginFormik.handleBlur}
               value={loginFormik.values.password}
               helperText={
-                loginFormik.touched.password && (
-                  <Trans>{loginFormik.errors.password}</Trans>
-                )
+                loginFormik.touched.password &&
+                t(loginFormik.errors.password)
               }
               InputProps={{
                 endAdornment: (
@@ -205,41 +202,42 @@ function Login(props) {
               variant="contained"
               color="primary"
             >
-              <Trans>auth.login</Trans>
+              {t("auth.login")}
             </Button>
           </div>
         </form>
+
         {/*<span className="mb-3 mt-10">
-          <Divider />
-          <span className="flex justify-center mt-1">
-            <Typography variant="body2">
-              <Trans>auth.loginWithThirdParty</Trans>
-            </Typography>
-          </span>
-        </span>
-        <div className=" flex justify-center">
-          <FacebookLoginButton
-            iconSize="15px"
-            align="center"
-            onClick={socialLogin('facebook')}
-          >
-            <Trans>auth.loginWithFacebook</Trans>
-          </FacebookLoginButton>
-          <GoogleLoginButton
-            iconSize="15px"
-            align="center"
-            onClick={socialLogin('google')}
-          >
-            <Trans>auth.loginWithGoogle</Trans>
-          </GoogleLoginButton>
+              <Divider />
+              <span className="flex justify-center mt-1">
+                <Typography variant="body2">
+                  {t("auth.loginWithThirdParty")}
+                </Typography>
+              </span>
+            </span>
+            <div className=" flex justify-center">
+              <FacebookLoginButton
+                iconSize="15px"
+                align="center"
+                onClick={socialLogin('facebook')}
+              >
+                {t("auth.loginWithFacebook")}
+              </FacebookLoginButton>
+              <GoogleLoginButton
+                iconSize="15px"
+                align="center"
+                onClick={socialLogin('google')}
+              >
+                {t("auth.loginWithGoogle")}
+              </GoogleLoginButton>
             </div>*/}
 
         <div id="auxiliaryLinks">
           <span className="mr-1">
-            <Trans>auth.forgotPassword</Trans>
+            {t("auth.forgotPassword")}
           </span>
           <Link href="/auth/restore-password" vcolor="primary">
-            <Trans>auth.restorePassword.title</Trans>
+            {t("auth.restorePassword.title")}
           </Link>
         </div>
       </div>

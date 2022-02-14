@@ -8,7 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import i18n from "i18n";
-import { Trans } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 import EnhancedTableHead from "./EnhancedTableHead";
@@ -134,6 +134,7 @@ function EnhancedTable(props) {
   const [page, setPage] = useState(0);
   const [headCells, setHeadCells] = useState(createHeadCells(props.headCells));
   const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage);
+  const { t } = useTranslation();
   const validationSchema = Yup.object({
     page: Yup.number().min(1).max(Math.ceil(rows.length / rowsPerPage)).integer().required(),
   });
@@ -157,16 +158,17 @@ function EnhancedTable(props) {
     headCells.map((element) => {
       let a = {
         ...element,
-        show: element.id == elementId ? !element.show : element.show,
+        show: element.id === elementId ? !element.show : element.show,
       };
       newHeadCells.push(a);
-      if (a.show == true) isAHeadCellVisible = true;
+      if (a.show === true) isAHeadCellVisible = true;
       /*let a = element
       if (element.id == elementId) a.show = !Boolean(element.show);
       if(element.show==true) isAHeadCellVisible=true
       newHeadCells.push(a);*/
+      return element
     });
-    if (isAHeadCellVisible == true) setHeadCells(newHeadCells);
+    if (isAHeadCellVisible === true) setHeadCells(newHeadCells);
   };
 
   const handleSearch = (e) => {
@@ -175,7 +177,7 @@ function EnhancedTable(props) {
       //per ogni riga
       let containsTheWord = false;
       Object.keys(row).forEach(function (key) {
-        if (key != "id" && key != "collapsible") {
+        if (key !== "id" && key !== "collapsible") {
           if (
             !(typeof row[key].value === "boolean") &&
             (row[key].value + (row[key]?.symbol ? row[key].symbol : ""))
@@ -271,7 +273,7 @@ function EnhancedTable(props) {
       page * rowsPerPage + rowsPerPage
     );
   };
-  { console.log(page) }
+
   return (
     <div className={classnames(classes.root, "enhancedTable")}>
       <EnhancedTableToolbar
@@ -335,11 +337,12 @@ function EnhancedTable(props) {
             })}
             {emptyRows > 0 && (
 
-              <TableRow style={{ height: (dense == true ? 25 : 55.5) * emptyRows }}>
+              <TableRow style={{ height: (dense === true ? 25 : 55.5) * emptyRows }}>
                 {!readOnly && <TableCell padding={dense ? "none" : "normal"} />}
                 {collapsible && <TableCell padding={dense ? "none" : "normal"} />}
                 {headCells.map((element, index) => {
-                  if (element.show == true) return <TableCell key={index} padding={dense ? "none" : "normal"} />;
+                  if (element.show === true) return <TableCell key={index} padding={dense ? "none" : "normal"} />;
+                  return null;
                 })}
               </TableRow>
             )}
@@ -366,7 +369,7 @@ function EnhancedTable(props) {
                 disabled={rows.length < rowsPerPage}
                 error={Boolean(formiktextFieldPage.errors.page)}
                 helperText={
-                  <Trans>{formiktextFieldPage.errors.page}</Trans>
+                  t(formiktextFieldPage.errors.page)
                 }
                 value={formiktextFieldPage.values.page}
                 onChange={(event) => {

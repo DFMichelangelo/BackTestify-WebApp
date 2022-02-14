@@ -12,7 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import classnames from "classnames";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import { makeStyles } from "@mui/styles";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   topTableCell: {
@@ -26,6 +26,7 @@ function EnhancedTableHead(props) {
   const themeContext = useContext(ThemeContext);
   const [popoverHelpText, setPopoverHelpText] = useState(null);
   const headClasses = useStyles();
+  const { t } = useTranslation();
   const {
     classes,
     onSelectAllClick,
@@ -46,7 +47,7 @@ function EnhancedTableHead(props) {
 
   const handleClick = (event, helperText) => {
     setAnchorEl(event.currentTarget);
-    setPopoverHelpText(<Trans>{helperText}</Trans>);
+    setPopoverHelpText(t(helperText));
   };
 
   const handleClose = () => {
@@ -83,12 +84,12 @@ function EnhancedTableHead(props) {
                 sortDirection={orderBy === headCell.id ? order : false}
                 classes={{ root: headClasses.topTableCell }}
                 className={classnames(
-                  (dense == true && index == 0 && readOnly == true) && "denseReadOnlyFirstItem"
+                  (dense === true && index === 0 && readOnly === true) && "denseReadOnlyFirstItem"
                 )}
               >
                 <span
                   className={classnames(
-                    index != 0 &&
+                    index !== 0 &&
                     (headCell.helpText
                       ? "headRowWithHelperText"
                       : "headRowWithoutHelperText")

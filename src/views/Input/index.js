@@ -7,16 +7,13 @@ import { useTranslation } from "react-i18next";
 import { DateTime } from "luxon";
 import MenuItem from '@mui/material/MenuItem';
 import GenericCard from "components/GenericCard";
-import Select from '@mui/material/Select';
 import RoundLoader from "components/RoundLoader";
 import Endpoints from "Endpoints";
 import InputOutlinedIcon from '@mui/icons-material/InputOutlined';
 import * as Yup from "yup";
-import Button from "@mui/material/Button";
 import InputAdornment from '@mui/material/InputAdornment';
 import DatePicker from '@mui/lab/DatePicker';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
+
 import TextField from '@mui/material/TextField';
 import Switch from '@mui/material/Switch';
 import { Typography } from "@mui/material";
@@ -31,7 +28,6 @@ function Input(props) {
   const [strategySelected, setStrategySelected] = useState(null)
   const { t } = useTranslation();
   const { fetch, loading } = useFetch();
-  const [validationTrigger, setValidationTrigger] = useState(false);
   const [typeStartDate, setTypeStartDate] = useState("date");
   const [initialValues, setInitialValues] = useState({
     initial: {
@@ -105,7 +101,7 @@ function Input(props) {
       console.log(indicators_parameters)
       //INFO - Creation of the object to send
       let payload = {
-        start_date: typeStartDate == "date" ?
+        start_date: typeStartDate === "date" ?
           values.startDate.set({ hours: 0, minutes: 0, seconds: 0 }).toFormat("d/MM/y HH:mm:ss")
           : values.endDate.set({ hours: 0, minutes: 0, seconds: 0 }).minus({ days: values.days, months: values.months, years: values.years }).toFormat("d/MM/y HH:mm:ss"),
         end_date: values.endDate.set({ hours: 0, minutes: 0, seconds: 0 }).toFormat("d/MM/y HH:mm:ss"),
@@ -153,7 +149,7 @@ function Input(props) {
               />
               <Typography variant="overline">{t("backtester.duration")}</Typography>
             </div>
-            {typeStartDate == "duration" ?
+            {typeStartDate === "duration" ?
               <div className="flex">
                 <TextField
                   error={

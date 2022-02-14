@@ -4,12 +4,12 @@ import Alert from "@mui/material/Alert";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import { Button } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 function SnackBar(props) {
   const themeContext = useContext(ThemeContext);
   const history = useHistory();
-
+  const { t } = useTranslation();
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -44,13 +44,13 @@ function SnackBar(props) {
         action={
           themeContext.snackbar.button && (
             <Button color="inherit" size="small" onClick={handleClick}>
-              <Trans>{themeContext.snackbar.button.text}</Trans>
+              {t(themeContext.snackbar.button.text)}
             </Button>
           )
         }
       >
         <div className="flex">
-          <Trans>{themeContext.snackbar.message}</Trans>
+          {t(themeContext.snackbar.message)}
         </div>
       </Alert>
     </Snackbar>

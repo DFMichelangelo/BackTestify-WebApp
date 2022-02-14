@@ -1,25 +1,20 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import config from "configuration/config";
 import Helmet from "react-helmet";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import "./style.scss";
 import { useHistory } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import * as Yup from "yup";
 import useFetch from "hooks/useFetch";
 import Endpoints from "Endpoints";
-import { ThemeContext } from "contexts/Providers/ThemeProvider";
-import { UserContext } from "contexts/Providers/UserProvider";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 
 function Activation(props) {
   let history = useHistory();
-  const themeContext = useContext(ThemeContext);
-  const userContext = useContext(UserContext);
   const { t } = useTranslation();
-  const { fetch, loading, error } = useFetch();
+  const { fetch, error } = useFetch();
   const [activationStatus, setActivationStatus] = useState("ACTIVATION");
 
   const pushInsideApp = () => {
@@ -59,28 +54,28 @@ function Activation(props) {
           alt="Main logo"
         />
         <Typography align="center" variant="h3" gutterBottom>
-          <Trans>auth.activation.title</Trans>
+          {t("auth.activation.title")}
         </Typography>
-        {activationStatus == "ACTIVATING" && (
+        {activationStatus === "ACTIVATING" && (
           <>
             <Typography align="center" variant="body1" gutterBottom>
-              <Trans>auth.activation.activatingText</Trans>
+              {t("auth.activation.activatingText")}
             </Typography>
             <div className="flex justify-center mt-5">
               <CircularProgress color="primary" size={75} />
             </div>
           </>
         )}
-        {activationStatus == "ACTIVATED" && (
+        {activationStatus === "ACTIVATED" && (
           <>
             <Typography align="center" variant="body1" gutterBottom>
-              <Trans>auth.activation.activatedText</Trans>
+              {t("auth.activation.activatedText")}
             </Typography>
             <img
               width="100px"
               className="mt-5 mb-10 self-center"
               src={process.env.PUBLIC_URL + "/img/tick.svg"}
-              alt="Confirm Image"
+              alt="Confirm"
             />
             <div className="flex justify-center mb-3">
               <Button
@@ -90,21 +85,21 @@ function Activation(props) {
                   pushInsideApp();
                 }}
               >
-                <Trans>auth.activation.goToApp</Trans>
+                {t("auth.activation.goToApp")}
               </Button>
             </div>
           </>
         )}
-        {activationStatus == "ERROR" && (
+        {activationStatus === "ERROR" && (
           <>
             <Typography align="center" variant="body1" gutterBottom>
-              <Trans>{`auth.activation.${error.data.message}`}</Trans>
+              {t(`auth.activation.${error.data.message}`)}
             </Typography>
             <img
               width="100px"
               className="mt-5 mb-10 self-center"
               src={process.env.PUBLIC_URL + "/img/cross.svg"}
-              alt="Confirm Image"
+              alt="Confirm"
             />
             <div className="flex justify-center mb-3">
               <Button
@@ -114,17 +109,17 @@ function Activation(props) {
                   loadData();
                 }}
               >
-                <Trans>auth.activation.retry</Trans>
+                {t("auth.activation.retry")}
               </Button>
             </div>
           </>
         )}
         <div id="auxiliaryLinks">
           <span className="mr-1">
-            <Trans>auth.alreadyHaveAnAccount</Trans>
+            {t("auth.alreadyHaveAnAccount")}
           </span>
           <Link href="/auth/login" vcolor="primary">
-            <Trans>auth.login</Trans>
+            {t("auth.login")}
           </Link>
         </div>
       </div>

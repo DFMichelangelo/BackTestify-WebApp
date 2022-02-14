@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import Button from "@mui/material/Button";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import "sassStyles/placeholders.scss";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 function ErrorInternalServer(props) {
   const themeContext = useContext(ThemeContext);
   const history = useHistory();
-
+  const { t } = useTranslation();
   useEffect(() => {
     themeContext.setTitle("placeholder.errorInternalServer");
   }, []);
@@ -29,7 +29,7 @@ function ErrorInternalServer(props) {
         className="error-image"
       />
       <Typography variant="h5" gutterBottom className="error-text">
-        <Trans>placeholder.errorInternalServer</Trans>
+        {t("placeholder.errorInternalServer")}
       </Typography>
       <Button
         onClick={pushInsideApp}
@@ -38,7 +38,7 @@ function ErrorInternalServer(props) {
         component={Button}
         className="error-button"
       >
-        <Trans>placeholder.backToHomepage</Trans>
+        {t("placeholder.backToHomepage")}
       </Button>
     </div>
   );

@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import CssBaseline from '@mui/material/CssBaseline';
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import config from "configuration/config";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 function MUIThemeHandler(props) {

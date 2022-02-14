@@ -6,6 +6,7 @@ import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
 import RawOnOutlinedIcon from '@mui/icons-material/RawOnOutlined';
 import ShowChartOutlinedIcon from '@mui/icons-material/ShowChartOutlined';
+import NoteAddOutlinedIcon from '@mui/icons-material/NoteAddOutlined';
 const SidebarMenu = [
   {
     type: "group",
@@ -72,6 +73,19 @@ const SidebarMenu = [
           exact: true,
         },]
       }
+    ]
+  },
+  {
+    type: "group",
+    id: "backtester.lab",
+    children: [
+      {
+        type: "item",
+        id: "backtester.createStrategy",
+        to: "/p/backtester/create_strategy",
+        icon: <NoteAddOutlinedIcon />,
+        exact: true,
+      },
     ]
   },
   /*{

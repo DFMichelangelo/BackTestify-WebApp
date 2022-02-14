@@ -1,4 +1,4 @@
-import React, { lazy, useEffect } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import ErrorNotFound from "theme/views/Placeholders/ErrorNotFound";
 import Backtester from "./Backtester";

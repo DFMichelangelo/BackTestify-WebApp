@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
-import { UserContext } from "contexts/Providers/UserProvider";
 import { Card, CardContent, CardHeader } from "@mui/material";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import TextField from "@mui/material/TextField";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
@@ -18,7 +17,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 
 function DisableAccountBox(props) {
-    const userContext = useContext(UserContext);
+    const { t } = useTranslation();
     const { fetch } = useFetch();
     const [disabledFields, setDisabledFields] = useState(true);
     const history = useHistory();
@@ -45,21 +44,21 @@ function DisableAccountBox(props) {
         },
         onSubmit: async (values) => {
             try {
-                const result = await fetch({
+                await fetch({
                     url: Endpoints.user.disableAccount,
                     data: {
                         password: values.password
                     },
                     method: "DELETE",
                 });
-                const logoutResult = await fetch({
+                await fetch({
                     url: Endpoints.auth.logout,
                     method: "DELETE"
                 })
                 history.push("/auth/login");
 
             } catch (e) {
-                if (e.status == 401 && e.data.message == "Password is wrong") themeContext.showErrorSnackbar({ message: "profile.passwordInsertedIsWrong" });
+                if (e.status === 401 && e.data.message === "Password is wrong") themeContext.showErrorSnackbar({ message: "profile.passwordInsertedIsWrong" });
             }
         },
     });
@@ -67,7 +66,7 @@ function DisableAccountBox(props) {
     return (
         <Card id="disableAccount">
             <form onSubmit={formikDisableUser.handleSubmit}>
-                <CardHeader title={<Trans>profile.disableAccount</Trans>} />
+                <CardHeader title={t("profile.disableAccount")} />
 
                 <CardContent>
                     <div className="flex flex-col">
@@ -85,9 +84,8 @@ function DisableAccountBox(props) {
                             onBlur={formikDisableUser.handleBlur}
                             value={formikDisableUser.values.password}
                             helperText={
-                                formikDisableUser.touched.password && (
-                                    <Trans>{formikDisableUser.errors.password}</Trans>
-                                )
+                                formikDisableUser.touched.password &&
+                                t(formikDisableUser.errors.password)
                             }
                             InputProps={{
                                 endAdornment: (
@@ -115,7 +113,7 @@ function DisableAccountBox(props) {
                         color="primary"
                         type="submit"
                     >
-                        <Trans>profile.disable</Trans>
+                        {t("profile.disable")}
                     </Button>
                 </CardActions>
             </form>

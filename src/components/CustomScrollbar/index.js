@@ -25,20 +25,20 @@ function CustomScrollbar(props) {
     );
   }
 
-  let renderTrackVertical = ({ style, ...props }) => (
+  /*let renderTrackVertical = ({ style, ...props }) => (
     <div {...props} style={{ ...style }} />
   );
   let renderThumbVertical = ({ style, ...props }) => (
     <div {...props} style={{ ...style, ...styleVertical }} />
-  );
+  );*/
   if (!props.vertical) {
     styleVertical.display = "none";
-    renderTrackVertical = (props) => (
+    /*renderTrackVertical = (props) => (
       <div {...props} style={{ display: "none" }} />
     );
     renderThumbVertical = (props) => (
       <div {...props} style={{ display: "none" }} />
-    );
+    );*/
   }
 
   let newProps = { ...props };

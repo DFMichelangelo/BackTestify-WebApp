@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -24,7 +24,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 function StandardDialog(props) {
   const [moreOpen, setMoreOpen] = useState(false);
   const themeContext = useContext(ThemeContext);
-
+  const { t } = useTranslation();
   useEffect(() => {
     createValidationSchema();
   }, []);
@@ -86,19 +86,19 @@ function StandardDialog(props) {
     if (type === "confirm") {
       buttons.push(
         <Button key="3" className="close" onClick={hideDialog(formikBag)}>
-          <Trans>cancel</Trans>
+          {t("cancel")}
         </Button>
       );
       buttons.push(
         <Button key="4" className="ok" type="submit">
-          <Trans>ok</Trans>
+          {t("ok")}
         </Button>
       );
     } else {
       // Success, error, ....
       buttons.push(
         <Button key="5" className="close" onClick={hideDialog(formikBag)}>
-          <Trans>close</Trans>
+          {t("close")}
         </Button>
       );
     }
@@ -132,7 +132,7 @@ function StandardDialog(props) {
       moreInfo = _.get(err, "status") + " - " + _.get(err, "statusText");
     }
     if (!message) {
-      message = <Trans>unknownError</Trans>;
+      message = t("unknownError");
       showMoreInfo = false;
       moreInfo = null;
     }

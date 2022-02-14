@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import Tooltip from "@mui/material/Tooltip";
@@ -25,6 +25,7 @@ export default function ButtonAppBar(props) {
   const classes = useStyles();
   const themeContext = useContext(ThemeContext);
   const history = useHistory();
+  const { t } = useTranslation();
   useEffect(() => {
     if (props.title) themeContext.setTitle(props.title);
   }, []);
@@ -43,9 +44,9 @@ export default function ButtonAppBar(props) {
             alt="Main logo"
           />
           <Typography variant="h6" className={classes.title}>
-            <Trans>{props.title}</Trans>
+            {t(props.title)}
           </Typography>
-          <Tooltip title={<Trans>publicAppBar.goToApp</Trans>}>
+          <Tooltip title={t("publicAppBar.goToApp")}>
             <IconButton
               onClick={() => {
                 history.push("/auth/login");

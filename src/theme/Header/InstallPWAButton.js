@@ -1,15 +1,13 @@
 import React, { useState, useContext } from "react";
 import { PWAInstalledChecker, installApp } from "auxiliaries/PWA";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
-import { Trans } from "react-i18next";
-import Button from "@mui/material/Button";
-import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import GetAppOutlinedIcon from "@mui/icons-material/GetAppOutlined";
 function InstallPWAButton(props) {
   let [showButton, setShowButton] = useState(true);
-
+  const { t } = useTranslation();
   const themeContext = useContext(ThemeContext);
 
   if (showButton && !PWAInstalledChecker() && themeContext.installEvent) {
@@ -31,7 +29,7 @@ function InstallPWAButton(props) {
               fontSize="small"
             />
             <Typography color="textSecondary" variant="body2" gutterBottom>
-              <Trans>installApp</Trans>
+              {t("installApp")}
             </Typography>
           </span>
         </MenuItem>

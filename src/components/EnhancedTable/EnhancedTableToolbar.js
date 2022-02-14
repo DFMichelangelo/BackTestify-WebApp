@@ -7,7 +7,7 @@ import { makeStyles } from "@mui/styles";
 import tinycolor from "tinycolor2";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import TextField from "@mui/material/TextField";
 import Menu from "@mui/material/Menu";
@@ -56,7 +56,7 @@ const EnhancedTableToolbar = (props) => {
   let setMinHeight = !(showFilters || showSearchbar || readOnly);
   const classes = useToolbarStyles(setMinHeight);
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const { t } = useTranslation();
   const handleFilterClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -79,11 +79,9 @@ const EnhancedTableToolbar = (props) => {
           component="div"
         >
           {numSelected} {" "}
-          {numSelected === 1 ? (
-            <Trans>enhancedTable.elementSelected</Trans>
-          ) : (
-            <Trans>enhancedTable.elementsSelected</Trans>
-          )}
+          {numSelected === 1 ?
+            t("enhancedTable.elementSelected") :
+            t("enhancedTable.elementsSelected")}
         </Typography>
       ) : (
         <div className="flex w-full justify-between">
@@ -103,13 +101,13 @@ const EnhancedTableToolbar = (props) => {
                 onChange={(e) => {
                   handleSearch(e);
                 }}
-                label={<Trans>enhancedTable.search</Trans>}
+                label={t("enhancedTable.search")}
               />
             )}
             {showFilters && (
               <>
                 <div className="self-center">
-                  <Tooltip title={<Trans>enhancedTable.filtersList</Trans>}>
+                  <Tooltip title={t("enhancedTable.filtersList")}>
                     <IconButton onClick={handleFilterClick} aria-label="filter list">
                       <FilterListIcon fontSize="small" />
                     </IconButton>
@@ -146,13 +144,13 @@ const EnhancedTableToolbar = (props) => {
 
       <div className="flex overflow-auto">
         {buttons.map(button => {
-          let icon = <Tooltip key={button.tooltip + "tt"} title={<Trans>{button.tooltip}</Trans>}>
+          let icon = <Tooltip key={button.tooltip + "tt"} title={t(button.tooltip)}>
             <span>
               <IconButton
                 key={button.tooltip + "ic"}
                 onClick={() => {
                   button.onClick(selected.length > 1 ? selected : selected[0])
-                  if (button.deselectCheckedOnClick == true) setSelected([])
+                  if (button.deselectCheckedOnClick === true) setSelected([])
                 }}
                 disabled={button.disabled && selected.length > 0 ? button.disabled(selected.length > 1 ? selected : selected[0]) : false}
               >
@@ -160,7 +158,8 @@ const EnhancedTableToolbar = (props) => {
               </IconButton>
             </span>
           </Tooltip>
-          if ((button.activateOnSingleSelection == true && numSelected === 1) || (button.activateOnMultipleSelection == true && numSelected > 1)) return icon
+          if ((button.activateOnSingleSelection === true && numSelected === 1) || (button.activateOnMultipleSelection === true && numSelected > 1)) return icon
+          return null
         })
         }
       </div>

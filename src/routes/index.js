@@ -1,4 +1,4 @@
-import React, { lazy, useEffect, useContext, useState, useCallback } from "react";
+import React, { lazy, useEffect, useContext, useCallback } from "react";
 import { Route, Switch } from "react-router-dom";
 import RoutingApp from "./App";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
@@ -45,7 +45,7 @@ function App(props) {
       userContext.setUser(data);
       //setLoading(false);
     } catch (e) {
-      if (e?.status == 404) {
+      if (e?.status === 404) {
         //history.push("auth/login?returnUrl=" + history.location.pathname);
         //themeContext.showWarningSnackbar({ message: "loginAgain" })
       }

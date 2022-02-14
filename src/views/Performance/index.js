@@ -1,11 +1,7 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
-import useFetch from "hooks/useFetch";
-import { useTranslation } from "react-i18next";
-import RoundLoader from "components/RoundLoader";
 import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import MetricCard from "components/MetricCard";
-import GenericCard from "components/GenericCard";
 import OverPeriodAnnualizedCard from "components/OverPeriodAnnualizedCard";
 import { LineChart, Line, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
 const data = [{ name: 'Page A', uv: 800, pv: 400, amt: 1400 }, { name: 'Page A', uv: 400, pv: 2400, amt: 2400 }, { name: 'Page A', uv: 700, pv: 400, amt: 4400 }];
@@ -13,7 +9,6 @@ const data = [{ name: 'Page A', uv: 800, pv: 400, amt: 1400 }, { name: 'Page A',
 
 function Performance(props) {
     const themeContext = useContext(ThemeContext);
-    const { t } = useTranslation();
 
     useEffect(() => {
         themeContext.setTitle("backtester.performance", <SpeedOutlinedIcon />);

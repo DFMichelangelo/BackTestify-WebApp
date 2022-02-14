@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Card, CardContent, CardHeader, Button } from "@mui/material";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import "./style.scss";
 import CardActions from "@mui/material/CardActions";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
@@ -11,13 +11,13 @@ function ChangePasswordBox(props) {
     const themeContext = useContext(ThemeContext);
     const userContext = useContext(UserContext);
     const { fetch } = useFetch();
-
+    const { t } = useTranslation();
     return (
         <Card id="doNotRememberPasswordBox" >
-            <CardHeader title={<Trans>profile.dontRememberPassword</Trans>} />
+            <CardHeader title={t("profile.dontRememberPassword")} />
             <CardContent className="flex flex-col">
                 <div>
-                    <Trans>profile.dontRememberPasswordText</Trans>
+                    {t("profile.dontRememberPasswordText")}
                 </div>
             </CardContent>
             <CardActions>
@@ -36,7 +36,7 @@ function ChangePasswordBox(props) {
                         }
                     }}
                 >
-                    <Trans>profile.remindPassword</Trans>
+                    {t("profile.remindPassword")}
                 </Button>
             </CardActions>
         </Card>

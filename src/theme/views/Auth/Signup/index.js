@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
 import config from "configuration/config";
 import Helmet from "react-helmet";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import "./style.scss";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -103,7 +103,7 @@ function Signup(props) {
     event.preventDefault();
   };
 
-  if (loading || loadingRedirect == true) return <RoundLoader />;
+  if (loading || loadingRedirect === true) return <RoundLoader />;
   return (
     <div id="signup">
       <Helmet title={`${config.name.short} - ${t("auth.signup")}`} />
@@ -116,11 +116,11 @@ function Signup(props) {
           alt="Main logo"
         />
         <Typography align="center" variant="h3" gutterBottom>
-          <Trans>auth.signup</Trans>
+          {t("auth.signup")}
         </Typography>
         <div className="flex w-full justify-end">
           <Chip
-            label={<Trans>auth.login</Trans>}
+            label={t("auth.login")}
             variant="outlined"
             color="primary"
             onClick={() => {
@@ -147,9 +147,9 @@ function Signup(props) {
                   onBlur={signupFormik.handleBlur}
                   value={signupFormik.values.email}
                   helperText={
-                    signupFormik.touched.email && (
-                      <Trans>{signupFormik.errors.email}</Trans>
-                    )
+                    signupFormik.touched.email &&
+                    t("signupFormik.errors.email")
+
                   }
                 />
 
@@ -167,9 +167,9 @@ function Signup(props) {
                   onBlur={signupFormik.handleBlur}
                   value={signupFormik.values.password}
                   helperText={
-                    signupFormik.touched.password && (
-                      <Trans>{signupFormik.errors.password}</Trans>
-                    )
+                    signupFormik.touched.password &&
+                    t("signupFormik.errors.password")
+
                   }
                   InputProps={{
                     endAdornment: (
@@ -197,7 +197,7 @@ function Signup(props) {
                   variant="contained"
                   color="primary"
                 >
-                  <Trans>auth.signup</Trans>
+                  {t("auth.signup")}
                 </Button>
               </div>
             </form>
@@ -206,7 +206,7 @@ function Signup(props) {
               <Divider />
               <span className="flex justify-center mt-1">
                 <Typography variant="body2">
-                  <Trans>auth.loginWithThirdParty</Trans>
+                  {t("auth.loginWithThirdParty")}
                 </Typography>
               </span>
             </span>
@@ -216,14 +216,14 @@ function Signup(props) {
                 align="center"
                 onClick={socialLogin('facebook')}
               >
-                <Trans>auth.loginWithFacebook</Trans>
+                {t("auth.loginWithFacebook")}
               </FacebookLoginButton>
               <GoogleLoginButton
                 iconSize="15px"
                 align="center"
                 onClick={socialLogin('google')}
               >
-                <Trans>auth.loginWithGoogle</Trans>
+                {t("auth.loginWithGoogle")}
               </GoogleLoginButton>
             </div>
           </>
@@ -233,7 +233,7 @@ function Signup(props) {
             <div className="flex flex-col items-center mt-5">
               <div className="w-64">
                 <Typography align="center" variant="body2">
-                  <Trans>auth.signedupSuccessfully</Trans>
+                  {t("auth.signedupSuccessfully")}
                 </Typography>
               </div>
               <div>
@@ -241,7 +241,7 @@ function Signup(props) {
                   width="100px"
                   className="mt-5 self-center"
                   src={process.env.PUBLIC_URL + "/img/tick.svg"}
-                  alt="Confirm Image"
+                  alt="Confirm"
                 />
               </div>
             </div>
@@ -249,10 +249,10 @@ function Signup(props) {
         )}
         <div id="auxiliaryLinks">
           <span className="mr-1">
-            <Trans>auth.forgotPassword</Trans>
+            {t("auth.forgotPassword")}
           </span>
           <Link href="/auth/restore-password" vcolor="primary">
-            <Trans>auth.restorePassword.title</Trans>
+            {t("auth.restorePassword.title")}
           </Link>
         </div>
       </div>

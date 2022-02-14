@@ -7,7 +7,6 @@ import React, {
   Suspense,
 } from "react";
 import { Route, Switch } from "react-router-dom";
-import Theme from "theme";
 import Account from "./Account";
 import { UserContext } from "contexts/Providers/UserProvider";
 import Endpoints from "Endpoints";
@@ -42,7 +41,7 @@ function App(props) {
       userContext.setUser(data);
       setLoading(false);
     } catch (e) {
-      if (e?.status == 404) {
+      if (e?.status === 404) {
         history.push("auth/login?returnUrl=" + history.location.pathname);
         //themeContext.showWarningSnackbar({ message: "loginAgain" })
       }

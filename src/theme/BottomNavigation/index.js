@@ -4,7 +4,7 @@ import _ from "lodash";
 import BottombarMenu from "configuration/BottombarMenu";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useHistory } from "react-router-dom";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import "./style.scss";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import config from "configuration/config";
@@ -45,7 +45,7 @@ function BottomNavigationCustomized(props) {
   const themeContext = useContext(ThemeContext);
   const matches = useMediaQuery("(max-width:" + config.mobileScreenWidth + ")");
   const classes = useStyles({ matches, sidebarOpen: themeContext.sidebarOpen });
-
+  const { t } = useTranslation();
   if (!config.theme.bottomNavigation.showOnDesktop && !matches) return null;
 
   const goTo = (url) => (event) => history.push(url);
@@ -80,7 +80,7 @@ function BottomNavigationCustomized(props) {
         return (
           <BottomNavigationAction
             key={index}
-            label={<Trans>{item.id}</Trans>}
+            label={t(item.id)}
             icon={item.icon}
             onClick={goTo(item.to)}
             classes={{ selected: classes.bottomNavigationActive }}

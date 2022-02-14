@@ -5,7 +5,7 @@ import classnames from "classnames";
 import NavBadge from "./NavBadge";
 import PropTypes from "prop-types";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import Typography from "@mui/material/Typography";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import config from "configuration/config";
@@ -31,6 +31,7 @@ function NavVerticalItem(props) {
   const matches = useMediaQuery("(max-width:" + config.mobileScreenWidth + ")");
   const history = useHistory();
   const classes = useStyles({ matches });
+  const { t } = useTranslation();
 
   const navBarCloseMobile = () => {
     themeContext.setSidebarOpen(false);
@@ -74,7 +75,7 @@ function NavVerticalItem(props) {
       <ListItemText
         primary={
           <Typography className="activeBolder" variant="body2">
-            <Trans>{item.id}</Trans>
+            {t(item.id)}
           </Typography>
         }
         classes={{ primary: "text-14" }}

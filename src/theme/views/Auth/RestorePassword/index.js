@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import config from "configuration/config";
 import Helmet from "react-helmet";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import "./style.scss";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -17,7 +17,7 @@ import Link from "@mui/material/Link";
 function RestorePassword(props) {
   let [disableButton, setDisableButton] = useState(true);
   const themeContext = useContext(ThemeContext);
-  const { fetch, loading, error, data } = useFetch();
+  const { fetch } = useFetch();
   const { t } = useTranslation();
   const [restorePasswordStatus, setRestorePasswordStatus] = useState(
     "INSERTING_EMAIL"
@@ -32,14 +32,14 @@ function RestorePassword(props) {
     },
     onSubmit: async (values, formikBag) => {
       try {
-        let data = await fetch({
+        await fetch({
           url: Endpoints.auth.lostPasswordEmail,
           data: values,
           method: "POST",
         });
         setRestorePasswordStatus("EMAIL_SENT");
       } catch (err) {
-        if (err?.status == 404)
+        if (err?.status === 404)
           themeContext.showErrorSnackbar({
             message: "auth." + err.data.message,
           });
@@ -67,10 +67,10 @@ function RestorePassword(props) {
           alt="Main logo"
         />
         <Typography align="center" variant="h3" gutterBottom>
-          <Trans>auth.restorePassword.title</Trans>
+          {t("auth.restorePassword.title")}
         </Typography>
 
-        {restorePasswordStatus == "INSERTING_EMAIL" && (
+        {restorePasswordStatus === "INSERTING_EMAIL" && (
           <form onSubmit={restorePasswordFormik.handleSubmit}>
             <div id="formInputs">
               <TextField
@@ -87,9 +87,8 @@ function RestorePassword(props) {
                 onBlur={restorePasswordFormik.handleBlur}
                 value={restorePasswordFormik.values.email}
                 helperText={
-                  restorePasswordFormik.touched.email && (
-                    <Trans>{restorePasswordFormik.errors.email}</Trans>
-                  )
+                  restorePasswordFormik.touched.email &&
+                  t(restorePasswordFormik.errors.email)
                 }
               />
             </div>
@@ -101,30 +100,30 @@ function RestorePassword(props) {
                 variant="contained"
                 color="primary"
               >
-                <Trans>auth.restorePassword.title</Trans>
+                {t("auth.restorePassword.title")}
               </Button>
             </div>
           </form>
         )}
-        {restorePasswordStatus == "EMAIL_SENT" && (
+        {restorePasswordStatus === "EMAIL_SENT" && (
           <>
             <Typography align="center" variant="body1" gutterBottom>
-              <Trans>auth.restorePassword.resetPasswordEmailSent</Trans>
+              {t("auth.restorePassword.resetPasswordEmailSent")}
             </Typography>
             <img
               width="100px"
               className="mt-5 mb-10 self-center"
               src={process.env.PUBLIC_URL + "/img/tick.svg"}
-              alt="Confirm Image"
+              alt="Confirm"
             />
           </>
         )}
         <div id="auxiliaryLinks">
           <span className="mr-1">
-            <Trans>auth.alreadyHaveAnAccount</Trans>
+            {t("auth.alreadyHaveAnAccount")}
           </span>
           <Link href="/auth/login" vcolor="primary">
-            <Trans>auth.login</Trans>
+            {t("auth.login")}
           </Link>
         </div>
       </div>

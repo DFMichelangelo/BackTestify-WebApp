@@ -4,7 +4,7 @@ import NavVerticalItem from "./NavVerticalItem";
 import { ListSubheader } from "@mui/material";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import Typography from "@mui/material/Typography";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import { makeStyles } from "@mui/styles";
@@ -21,6 +21,7 @@ function NavVerticalGroup(props) {
   const { item, nestedLevel } = props;
   const classes = useStyles();
   const themeContext = useContext(ThemeContext);
+  const { t } = useTranslation();
   let paddingValue = nestedLevel * 3;
 
   const listItemPadding =
@@ -32,7 +33,7 @@ function NavVerticalGroup(props) {
           <span className={classnames(classes.uppercaseText)}>
             <Typography variant="body2">
               <span className={classNames(listItemPadding)}>
-                <Trans>{item.id}</Trans>
+                {t(item.id)}
               </span>
             </Typography>
           </span>

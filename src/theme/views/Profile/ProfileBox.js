@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "contexts/Providers/UserProvider";
 import { Card, CardContent, CardHeader } from "@mui/material";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import TextField from "@mui/material/TextField";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
@@ -14,6 +14,7 @@ function ProfileBox(props) {
   const userContext = useContext(UserContext);
   const { fetch } = useFetch();
   const [disabledFields, setDisabledFields] = useState(true);
+  const { t } = useTranslation();
   const formikProfile = useFormik({
     initialValues: {
       firstname: userContext.user.firstname,
@@ -39,14 +40,14 @@ function ProfileBox(props) {
   return (
     <Card id="personalInformationBox">
       <form onSubmit={formikProfile.handleSubmit}>
-        <CardHeader title={<Trans>profile.personalInformation</Trans>} />
+        <CardHeader title={t("profile.personalInformation")} />
 
         <CardContent>
           <div id="personalInformationData" className="flex flex-col">
             <TextField
               disabled={disabledFields}
               id="firstname"
-              label={<Trans>profile.firstname</Trans>}
+              label={t("profile.firstname")}
               variant="filled"
               onChange={formikProfile.handleChange}
               value={formikProfile.values?.firstname}
@@ -55,7 +56,7 @@ function ProfileBox(props) {
             <TextField
               disabled={disabledFields}
               id="lastname"
-              label={<Trans>profile.lastname</Trans>}
+              label={t("profile.lastname")}
               variant="filled"
               onChange={formikProfile.handleChange}
               value={formikProfile.values?.lastname}
@@ -79,7 +80,7 @@ function ProfileBox(props) {
                 setDisabledFields(false);
               }}
             >
-              <Trans>profile.changePersonalInformation</Trans>
+              {t("profile.changePersonalInformation")}
             </Button>
           )}
 
@@ -94,7 +95,7 @@ function ProfileBox(props) {
                   setDisabledFields(true);
                 }}
               >
-                <Trans>save</Trans>
+                {t("save")}
               </Button>
               <Button
                 color="primary"
@@ -103,7 +104,7 @@ function ProfileBox(props) {
                   setDisabledFields(true);
                 }}
               >
-                <Trans>profile.cancel</Trans>
+                {t("profile.cancel")}
               </Button>
             </span>
           )}

@@ -1,15 +1,13 @@
 import React, { useContext, useState } from "react";
-import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import { UserContext } from "contexts/Providers/UserProvider";
 import { Card, CardContent, CardHeader, Button, CircularProgress } from "@mui/material";
-import PhotoCameraOutlinedIcon from "@mui/icons-material/PhotoCameraOutlined";
 import IconButton from "@mui/material/IconButton";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import Typography from "@mui/material/Typography";
 import "./style.scss";
 import { makeStyles } from "@mui/styles";
 import Avatar from "@mui/material/Avatar";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import useFetch from "hooks/useFetch";
 import Endpoints from "Endpoints";
 
@@ -28,12 +26,13 @@ function UploadProfileImageBox(props) {
   const userContext = useContext(UserContext);
   const classes = useStyles();
   const { fetch } = useFetch();
+  const { t } = useTranslation();
 
   const handleUploadClick = (event) => {
     if (event?.target?.files[0]) {
       let file = event.target.files[0];
       const reader = new FileReader();
-      let url = reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
 
       reader.onloadend = async function (e) {
         setUploaderLoader(true)
@@ -46,13 +45,13 @@ function UploadProfileImageBox(props) {
         userContext.setUser(result);
         setUploaderLoader(false)
 
-      }.bind(this);
+      };
     }
 
   };
   return (
     <Card id="UploadProfileImageBox">
-      <CardHeader title={<Trans>profile.profileImage</Trans>} />
+      <CardHeader title={t("profile.profileImage")} />
       <CardContent>
         <div className="flex flex-col items-center">
           <div className="flex relative">
@@ -97,7 +96,7 @@ function UploadProfileImageBox(props) {
                   event.target.value = null;
                 }}
               />
-              <Trans>profile.upload</Trans>
+              {t("profile.upload")}
             </Button>
             <div className="self-center mt-2">
               {uploaderLoader && <CircularProgress />}
@@ -105,7 +104,7 @@ function UploadProfileImageBox(props) {
           </div>
           <div className="mt-2 mb-2 flex justify-center">
             <Typography color="textSecondary" variant="body1">
-              <Trans>profile.uploadImageText</Trans>
+              {t("profile.uploadImageText")}
             </Typography>
           </div>
         </div>

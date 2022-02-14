@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@mui/styles";
 import Avatar from "@mui/material/Avatar";
 import { UserContext } from "contexts/Providers/UserProvider";
@@ -6,12 +6,10 @@ import Typography from "@mui/material/Typography";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import useFetch from "hooks/useFetch";
 import Endpoints from "Endpoints";
-import _ from "lodash";
-import Button from "@mui/material/Button";
-import { Card, CardContent, CardActions, CardHeader } from "@mui/material";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -29,14 +27,14 @@ function TopSide(props) {
   const userContext = useContext(UserContext);
   const themeContext = useContext(ThemeContext);
   const { fetch } = useFetch();
-
+  const { t } = useTranslation();
   const changeTheme = async () => {
     themeContext.toggleMuiType();
     try {
       await fetch({
         url: Endpoints.user.editProfile,
         data: {
-          theme: themeContext.muiType == "light" ? "dark" : "light",
+          theme: themeContext.muiType === "light" ? "dark" : "light",
           //theme: "dark"
         },
         method: "PUT",
@@ -79,11 +77,11 @@ function TopSide(props) {
           control={
             <Switch
               color="primary"
-              checked={themeContext.muiType == "dark"}
+              checked={themeContext.muiType === "dark"}
               onChange={changeTheme}
             />
           }
-          label={<Trans>theme.{themeContext.muiType}Theme</Trans>}
+          label={t(`theme.${themeContext.muiType}Theme`)}
         />
       </div>
     </div>

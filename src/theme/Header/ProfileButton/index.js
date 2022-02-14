@@ -19,7 +19,7 @@ import { UserContext } from "contexts/Providers/UserProvider";
 import Endpoints from "Endpoints";
 import useFetch from "hooks/useFetch";
 import React, { useContext, useState } from "react";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import Feedback from "theme/Header/Feedback";
 import InstallPWAButton from "theme/Header/InstallPWAButton";
@@ -31,12 +31,13 @@ function ProfileButton(props) {
   const history = useHistory();
   const matches = useMediaQuery("(max-width:" + config.mobileScreenWidth + ")");
   const { fetch } = useFetch();
+  const { t } = useTranslation();
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
   return (
     <div className="profileButton flex-grow flex justify-end">
-      <Tooltip title={<Trans>profileButton.profile</Trans>}>
+      <Tooltip title={t("profileButton.profile")}>
         <Button
           color="inherit"
           id="avatarButton"
@@ -52,9 +53,8 @@ function ProfileButton(props) {
           {!matches && (
             <span className="ml-2">
               <Typography variant="body2">
-                {userContext?.user?.firstname || (
-                  <Trans>profileButton.welcome</Trans>
-                )}
+                {userContext?.user?.firstname || t("profileButton.welcome")
+                }
               </Typography>
             </span>
           )}
@@ -97,7 +97,7 @@ function ProfileButton(props) {
               fontSize="small"
             />
             <Typography color="textSecondary" variant="body2">
-              <Trans>profileButton.profile</Trans>
+              {t("profileButton.profile")}
             </Typography>
           </span>
         </MenuItem>
@@ -117,7 +117,7 @@ function ProfileButton(props) {
               />
             )}
             <Typography color="textSecondary" variant="body2">
-              <Trans>profileButton.changeTheme</Trans>
+              {t("profileButton.changeTheme")}
             </Typography>
           </span>
         </MenuItem>
@@ -145,7 +145,7 @@ function ProfileButton(props) {
               fontSize="small"
             />
             <Typography color="textSecondary" variant="body2">
-              <Trans>auth.logout</Trans>
+              {t("auth.logout")}
             </Typography>
           </span>
         </MenuItem>}
@@ -161,13 +161,13 @@ function ProfileButton(props) {
               fontSize="small"
             />
             <Typography color="textSecondary" variant="body2">
-              <Trans>auth.login</Trans>
+              {t("auth.login")}
             </Typography>
           </span>
         </MenuItem>}
 
       </Menu>
-    </div>
+    </div >
   );
 }
 export default ProfileButton;

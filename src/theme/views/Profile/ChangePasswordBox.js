@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Card, CardContent, CardHeader, Button } from "@mui/material";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import "./style.scss";
 import CardActions from "@mui/material/CardActions";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
@@ -18,14 +18,17 @@ import TextField from "@mui/material/TextField";
 import { useFormik } from "formik";
 import useFetch from "hooks/useFetch";
 import Endpoints from "Endpoints";
+
+
 function ChangePasswordBox(props) {
+  const { t } = useTranslation();
   const themeContext = useContext(ThemeContext);
   const [openChangePasswordDialog, setOpenChangePasswordDialog] = useState(
     false
   );
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [disableChangeButton, setDisableChangeButton] = useState(true);
-  const { fetch, error } = useFetch();
+  const { fetch } = useFetch();
 
   const validationSchema = Yup.object({
     currentPassword: Yup.string().required(),
@@ -50,12 +53,12 @@ function ChangePasswordBox(props) {
         handleClose();
         formikBag.resetForm();
         themeContext.showSuccessSnackbar({
-          message: <Trans>profile.passwordChanged</Trans>,
+          message: t("profile.passwordChanged"),
         });
       } catch (e) {
         if (e?.status < 500)
           themeContext.showErrorSnackbar({
-            message: <Trans>profile.passwordIsWrong</Trans>,
+            message: t("profile.passwordIsWrong"),
           });
       }
     },
@@ -78,18 +81,18 @@ function ChangePasswordBox(props) {
         className="p-5"
       >
         <DialogTitle id="form-dialog-title">
-          <Trans>profile.changePassword</Trans>
+          {t("profile.changePassword")}
         </DialogTitle>
         <form onSubmit={changePasswordFormik.handleSubmit}>
           <DialogContent>
             <DialogContentText>
-              <Trans>profile.changePasswordText</Trans>
+              {t("profile.changePasswordText")}
             </DialogContentText>
 
             <TextField
               variant="outlined"
               id="currentPassword"
-              label={<Trans>profile.currentPassword</Trans>}
+              label={t("profile.currentPassword")}
               type={passwordVisible ? "text" : "password"}
               value={changePasswordFormik.values.currentPassword}
               onBlur={changePasswordFormik.handleBlur}
@@ -99,9 +102,8 @@ function ChangePasswordBox(props) {
                 Boolean(changePasswordFormik.errors.currentPassword)
               }
               helperText={
-                changePasswordFormik.touched.currentPassword && (
-                  <Trans>{changePasswordFormik.errors.currentPassword}</Trans>
-                )
+                changePasswordFormik.touched.currentPassword &&
+                t(changePasswordFormik.errors.currentPassword)
               }
               fullWidth
               InputProps={{
@@ -125,7 +127,7 @@ function ChangePasswordBox(props) {
             <TextField
               variant="outlined"
               id="password"
-              label={<Trans>profile.newPassword</Trans>}
+              label={t("profile.newPassword")}
               type={passwordVisible ? "text" : "password"}
               fullWidth
               onBlur={changePasswordFormik.handleBlur}
@@ -135,9 +137,8 @@ function ChangePasswordBox(props) {
                 Boolean(changePasswordFormik.errors.password)
               }
               helperText={
-                changePasswordFormik.touched.password && (
-                  <Trans>{changePasswordFormik.errors.password}</Trans>
-                )
+                changePasswordFormik.touched.password &&
+                t(changePasswordFormik.errors.password)
               }
               onChange={changePasswordFormik.handleChange}
               InputProps={{
@@ -161,7 +162,7 @@ function ChangePasswordBox(props) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
-              <Trans>profile.back</Trans>
+              {t("profile.back")}
             </Button>
             <Button
               type="submit"
@@ -169,17 +170,17 @@ function ChangePasswordBox(props) {
               color="primary"
               disabled={disableChangeButton}
             >
-              <Trans>profile.change</Trans>
+              {t("profile.change")}
             </Button>
           </DialogActions>
         </form>
       </Dialog>
 
       <Card id="changePasswordBox">
-        <CardHeader title={<Trans>profile.changePassword</Trans>} />
+        <CardHeader title={t("profile.changePassword")} />
         <CardContent className="flex flex-col">
           <div>
-            <Trans>profile.changePasswordText</Trans>
+            {t("profile.changePasswordText")}
           </div>
         </CardContent>
         <CardActions>
@@ -189,7 +190,7 @@ function ChangePasswordBox(props) {
               setOpenChangePasswordDialog(true);
             }}
           >
-            <Trans>profile.changeYourPassword</Trans>
+            {t("profile.changeYourPassword")}
           </Button>
         </CardActions>
       </Card>

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
@@ -16,16 +16,15 @@ import Table from "@mui/material/Table";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@mui/styles";
 import classnames from "classnames";
-import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import _ from "lodash"
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 const useRowStyles = makeStyles((theme) => ({
   tableCell: {
     borderTop: "unset",
     borderBottom: "unset",
   },
   rowColor: {
-    backgroundColor: theme.palette.mode == "light" ? "#FBFBFB" : "#666666",
+    backgroundColor: theme.palette.mode === "light" ? "#FBFBFB" : "#666666",
   },
   root: {
     "& > *": {
@@ -114,10 +113,9 @@ function Row(props) {
     dense
   } = props;
 
-  const themeContext = useContext(ThemeContext);
   const [open, setOpen] = useState(false);
   const rowClasses = useRowStyles({ showVerticalBorders });
-
+  const { t } = useTranslation();
   return (
     <>
       <TableRow
@@ -126,7 +124,7 @@ function Row(props) {
         }}
         className={classnames(
           collapsible && rowClasses.root,
-          index % 2 == 0 && rowClasses.rowColor
+          index % 2 === 0 && rowClasses.rowColor
         )}
         hover
         role="checkbox"
@@ -168,11 +166,11 @@ function Row(props) {
               <TableCell
                 padding={dense ? "none" : "normal"}
                 key={row[element.id].value + index + element.id}
-                align={index == 0 ? "inherit" : "center"}
+                align={index === 0 ? "inherit" : "center"}
                 className={classnames(
-                  row[element.id].link && index != 0 && "iconPadding",
-                  (dense == true && index == 0 && readOnly == true) && "denseReadOnlyFirstItem",
-                  (dense == true && index == headCells.length - 1 && readOnly == true) && "denseReadOnlyLastItem"
+                  row[element.id].link && index !== 0 && "iconPadding",
+                  (dense === true && index === 0 && readOnly === true) && "denseReadOnlyFirstItem",
+                  (dense === true && index === headCells.length - 1 && readOnly === true) && "denseReadOnlyLastItem"
                 )}
               >
                 {createTableCell(row[element.id])}
@@ -182,7 +180,7 @@ function Row(props) {
         })}
       </TableRow>
 
-      {(collapsible && collapsibleType == "INFORMATION") && (
+      {(collapsible && collapsibleType === "INFORMATION") && (
         <TableRow>
           <TableCell
             style={{ paddingTop: 0, paddingBottom: 0 }}
@@ -191,16 +189,16 @@ function Row(props) {
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box margin={1}>
                 <Typography variant="h6" gutterBottom>
-                  <span className="font-semibold"><Trans>{collapsibleTitle}</Trans></span>
+                  <span className="font-semibold">{t(collapsibleTitle)}</span>
                 </Typography>
                 {collapsibleHeadIconsAndDescription.map(element => {
-                  if (_.isEmpty(row.collapsible[element.id].value) && _.isEmpty(row.collapsible[element.id].component)) return
-                  return (
+                  if (_.isEmpty(row.collapsible[element.id].value) && _.isEmpty(row.collapsible[element.id].component)) return null;
+                  else return (
                     <div key={element.id} className="mb-3">
                       <div className="flex mb-1">
                         {element.icon}
                         <Typography variant="body1">
-                          <Trans>{element.label}</Trans>
+                          {t(element.label)}
                         </Typography>
                       </div>
 
@@ -208,7 +206,6 @@ function Row(props) {
 
                     </div>
                   )
-
                 })}
               </Box>
             </Collapse>
@@ -216,7 +213,7 @@ function Row(props) {
         </TableRow>
       )}
 
-      {(collapsible && collapsibleType == "TABLE") && (
+      {(collapsible && collapsibleType === "TABLE") && (
         <TableRow>
           <TableCell
             style={{ paddingTop: 0, paddingBottom: 0 }}
@@ -225,7 +222,7 @@ function Row(props) {
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box margin={1}>
                 <Typography variant="h6" gutterBottom>
-                  <span className="font-semibold"><Trans>{collapsibleTitle}</Trans></span>
+                  <span className="font-semibold">{t(collapsibleTitle)}</span>
                 </Typography>
                 <span className="collapsibleTable">
                   <Table size="small">
@@ -235,10 +232,10 @@ function Row(props) {
                           return (
                             <TableCell
                               key={index}
-                              align={index == 0 ? "left" : "center"}
+                              align={index === 0 ? "left" : "center"}
                             >
                               <span className="font-semibold">
-                                <Trans>{element.label}</Trans>
+                                {t(element.label)}
                               </span>
                             </TableCell>
                           );
@@ -266,7 +263,7 @@ function Row(props) {
                                           collapsibleHeadcellIndex
                                         }
                                         align={
-                                          collapsibleHeadcellIndex == 0
+                                          collapsibleHeadcellIndex === 0
                                             ? "left"
                                             : "center"
                                         }

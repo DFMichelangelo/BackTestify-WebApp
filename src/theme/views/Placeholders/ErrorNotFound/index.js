@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import Button from "@mui/material/Button";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import "sassStyles/placeholders.scss";
@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 
 function ErrorNotFound(props) {
   const themeContext = useContext(ThemeContext);
+  const { t } = useTranslation();
   useEffect(() => {
     themeContext.setTitle("placeholder.notFound");
   }, []);
@@ -21,7 +22,7 @@ function ErrorNotFound(props) {
         className="error-image"
       />
       <Typography variant="h5" gutterBottom className="error-text">
-        <Trans>placeholder.cannotFindPage</Trans>
+        {t("placeholder.cannotFindPage")}
       </Typography>
       <Link
         to="/"
@@ -30,7 +31,7 @@ function ErrorNotFound(props) {
         component={Button}
         className="error-button"
       >
-        <Trans>placeholder.backToHomepage</Trans>
+        {t("placeholder.backToHomepage")}
       </Link>
     </div>
   );

@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import config from "configuration/config";
 import Helmet from "react-helmet";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import "./style.scss";
 import { useHistory } from "react-router-dom";
 import Typography from "@mui/material/Typography";
@@ -21,7 +21,7 @@ function RestorePassword(props) {
   let history = useHistory();
   const themeContext = useContext(ThemeContext);
   const { t } = useTranslation();
-  const { fetch, loading, error } = useFetch();
+  const { fetch } = useFetch();
   const [restorePasswordStatus, setRestorePasswordStatus] = useState("RESET");
   let [disableButton, setDisableButton] = useState(true);
   let [showPassword, setShowPassword] = useState(false);
@@ -89,12 +89,12 @@ function RestorePassword(props) {
           alt="Main logo"
         />
         <Typography align="center" variant="h3" gutterBottom>
-          <Trans>auth.resetPassword.title</Trans>
+          {t("auth.resetPassword.title")}
         </Typography>
         {
           // ? FORM
         }
-        {restorePasswordStatus == "RESET" && (
+        {restorePasswordStatus === "RESET" && (
           <form onSubmit={resetPasswordFormik.handleSubmit} className="mt-6">
             <div id="formInputs">
               <TextField
@@ -103,15 +103,14 @@ function RestorePassword(props) {
                   Boolean(resetPasswordFormik.errors.password1)
                 }
                 id="password1"
-                label={<Trans>auth.resetPassword.insertNewPassword</Trans>}
+                label={t("auth.resetPassword.insertNewPassword")}
                 variant="filled"
                 onChange={resetPasswordFormik.handleChange}
                 onBlur={resetPasswordFormik.handleBlur}
                 value={resetPasswordFormik.values.password1}
                 helperText={
-                  resetPasswordFormik.touched.password1 && (
-                    <Trans>{resetPasswordFormik.errors.password1}</Trans>
-                  )
+                  resetPasswordFormik.touched.password1 &&
+                  t(resetPasswordFormik.errors.password1)
                 }
                 type={showPassword ? "text" : "password"}
                 InputProps={{
@@ -139,15 +138,14 @@ function RestorePassword(props) {
                 }
                 variant="filled"
                 id="password2"
-                label={<Trans>auth.resetPassword.insertNewPasswordAgain</Trans>}
+                label={t("auth.resetPassword.insertNewPasswordAgain")}
                 type={showPassword ? "text" : "password"}
                 onChange={resetPasswordFormik.handleChange}
                 onBlur={resetPasswordFormik.handleBlur}
                 value={resetPasswordFormik.values.password2}
                 helperText={
-                  resetPasswordFormik.touched.password2 && (
-                    <Trans>{resetPasswordFormik.errors.password2}</Trans>
-                  )
+                  resetPasswordFormik.touched.password2 &&
+                  t(resetPasswordFormik.errors.password2)
                 }
                 InputProps={{
                   endAdornment: (
@@ -175,22 +173,22 @@ function RestorePassword(props) {
                 variant="contained"
                 color="primary"
               >
-                <Trans>auth.resetPassword.title</Trans>
+                {t("auth.resetPassword.title")}
               </Button>
             </div>
           </form>
         )}
 
-        {restorePasswordStatus == "RESETTED" && (
+        {restorePasswordStatus === "RESETTED" && (
           <>
             <Typography align="center" variant="body1" gutterBottom>
-              <Trans>auth.resetPassword.resettedPasswordText</Trans>
+              {t("auth.resetPassword.resettedPasswordText")}
             </Typography>
             <img
               width="100px"
               className="mt-5 mb-10 self-center"
               src={process.env.PUBLIC_URL + "/img/tick.svg"}
-              alt="Confirm Image"
+              alt="Confirm"
             />
             <div className="flex justify-center">
               <Button
@@ -200,17 +198,17 @@ function RestorePassword(props) {
                   pushInsideApp();
                 }}
               >
-                <Trans>auth.resetPassword.goToApp</Trans>
+                {t("auth.resetPassword.goToApp")}
               </Button>
             </div>
           </>
         )}
         <div id="auxiliaryLinks">
           <span className="mr-1">
-            <Trans>auth.alreadyHaveAnAccount</Trans>
+            {t("auth.alreadyHaveAnAccount")}
           </span>
           <Link href="/auth/login" vcolor="primary">
-            <Trans>auth.login</Trans>
+            {t("auth.login")}
           </Link>
         </div>
       </div>

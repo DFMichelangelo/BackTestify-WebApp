@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import classnames from "classnames";
 import MuiAppBar from "@mui/material/AppBar";
 import ToolbarUI from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -9,9 +8,9 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import config from "configuration/config";
 import { Helmet } from "react-helmet";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import ProfileButton from "theme/Header/ProfileButton";
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open' | prop !== 'matches',
@@ -84,7 +83,6 @@ function Header(props) {
       >
         <IconButtonMenu
           color="inherit"
-          onClick={() => themeContext.setSidebarOpen(true)}
           open={themeContext.sidebarOpen ? 1 : 0}
           matches={matches ? 1 : 0}
           edge="start"
@@ -102,7 +100,7 @@ function Header(props) {
               }}
             >
               <span className="ml-2">
-                <Trans>{title}</Trans>
+                {t(title)}
               </span>
             </Typography>
           </span>

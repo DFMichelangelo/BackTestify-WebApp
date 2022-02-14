@@ -8,6 +8,7 @@ specifiers:
   '@mui/material': ^5.2.4
   '@mui/styles': ^5.2.3
   '@mui/system': ^5.2.4
+  ace-builds: ^1.4.14
   autoprefixer: ^10.4.0
   axios: ^0.24.0
   classnames: ^2.3.1
@@ -23,6 +24,7 @@ specifiers:
   prop-types: ^15.7.2
   qs: ^6.10.2
   react: ^17.0.2
+  react-ace: ^9.5.0
   react-custom-scrollbars-2: ^4.4.0
   react-dom: ^17.0.2
   react-error-boundary: ^3.1.4
@@ -59,6 +61,7 @@ dependencies:
   '@mui/material': 5.2.5_c84e354a724f4213aa6539fdea9d08aa
   '@mui/styles': 5.2.3_react@17.0.2
   '@mui/system': 5.2.5_922a85da57e3646a57465b7970b0de85
+  ace-builds: 1.4.14
   axios: 0.24.0
   classnames: 2.3.1
   firebase: 8.2.1
@@ -72,6 +75,7 @@ dependencies:
   prop-types: 15.7.2
   qs: 6.10.2
   react: 17.0.2
+  react-ace: 9.5.0_react-dom@17.0.2+react@17.0.2
   react-custom-scrollbars-2: 4.4.0_react-dom@17.0.2+react@17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-error-boundary: 3.1.4_react@17.0.2
@@ -3980,6 +3984,10 @@ packages:
       negotiator: 0.6.2
     dev: false
 
+  /ace-builds/1.4.14:
+    resolution: {integrity: sha512-NBOQlm9+7RBqRqZwimpgquaLeTJFayqb9UEPtTkpC3TkkwDnlsT/TwsCC0svjt9kEZ6G9mH5AEOHSz6Q/HrzQQ==}
+    dev: false
+
   /acorn-globals/6.0.0:
     resolution: {integrity: sha512-ZQl7LOWaF5ePqqcX4hLuv/bLXYQNfNWw2c0/yX/TsPRKamzHcTGQnlCjHT3TsmkOUVEPS3crCxiPfdzE/Trlhg==}
     dependencies:
@@ -5438,6 +5446,10 @@ packages:
 
   /didyoumean/1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
+
+  /diff-match-patch/1.0.5:
+    resolution: {integrity: sha512-IayShXAgj/QMXgB0IWmKx+rOPuGMhqm5w6jvFxmVenXKIzRqTAAsbBPT3kWQeGANj3jGgvcvv4yK6SxqYmikgw==}
+    dev: false
 
   /diff-sequences/27.4.0:
     resolution: {integrity: sha512-YqiQzkrsmHMH5uuh8OdQFU9/ZpADnwzml8z0O5HvRNda+5UZsaX/xN+AAxfR2hWq1Y7HZnAzO9J5lJXOuDz2Ww==}
@@ -8139,6 +8151,14 @@ packages:
     resolution: {integrity: sha1-gteb/zCmfEAF/9XiUVMArZyk168=}
     dev: false
 
+  /lodash.get/4.4.2:
+    resolution: {integrity: sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=}
+    dev: false
+
+  /lodash.isequal/4.5.0:
+    resolution: {integrity: sha1-QVxEePK8wwEgwizhDtMib30+GOA=}
+    dev: false
+
   /lodash.memoize/4.1.2:
     resolution: {integrity: sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=}
     dev: false
@@ -9696,6 +9716,21 @@ packages:
       http-errors: 1.7.2
       iconv-lite: 0.4.24
       unpipe: 1.0.0
+    dev: false
+
+  /react-ace/9.5.0_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-4l5FgwGh6K7A0yWVMQlPIXDItM4Q9zzXRqOae8KkCl6MkOob7sC1CzHxZdOGvV+QioKWbX2p5HcdOVUv6cAdSg==}
+    peerDependencies:
+      react: ^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0
+      react-dom: ^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0
+    dependencies:
+      ace-builds: 1.4.14
+      diff-match-patch: 1.0.5
+      lodash.get: 4.4.2
+      lodash.isequal: 4.5.0
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
     dev: false
 
   /react-app-polyfill/3.0.0:

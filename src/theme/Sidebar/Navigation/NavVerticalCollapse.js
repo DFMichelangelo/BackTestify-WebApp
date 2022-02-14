@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import classNames from "classnames";
 import NavBadge from "./NavBadge";
 import PropTypes from "prop-types";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { makeStyles } from "@mui/styles";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import ExpandLessOutlinedIcon from "@mui/icons-material/ExpandLessOutlined";
@@ -63,7 +63,7 @@ let isUrlInChildren = (parent, url) => {
       return true;
     if (
       parent.children[i].to === url ||
-      ((!parent.children[i].exact || !parent.children[i].exact == false) && url.includes(parent.children[i].to))
+      ((!parent.children[i].exact || !parent.children[i].exact === false) && url.includes(parent.children[i].to))
     )
       return true;
   }
@@ -72,6 +72,7 @@ let isUrlInChildren = (parent, url) => {
 function NavVerticalCollapse(props) {
   const themeContext = useContext(ThemeContext);
   const history = useHistory();
+  const { t } = useTranslation();
   let needsToBeOpened = useCallback(
     (item) =>
       history.location && isUrlInChildren(item, history.location.pathname),
@@ -124,7 +125,7 @@ function NavVerticalCollapse(props) {
           className="list-item-text"
           primary={
             <Typography variant="body2">
-              <Trans>{item.id}</Trans>
+              {t(item.id)}
             </Typography>
           }
           classes={{ primary: "text-14" }}
