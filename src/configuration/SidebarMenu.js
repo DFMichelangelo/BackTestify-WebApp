@@ -21,16 +21,9 @@ const SidebarMenu = [
       },
       {
         type: "item",
-        id: "backtester.timeseries",
-        to: "/p/backtester/timeseries",
+        id: "backtester.underlying",
+        to: "/p/backtester/underlying",
         icon: <ShowChartOutlinedIcon />,
-        exact: true,
-      },
-      {
-        type: "item",
-        id: "backtester.orders",
-        to: "/p/backtester/orders",
-        icon: <MarkAsUnreadOutlinedIcon />,
         exact: true,
       },
       {
@@ -38,6 +31,13 @@ const SidebarMenu = [
         id: "backtester.portfolio",
         to: "/p/backtester/portfolio",
         icon: <AccountBalanceWalletOutlinedIcon />,
+        exact: true,
+      },
+      {
+        type: "item",
+        id: "backtester.orders",
+        to: "/p/backtester/orders",
+        icon: <MarkAsUnreadOutlinedIcon />,
         exact: true,
       },
       {
@@ -75,7 +75,7 @@ const SidebarMenu = [
       }
     ]
   },
-  {
+  /*{
     type: "group",
     id: "backtester.lab",
     children: [

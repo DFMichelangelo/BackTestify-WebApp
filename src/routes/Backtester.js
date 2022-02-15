@@ -2,7 +2,7 @@ import React, { lazy } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 const Input = lazy(() => import("views/Input"));
-const Timeseries = lazy(() => import("views/Timeseries"));
+const Underlying = lazy(() => import("views/Underlying"));
 const Portfolio = lazy(() => import("views/Portfolio"));
 const Orders = lazy(() => import("views/Orders"));
 const Performance = lazy(() => import("views/Performance"));
@@ -16,7 +16,7 @@ function Backtester() {
     return (
         <Switch>
             <Route path="/p/backtester/input" component={Input} />
-            <Route path="/p/backtester/timeseries" component={Timeseries} />
+            <Route path="/p/backtester/underlying" component={Underlying} />
             <Route path="/p/backtester/orders" component={Orders} />
             <Route path="/p/backtester/portfolio" component={Portfolio} />
             <Route path="/p/backtester/performance" component={Performance} />

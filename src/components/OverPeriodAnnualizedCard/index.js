@@ -1,16 +1,16 @@
 import React from "react";
 import MetricCard from 'components/MetricCard';
-import _ from "lodash"
+
 function OverPeriodAnnualizedCard(props) {
     const { title, classname, data } = props;
     const multiMetricData = [
         {
-            subtitle: "overPeriod",
-            metricValue: _.get(data, "data[0]", undefined)
+            subtitle: "backtester.overPeriod",
+            metricValue: data?.[0]
         },
         {
-            subtitle: "annualized",
-            metricValue: _.get(data, "data[1]", undefined)
+            subtitle: "backtester.annualized",
+            metricValue: data?.[1]
         },
     ]
     return (
