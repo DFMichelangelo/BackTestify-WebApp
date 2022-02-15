@@ -17,6 +17,7 @@ const ErrorInternalServer = lazy(() =>
 const ErrorNotAuthorized = lazy(() =>
   import("theme/views/Placeholders/ErrorNotAuthorized")
 );
+const ErrorCreateBacktest = lazy(() => import("theme/views/Placeholders/ErrorCreateBacktest"));
 const ErrorNotFound = lazy(() => import("theme/views/Placeholders/ErrorNotFound"));
 const PrivacyPolicy = lazy(() => import("theme/views/TOS/PrivacyPolicy"));
 const TermsAndConditions = lazy(() => import("theme/views/TOS/TermsAndConditions"));
@@ -87,10 +88,12 @@ function App(props) {
         <Route path="/error/401" component={ErrorNotAuthorized} />
         <Route path="/error/403" component={ErrorNotAuthorized} />
         <Route path="/error/500" component={ErrorInternalServer} />
+
         <Route path="/auth*" component={RoutingAuth} />
         <Theme>
           <Switch>
             <Route exact strict path="/p/*" component={RoutingPublic} />
+            <Route path="/error/create-backtest" component={ErrorCreateBacktest} />
             <Route path="/*" exact component={RoutingApp} />
           </Switch>
         </Theme>

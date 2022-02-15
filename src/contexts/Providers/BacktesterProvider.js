@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 export const BacktesterContext = createContext();
 
 function BacktesterProvider(props) {
-    const [backtesterResults, setBacktesterResults] = useState({});
+    const [backtesterResults, setBacktesterResults] = useState();
     /*const [strategies, setStrategies] = useState([]);
     const [startDate, setStartDate] = useState(DateTime.now().minus({ years: 1 }));
     const [endDate, setEndDate] = useState(DateTime.now());
