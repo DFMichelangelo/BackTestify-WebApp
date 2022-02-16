@@ -103,7 +103,8 @@
 		"cannotFindPage": "Ooops! You seem lost!",
 		"notFound": "Page Not Found",
 		"errorInternalServer": "Oh No! The server is Down",
-		"youAreNotAuthorized": "You Are not Authorized!"
+		"youAreNotAuthorized": "You Are not Authorized!",
+		"createNewBacktest": "Create New Backtest"
 	},
 	"profile": {
 		"profileImage": "Profile Image",
@@ -209,6 +210,20 @@
 		"portfolioPercentageReturn": "Portfolio Percentage Return",
 		"portfolioPercentageVolatility": "Portfolio Percentage Volatility",
 		"overPeriod": "Over Period",
-		"annualized": "Annualized"
+		"annualized": "Annualized",
+		"ordersInfo": "Orders Info",
+		"totalOrders": "Total Orders",
+		"longOrders": "Long Orders",
+		"shortOrders": "Short Orders",
+		"percentage": "Percentage",
+		"absoluteValue": "Absolute Value",
+		"amountProfitable": "Amount Profitable",
+		"percentageProfitable": "Percentage Profitable",
+		"backtestCompleted": "Backtest Completed",
+		"sharpeRatio": "Sharpe Ratio",
+		"sortinoRatio": "Sortino Ratio",
+		"calmarRatio": "Calmar Ratio",
+		"alpha": "Alpha",
+		"vsBuyAndHoldUnderlying": "Vs Buy And Hold Underlying"
 	}
 }

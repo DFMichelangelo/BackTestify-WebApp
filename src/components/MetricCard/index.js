@@ -1,9 +1,10 @@
 import React from "react";
-
+import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from "react-i18next";
 import GenericCard from 'components/GenericCard';
 import classnames from "classnames";
+
 import "./style.scss"
 function MetricCard(props) {
     const { title, subtitle, metricValue, classname, multiMetricData } = props;
@@ -24,24 +25,31 @@ function MetricCard(props) {
                                     }}>
                                         <Typography
                                             align="center" variant="button" gutterBottom >
-                                            {value.subsubtitle}</Typography></span></div>
+                                            {t(value.subsubtitle)}</Typography></span></div>
                                 <div className="flex flex-row">
                                     {value.metrics.map((metric, ind) =>
-                                        <span key={metric.subtitle} className={classnames(ind !== value.metrics.length - 1 && "mr-3")}>
-                                            <Typography variant="overline" gutterBottom >
-                                                <span style={{
-                                                    color: "rgb(100, 100, 100)",
-                                                }}>
-                                                    {metric?.subtitle ? t(metric?.subtitle) : <br />}
+                                        <span key={metric.subtitle} className={classnames(ind !== value.metrics.length - 1 && "mr-2")}>
+                                            <span className="flex flex-row">
+                                                <span className="flex flex-col">
+                                                    <Typography align="center" variant="overline" gutterBottom >
+                                                        <span style={{
+                                                            color: "rgb(100, 100, 100)",
+                                                        }}>
+                                                            {metric?.subtitle ? t(metric?.subtitle) : <br />}
+                                                        </span>
+                                                    </Typography>
+                                                    <Typography align="center" variant="h6" >
+                                                        <span style={{
+                                                            fontWeight: "semi-bold",
+                                                        }}>
+                                                            {metric?.metricValue ? metric?.metricValue : "-"}
+                                                        </span>
+                                                    </Typography>
                                                 </span>
-                                            </Typography>
-                                            <Typography variant="h6" >
-                                                <span style={{
-                                                    fontWeight: "semi-bold",
-                                                }}>
-                                                    {metric?.metricValue ? metric?.metricValue : "-"}
-                                                </span>
-                                            </Typography>
+                                                {ind < value.metrics.length - 1 && <span className="ml-1">
+                                                    <Divider orientation="vertical" />
+                                                </span>}
+                                            </span>
                                         </span>
                                     )}
                                 </div>

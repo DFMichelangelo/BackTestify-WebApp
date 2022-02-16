@@ -83,12 +83,7 @@ function Portfolio(props) {
                         title="backtester.portfolioPercentageVolatility"
                         data={[(100 * backtesterContext?.backtesterResults?.analytics.portfolio.volatility_over_period).toFixed(2) + " %",
                         (100 * backtesterContext?.backtesterResults?.analytics.portfolio.volatility_annualized).toFixed(2) + " %"]} />
-                    {/*<MetricCard title="Sharpe Ratio" />
 
-                    <OverPeriodAnnualizedCard title="portfolioVolatility" />
-                    <OverPeriodAnnualizedCard title="buyAndHoldUnderlyingReturn" />
-                    <OverPeriodAnnualizedCard title="buyAndHoldUnderlyingVolatility" />
-    <OverPeriodAnnualizedCard title="alpha" subtitle="overPeriod" />*/}
                 </div>
             </div>
         </div>)

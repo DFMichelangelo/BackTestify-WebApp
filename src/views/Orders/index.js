@@ -18,45 +18,45 @@ function Orders(props) {
 
                 <MetricCard title="backtester.ordersInfo" multiMetricData={[
                     {
-                        subtitle: "backtesterltotalOrders",
+                        subtitle: "backtester.totalOrders",
                         metricValue: ordersInfo.general.amount
                     },
                     {
-                        subsubtitle: "longOrders",
+                        subsubtitle: "backtester.longOrders",
                         metrics: [{
-                            subtitle: "absoluteValue",
+                            subtitle: "backtester.absoluteValue",
                             metricValue: ordersInfo.long_orders.amount
                         },
                         {
-                            subtitle: "percentageValue",
+                            subtitle: "backtester.percentage",
                             metricValue: (ordersInfo.long_orders.percentage * 100).toFixed(2) + "%"
                         },
                         {
-                            subtitle: "amountProfitableOrders",
+                            subtitle: "backtester.amountProfitable",
                             metricValue: ordersInfo.long_orders.amount_profitable_orders
                         },
                         {
-                            subtitle: "percentageProfitableOrders",
+                            subtitle: "backtester.percentageProfitable",
                             metricValue: (ordersInfo.long_orders.percentage_profitable_orders * 100).toFixed(2) + "%"
                         }]
                     },
                     {
-                        subsubtitle: "shortOrders",
+                        subsubtitle: "backtester.shortOrders",
                         metrics: [
                             {
-                                subtitle: "absoluteValue",
+                                subtitle: "backtester.absoluteValue",
                                 metricValue: ordersInfo.short_orders.amount
                             },
                             {
-                                subtitle: "percentageValue",
+                                subtitle: "backtester.percentage",
                                 metricValue: (ordersInfo.short_orders.percentage * 100).toFixed(2) + "%"
                             },
                             {
-                                subtitle: "amountProfitableOrders",
+                                subtitle: "backtester.amountProfitable",
                                 metricValue: ordersInfo.short_orders.amount_profitable_orders
                             },
                             {
-                                subtitle: "percentageProfitableOrders",
+                                subtitle: "backtester.percentageProfitable",
                                 metricValue: (ordersInfo.short_orders.percentage_profitable_orders * 100).toFixed(2) + "%"
                             }
                         ]

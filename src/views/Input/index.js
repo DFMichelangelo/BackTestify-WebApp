@@ -98,7 +98,6 @@ function Input(props) {
     onSubmit: async (values, formikBag) => {
       let indicators_parameters = {}
       strategySelected.indicators_parameters_config.map(indicator => indicators_parameters[indicator.name] = values[indicator.name])
-      console.log(indicators_parameters)
       //INFO - Creation of the object to send
       let payload = {
         start_date: typeStartDate === "date" ?
@@ -106,7 +105,7 @@ function Input(props) {
           : values.endDate.set({ hours: 0, minutes: 0, seconds: 0 }).minus({ days: values.days, months: values.months, years: values.years }).toFormat("d/MM/y HH:mm:ss"),
         end_date: values.endDate.set({ hours: 0, minutes: 0, seconds: 0 }).toFormat("d/MM/y HH:mm:ss"),
         initial_portfolio_value: values.initialPortfolioValue,
-        risk_free_rate: values.riskFreeRate,
+        risk_free_rate: values.riskFreeRate / 100,
         benchmark_financial_instrument_name: values.benchmarkFinancialInstrumentName,
         strategy_name: values.strategy.name,
         input_data: {
@@ -124,6 +123,7 @@ function Input(props) {
       });
       console.log(result)
       backtesterContext.setBacktesterResults(result)
+      themeContext.showSuccessSnackbar({ message: "backtester.backtestCompleted" });
     },
     validationSchema,
     validate: (values) => {

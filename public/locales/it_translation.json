@@ -103,7 +103,8 @@
 		"cannotFindPage": "Ooops! Ti sei perso!",
 		"notFound": "Pagina Non Trovata",
 		"errorInternalServer": "Oh No! Il server non risponde",
-		"youAreNotAuthorized": "Non sei Autorizzato!"
+		"youAreNotAuthorized": "Non sei Autorizzato!",
+		"createNewBacktest": "Crea Nuovo Backtest"
 	},
 	"profile": {
 		"profileImage": "Immagine Profilo",
@@ -210,6 +211,20 @@
 		"portfolioPercentageReturn": "Ritorno Percentuale del Portafoglio",
 		"portfolioPercentageVolatility": "Volatilità Percentuale del Portafoglio",
 		"overPeriod": "Sul Periodo",
-		"annualized": "Annualizzato"
+		"annualized": "Annualizzato",
+		"ordersInfo": "Informazioni sugli Ordini",
+		"totalOrders": "Totale Ordini",
+		"longOrders": "Ordini Long",
+		"shortOrders": "Ordini Short",
+		"percentage": "Percentuale",
+		"absoluteValue": "Valore Assoluto",
+		"amountProfitable": "Quantità Profittevole",
+		"percentageProfitable": "Percentuale Profittevole",
+		"backtestCompleted": "Backtest Completato",
+		"sharpeRatio": "Sharpe Ratio",
+		"sortinoRatio": "Sortino Ratio",
+		"calmarRatio": "Calmar Ratio",
+		"alpha": "Alpha",
+		"vsBuyAndHoldUnderlying": "Vs Buy And Hold Underlying"
 	}
 }
