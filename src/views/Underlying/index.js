@@ -43,7 +43,7 @@ function Underlying(props) {
             }
         })
     }
-    console.log(underlyingReturnsDistribution)
+
     let stdReturns = backtesterContext.backtesterResults.analytics.underlying.returns_std * 100
     let meanReturns = backtesterContext.backtesterResults.analytics.underlying.returns_mean * 100
     return (

@@ -23,7 +23,7 @@ function Portfolio(props) {
             return {
                 ...portfolioValue,
                 date: index, // TODO - provsional
-                underlyingAssetValue: backtesterContext?.backtesterResults?.raw_data.prices[index],
+                underlyingAssetValue: backtesterContext?.backtesterResults?.raw_data.underlying[index],
                 totalPortfolioValue: portfolioValue.liquidity + portfolioValue.assets_value
             }
         }
@@ -36,8 +36,8 @@ function Portfolio(props) {
                 <GenericCard title="backtester.portfolioValue" width={"50%"}>
                     <ResponsiveContainer minHeight={300} >
                         <LineChart minHeight={300} data={portfolioValue} >
-                            <ReferenceLine y={portfolioValue[0].liquidity}
-                                label={portfolioValue[0].liquidity}
+                            <ReferenceLine y={portfolioValue?.[0].liquidity}
+                                label={portfolioValue?.[0].liquidity}
                                 stroke="red" strokeDasharray="3 3" />
                             <XAxis type="number" dataKey="date" />
                             <YAxis yAxisId={0} type="number" name={t("backtester.totalPortfolioValue")} domain={['auto', 'auto']} />

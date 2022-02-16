@@ -18,39 +18,7 @@ function Performance(props) {
     return (
         <div className="flex flex-col w-full">
 
-            <div className="flex flex-row">
 
-                <MetricCard title="ordersInfo" multiMetricData={[
-                    {
-                        subtitle: "totalOrders",
-                        metricValue: "0"
-                    }
-                    ,
-                    {
-                        subsubtitle: "longOrders",
-                        metrics: [{
-                            subtitle: "absoluteValue",
-                            metricValue: "0"
-                        },
-                        {
-                            subtitle: "percentageValue",
-                            metricValue: "0"
-                        }]
-                    },
-                    {
-                        subsubtitle: "shortOrders",
-                        metrics: [{
-                            subtitle: "absoluteValue",
-                            metricValue: "0"
-                        },
-                        {
-                            subtitle: "percentageValue",
-                            metricValue: "0"
-                        }]
-                    }
-                ]
-                } />
-            </div>
             <div className="flex flex-row w-full">
                 <ResponsiveContainer minWidth={"50%"} minHeight={400}>
                     <LineChart data={data}>
