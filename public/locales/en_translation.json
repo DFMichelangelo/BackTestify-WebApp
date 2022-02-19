@@ -224,6 +224,19 @@
 		"sortinoRatio": "Sortino Ratio",
 		"calmarRatio": "Calmar Ratio",
 		"alpha": "Alpha",
-		"vsBuyAndHoldUnderlying": "Vs Buy And Hold Underlying"
+		"vsBuyAndHoldUnderlying": "Vs Buy And Hold Underlying",
+		"position": "Position",
+		"autocorrelationFunction": "Autocorrelation Function",
+		"partialAutocorrelationFunction": "Partial Autocorrelation Function",
+		"equityLine": "Equity Line",
+		"underlyingAssetValue": "Underlying Asset Value",
+		"totalPortfolioValue": "Total Portfolio Value",
+		"price": "Price",
+		"amount": "Amount",
+		"confidenceInterval": "Confidence Interval",
+		"autocorrelation": "Autocorrelation",
+		"partialAutocorrelation": "Partial Autocorrelation",
+		"returnValue": "Returns",
+		"equityValue": "Equity Value"
 	}
 }

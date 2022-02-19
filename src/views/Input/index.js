@@ -33,7 +33,7 @@ function Input(props) {
     initial: {
       startDate: DateTime.now().minus({ years: 1 }),
       endDate: DateTime.now(),
-      initialPortfolioValue: 1000,
+      initialPortfolioValue: 500,
       riskFreeRate: 1,
       financialInstrumentName: "AAPL",
       timeframe: "1d",
