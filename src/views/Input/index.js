@@ -38,7 +38,7 @@ function Input(props) {
       financialInstrumentName: "AAPL",
       timeframe: "1d",
       strategy: strategySelected || "",
-      benchmarkFinancialInstrumentName: "SPY",
+      benchmarkFinancialInstrumentName: "^GSPC",
       durationType: "years",
       durationAmount: 1
     },
@@ -114,16 +114,20 @@ function Input(props) {
         },
         indicators_parameters
       }
-      console.log(payload)
-      const result = await fetchBacktest({
-        url: Endpoints.backtester.backtestStrategy,
-        baseUrl: process.env.REACT_APP_BACKTESTER_ENGINE_URL,
-        method: "POST",
-        data: payload
-      });
-      console.log(result)
-      backtesterContext.setBacktesterResults(result)
-      themeContext.showSuccessSnackbar({ message: "backtester.backtestCompleted" });
+      try {
+        const result = await fetchBacktest({
+          url: Endpoints.backtester.backtestStrategy,
+          baseUrl: process.env.REACT_APP_BACKTESTER_ENGINE_URL,
+          showStatus400ErrorSnackBar: false,
+          method: "POST",
+          data: payload
+        });
+        console.log(result)
+        backtesterContext.setBacktesterResults(result)
+        themeContext.showSuccessSnackbar({ message: "backtester.backtestCompleted" });
+      } catch (e) {
+        themeContext.showErrorSnackbar({ message: e.data.detail });
+      }
     },
     validationSchema,
     validate: (values) => {

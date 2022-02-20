@@ -15,7 +15,7 @@ function MetricCard(props) {
             {props.children}
             {multiMetricData ?
                 multiMetricData.map((value, valueIndex) =>
-                    <div key={valueIndex} className={classnames(valueIndex !== multiMetricData.length - 1 && "mb-2")}>
+                    <div key={valueIndex} className={classnames(valueIndex !== multiMetricData.length - 1 && "mb-5")}>
                         {value.subsubtitle ?
                             <span key={value.subtitle}>
                                 <div className="text-center">
@@ -24,9 +24,9 @@ function MetricCard(props) {
                                         fontSize: "14px !important"
                                     }}>
                                         <Typography
-                                            align="center" variant="button" gutterBottom >
+                                            align="center" variant="button"  >
                                             {t(value.subsubtitle)}</Typography></span></div>
-                                <div className="flex flex-row">
+                                <div className="flex flex-row justify-center">
                                     {value.metrics.map((metric, ind) =>
                                         <span key={metric.subtitle} className={classnames(ind !== value.metrics.length - 1 && "mr-2")}>
                                             <span className="flex flex-row">

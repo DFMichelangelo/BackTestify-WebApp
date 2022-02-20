@@ -15,7 +15,7 @@ function Underlying(props) {
     const backtesterContext = useContext(BacktesterContext);
     const { t } = useTranslation();
     useEffect(() => {
-        themeContext.setTitle("backtester.timeseries", <ShowChartOutlinedIcon />);
+        themeContext.setTitle("backtester.underlying", <ShowChartOutlinedIcon />);
     }, []);
 
     let underlyingPrices = [];
@@ -101,7 +101,7 @@ function Underlying(props) {
                 <OverPeriodAnnualizedCard
                     title="backtester.underlyingPercentageReturn"
                     data={[(100 * backtesterContext?.backtesterResults?.analytics.underlying.percentage_return_over_period).toFixed(2) + " %",
-                    (100 * backtesterContext?.backtesterResults?.analytics.underlying.percentage_return_over_period).toFixed(2) + " %"]} />
+                    (100 * backtesterContext?.backtesterResults?.analytics.underlying.percentage_return_annualized).toFixed(2) + " %"]} />
                 <OverPeriodAnnualizedCard
                     title="backtester.underlyingPercentageVolatility"
                     data={[(100 * backtesterContext?.backtesterResults?.analytics.underlying.volatility_over_period).toFixed(2) + " %",

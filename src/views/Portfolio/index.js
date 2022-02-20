@@ -26,7 +26,7 @@ function Portfolio(props) {
             return {
                 ...portfolioValue,
                 date: index, // TODO - provsional
-                underlyingAssetValue: backtesterContext?.backtesterResults?.raw_data.underlying[index],
+                benchmarkAssetValue: backtesterContext?.backtesterResults?.raw_data.benchmark[index],
                 totalPortfolioValue: portfolioValue.liquidity + portfolioValue.assets_value
             }
         })
@@ -46,7 +46,7 @@ function Portfolio(props) {
                             <YAxis yAxisId={0} type="number" domain={['auto', 'auto']} />
                             <YAxis yAxisId={1} orientation="right" type="number" domain={['auto', 'auto']} />
                             <Line yAxisId={0} dot={false} type="monotone" dataKey="totalPortfolioValue" stroke="#8884d8" />
-                            <Line yAxisId={1} dot={false} type="monotone" dataKey="underlyingAssetValue" stroke="#8d8" />
+                            <Line yAxisId={1} dot={false} type="monotone" dataKey="benchmarkAssetValue" stroke="#8d8" />
                             {CustomTooltip()}
                             {CustomLegend()}
                         </LineChart>

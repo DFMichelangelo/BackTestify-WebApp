@@ -23,7 +23,7 @@ function Performance(props) {
         equityLineValue = backtesterContext?.backtesterResults?.raw_data.portfolio_value_history.map((portfolioValue, index) => {
             return {
                 date: index, // TODO - provsional
-                underlyingAssetValue: backtesterContext?.backtesterResults?.raw_data.underlying[index],
+                benchmarkAssetValue: backtesterContext?.backtesterResults?.raw_data.benchmark[index],
                 equityValue: portfolioValue.liquidity + portfolioValue.assets_value - portfolioInitialValue
             }
         })
@@ -43,37 +43,120 @@ function Performance(props) {
     };
 
     const off = gradientOffset();
-    console.log(off);
+
     return (
         <div className="flex flex-col w-full">
+            <div className="flex flex-row">
+
+                <div className="flex flex-col">
+                    <div className="flex flex-row">
+
+                        <MetricCard title="backtester.sharpeRatio" multiMetricData={[
+                            {
+                                subtitle: "backtester.annualized",
+                                metricValue: backtesterContext.backtesterResults.analytics.performance.sharpe_ratio_annualized.toFixed(2),
+                            }]} />
+                        <MetricCard title="backtester.sortinoRatio" multiMetricData={[
+                            {
+                                subtitle: "backtester.annualized",
+                                metricValue: backtesterContext.backtesterResults.analytics.performance.sortino_ratio_annualized.toFixed(2),
+                            }]} />
+                    </div>
+                    <div className="flex flex-row w-full">
+                        <MetricCard title="backtester.calmarRatio" multiMetricData={[
+                            {
+                                subtitle: "backtester.annualized",
+                                metricValue: undefined,
+                            }]} />
+                        <MetricCard title="backtester.alpha" multiMetricData={[
+                            {
+                                subtitle: "backtester.annualized",
+                                metricValue: (100 *
+                                    (backtesterContext?.backtesterResults?.analytics.portfolio.percentage_return_annualized -
+                                        backtesterContext?.backtesterResults?.analytics.benchmark.percentage_return_annualized
+                                    )
+                                ).toFixed(2) + " %",
+                            }]} />
+                    </div>
+
+                </div>
+                <div className="flex flex-row">
+                    <MetricCard title="backtester.strategyPerformance" multiMetricData={[
+                        {
+                            subsubtitle: "backtester.return",
+                            metrics: [{
+                                subtitle: "backtester.overPeriod",
+                                metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.percentage_return_over_period).toFixed(2) + " %"
+                            },
+                            {
+                                subtitle: "backtester.annualized",
+                                metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.percentage_return_annualized).toFixed(2) + " %"
+                            }]
+                        },
+                        {
+                            subsubtitle: "backtester.volatility",
+                            metrics: [{
+                                subtitle: "backtester.overPeriod",
+                                metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.volatility_over_period).toFixed(2) + " %"
+                            },
+                            {
+                                subtitle: "backtester.annualized",
+                                metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.volatility_annualized).toFixed(2) + " %"
+                            }]
+                        },
+                    ]} />
+                    <MetricCard title="backtester.underlyingPerformance" multiMetricData={[
+                        {
+                            subsubtitle: "backtester.return",
+                            metrics: [{
+                                subtitle: "backtester.overPeriod",
+                                metricValue: (100 * backtesterContext?.backtesterResults?.analytics.underlying.percentage_return_over_period).toFixed(2) + " %"
+                            },
+                            {
+                                subtitle: "backtester.annualized",
+                                metricValue: (100 * backtesterContext?.backtesterResults?.analytics.underlying.percentage_return_annualized).toFixed(2) + " %"
+                            }]
+                        },
+                        {
+                            subsubtitle: "backtester.volatility",
+                            metrics: [{
+                                subtitle: "backtester.overPeriod",
+                                metricValue: (100 * backtesterContext?.backtesterResults?.analytics.underlying.volatility_over_period).toFixed(2) + " %"
+                            },
+                            {
+                                subtitle: "backtester.annualized",
+                                metricValue: (100 * backtesterContext?.backtesterResults?.analytics.underlying.volatility_annualized).toFixed(2) + " %"
+                            }]
+                        },
+                    ]} />
+                    <MetricCard title="backtester.benchmarkPerformance" multiMetricData={[
+                        {
+                            subsubtitle: "backtester.return",
+                            metrics: [{
+                                subtitle: "backtester.overPeriod",
+                                metricValue: (100 * backtesterContext?.backtesterResults?.analytics.benchmark.percentage_return_over_period).toFixed(2) + " %"
+                            },
+                            {
+                                subtitle: "backtester.annualized",
+                                metricValue: (100 * backtesterContext?.backtesterResults?.analytics.benchmark.percentage_return_annualized).toFixed(2) + " %"
+                            }]
+                        },
+                        {
+                            subsubtitle: "backtester.volatility",
+                            metrics: [{
+                                subtitle: "backtester.overPeriod",
+                                metricValue: (100 * backtesterContext?.backtesterResults?.analytics.benchmark.volatility_over_period).toFixed(2) + " %"
+                            },
+                            {
+                                subtitle: "backtester.annualized",
+                                metricValue: (100 * backtesterContext?.backtesterResults?.analytics.benchmark.volatility_annualized).toFixed(2) + " %"
+                            }]
+                        },
+                    ]} />
+
+                </div>
+            </div>
             <div className="flex flex-row w-full">
-                <MetricCard title="backtester.sharpeRatio" multiMetricData={[
-                    {
-                        subtitle: "backtester.annualized",
-                        metricValue: backtesterContext.backtesterResults.analytics.performance.sharpe_ratio_annualized.toFixed(2),
-                    }]} />
-                <MetricCard title="backtester.sortinoRatio" multiMetricData={[
-                    {
-                        subtitle: "backtester.annualized",
-                        metricValue: undefined,
-                    }]} />
-                <MetricCard title="backtester.calmarRatio" multiMetricData={[
-                    {
-                        subtitle: "backtester.annualized",
-                        metricValue: undefined,
-                    }]} />
-                <MetricCard title="backtester.alpha" multiMetricData={[
-                    {
-                        subtitle: "backtester.annualized",
-                        metricValue: undefined,
-                    }]} />
-                <MetricCard title="backtester.vsBuyAndHoldUnderlying" multiMetricData={[
-                    {
-                        subtitle: "backtester.annualized",
-                        metricValue: undefined,
-                    }]} />
-                {/*
-    <OverPeriodAnnualizedCard title="alpha" subtitle="overPeriod" />*/}
             </div>
             <div className="flex flex-row w-full">
                 <GenericCard title="backtester.equityLine" width={"50%"}>
@@ -94,11 +177,20 @@ function Performance(props) {
                                 </linearGradient>
                             </defs>
                             <Area yAxisId={0} dot={false} type="monotone" dataKey="equityValue" stroke="#8884d8" fill="url(#splitColor)" />
-                            <Line yAxisId={1} dot={false} type="monotone" dataKey="underlyingAssetValue" stroke="purple" />
+                            <Line yAxisId={1} dot={false} type="monotone" dataKey="benchmarkAssetValue" stroke="purple" />
                             {CustomTooltip()}
                             {CustomLegend()}
                         </ComposedChart>
                     </ResponsiveContainer>
+                </GenericCard>
+
+            </div>
+            <div className="flex flex-row w-full">
+                <GenericCard title="backtester.drawdown" width={"50%"}>
+
+                </GenericCard>
+                <GenericCard title="backtester.underwater" width={"50%"}>
+
                 </GenericCard>
             </div>
         </div>)

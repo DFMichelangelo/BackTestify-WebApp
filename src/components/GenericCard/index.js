@@ -2,6 +2,7 @@ import React from "react";
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from "react-i18next";
+import classnames from 'classnames';
 import "./style.scss"
 
 function ChartCard(props) {
@@ -10,7 +11,7 @@ function ChartCard(props) {
     return (
 
         <Card className="genericCard" sx={{ padding: "15px", width: props.width, height: "fit-content" }}>
-            <Typography variant="subtitle1">
+            <Typography align="center" variant="subtitle1">
                 <span style={{
                     fontWeight: "bold",
                 }}>
@@ -24,7 +25,7 @@ function ChartCard(props) {
                     {subtitle ? t(subtitle) : <br />}
                 </span>
             </Typography>}
-            <div className={classNameContent}>
+            <div className={classnames(classNameContent, "genericCardChildren")}>
                 {props.children}
             </div>
         </Card>

@@ -52,6 +52,7 @@ function useFetcher(props) {
     const addHeaders = _.get(options, "addHeaders", true);
     const redirectToPage500 = _.get(options, "redirectToPage500", false);
     const showErrorSnackBar = _.get(options, "showErrorSnackBar", true);
+    const showStatus400ErrorSnackBar = _.get(options, "showStatus400ErrorSnackBar", true);
     const redirectToLogin = _.get(options, "redirectToLogin", true);
     let addBaseUrl = _.get(options, "addBaseUrl", true);
     addBaseUrl = options?.baseUrl ? false : addBaseUrl;
@@ -162,7 +163,7 @@ function useFetcher(props) {
 
           throw err;
         } else {
-          if (err.response?.status === 400) themeContext.showErrorSnackbar({ message: "validationError" })
+          if (err.response?.status === 400 && showStatus400ErrorSnackBar) themeContext.showErrorSnackbar({ message: "validationError" })
           throw err;
         }
       }
