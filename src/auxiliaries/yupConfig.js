@@ -42,8 +42,8 @@ export default function yupConfig() {
     },
     // use functions to generate an error object that includes the value from the schema
     number: {
-      min: ({ min, path }) => i18n.t("yup.minNumber", { path: i18n.t(path), num: min }),
-      max: ({ max, path }) => i18n.t("yup.maxNumber", { path: i18n.t(path), num: max })
+      min: ({ min, path }) => i18n.t("yup.minNumber", { path: i18n.t(`backtester.${path}`), num: min }),
+      max: ({ max, path }) => i18n.t("yup.maxNumber", { path: i18n.t(`backtester.${path}`), num: max })
 
     },
     string: {

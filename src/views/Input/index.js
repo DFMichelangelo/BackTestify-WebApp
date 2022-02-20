@@ -13,7 +13,7 @@ import InputOutlinedIcon from '@mui/icons-material/InputOutlined';
 import * as Yup from "yup";
 import InputAdornment from '@mui/material/InputAdornment';
 import DatePicker from '@mui/lab/DatePicker';
-
+import FormikTextField from "components/FormikComponents/FormikTextField";
 import TextField from '@mui/material/TextField';
 import Switch from '@mui/material/Switch';
 import { Typography } from "@mui/material";
@@ -27,7 +27,7 @@ function Input(props) {
   const [strategies, setStrategies] = useState([])
   const [strategySelected, setStrategySelected] = useState(null)
   const { t } = useTranslation();
-  const { fetch, loading } = useFetch();
+  const { fetch: fetchStrategies, loading: loadingStrategies } = useFetch();
   const [typeStartDate, setTypeStartDate] = useState("date");
   const [initialValues, setInitialValues] = useState({
     initial: {
@@ -63,13 +63,14 @@ function Input(props) {
     durationAmount: Yup.number().min(0).required(),
     durationType: Yup.string().required(),
     financialInstrumentName: Yup.string().required(),
+    benchmarkFinancialInstrumentName: Yup.string().required(),
     strategy: Yup.object().required(),
   });
 
 
   useEffect(async () => {
     themeContext.setTitle("backtester.input", <InputOutlinedIcon />);
-    const result = await fetch({
+    const result = await fetchStrategies({
       url: Endpoints.backtester.getStrategies,
       baseUrl: process.env.REACT_APP_BACKTESTER_ENGINE_URL,
       method: "GET"
@@ -114,6 +115,7 @@ function Input(props) {
         },
         indicators_parameters
       }
+      console.log(payload)
       try {
         const result = await fetchBacktest({
           url: Endpoints.backtester.backtestStrategy,
@@ -137,7 +139,7 @@ function Input(props) {
   });
 
 
-  if (loading) return <RoundLoader />;
+  if (loadingStrategies) return <RoundLoader />;
 
   return (
     <div>
@@ -155,21 +157,13 @@ function Input(props) {
             </div>
             {typeStartDate === "duration" ?
               <div className="flex">
-                <TextField
-                  error={
-                    inputBacktesterFormik.touched.durationAmount && Boolean(inputBacktesterFormik.errors.durationAmount)
-                  }
+                <FormikTextField
+                  formikInstance={inputBacktesterFormik}
                   style={{ width: "45%" }}
                   id="durationAmount"
                   label={t("backtester.durationAmount")}
                   type="number"
-                  onChange={inputBacktesterFormik.handleChange}
-                  onBlur={inputBacktesterFormik.handleBlur}
-                  value={inputBacktesterFormik.values.durationAmount}
-                  helperText={
-                    inputBacktesterFormik.touched.durationAmount &&
-                    t(inputBacktesterFormik.errors.durationAmount)
-                  }
+                  inputProps={{ inputMode: "numberic", pattern: "^[1-9]\d*$" }}
                 />
 
                 <TextField
@@ -217,52 +211,27 @@ function Input(props) {
               <MenuItem value={"1d"}>{t("backtester.daily")}</MenuItem>
             </TextField>
 
-            <TextField
-              error={
-                inputBacktesterFormik.touched.financialInstrumentName && Boolean(inputBacktesterFormik.errors.financialInstrumentName)
-              }
+            <FormikTextField
+              formikInstance={inputBacktesterFormik}
               id="financialInstrumentName"
               label={t("backtester.financialInstrumentName")}
-              onChange={inputBacktesterFormik.handleChange}
-              onBlur={inputBacktesterFormik.handleBlur}
-              value={inputBacktesterFormik.values.financialInstrumentName}
-              helperText={
-                inputBacktesterFormik.touched.financialInstrumentName &&
-                t(inputBacktesterFormik.errors.financialInstrumentName)
-              }
+
             />
 
-            <TextField
-              error={
-                inputBacktesterFormik.touched.benchmarkFinancialInstrumentName && Boolean(inputBacktesterFormik.errors.benchmarkFinancialInstrumentName)
-              }
+            <FormikTextField
+              formikInstance={inputBacktesterFormik}
               id="benchmarkFinancialInstrumentName"
               label={t("backtester.benchmarkFinancialInstrumentName")}
-              onChange={inputBacktesterFormik.handleChange}
-              onBlur={inputBacktesterFormik.handleBlur}
-              value={inputBacktesterFormik.values.benchmarkFinancialInstrumentName}
-              helperText={
-                inputBacktesterFormik.touched.benchmarkFinancialInstrumentName &&
-                t(inputBacktesterFormik.errors.benchmarkFinancialInstrumentName)
-              }
+
             />
           </GenericCard>
           <div className="flex flex-col">
             <GenericCard title="backtester.portfolio" classNameContent="flex flex-col">
-              <TextField
-                error={
-                  inputBacktesterFormik.touched.initialPortfolioValue && Boolean(inputBacktesterFormik.errors.initialPortfolioValue)
-                }
+              <FormikTextField
                 id="initialPortfolioValue"
                 label={t("backtester.initialPortfolioValue")}
                 type="number"
-                onChange={inputBacktesterFormik.handleChange}
-                onBlur={inputBacktesterFormik.handleBlur}
-                value={inputBacktesterFormik.values.initialPortfolioValue}
-                helperText={
-                  inputBacktesterFormik.touched.initialPortfolioValue &&
-                  t(inputBacktesterFormik.errors.initialPortfolioValue)
-                }
+                formikInstance={inputBacktesterFormik}
               />
             </GenericCard>
             <GenericCard title="backtester.exogenVariables" classNameContent="flex flex-col">
@@ -314,22 +283,14 @@ function Input(props) {
               {strategies.map((strategy) => <MenuItem key={strategy.name} value={strategy}>{strategy.name}</MenuItem>)}
             </TextField>
 
-            {strategySelected?.indicators_parameters_config && strategySelected.indicators_parameters_config.map((indicator_config) =>
-              <TextField
+            {strategySelected?.indicators_parameters_config && strategySelected.indicators_parameters_config.map(indicator_config =>
+              <FormikTextField
+                errorAfterTouch
                 key={indicator_config.name}
-                error={
-                  inputBacktesterFormik.touched[indicator_config.name] && Boolean(inputBacktesterFormik.errors[indicator_config.name])
-                }
+                formikInstance={inputBacktesterFormik}
                 id={indicator_config.name}
                 label={indicator_config.name}
-                onChange={inputBacktesterFormik.handleChange}
-                onBlur={inputBacktesterFormik.handleBlur}
                 type="number"
-                value={inputBacktesterFormik.values[indicator_config.name] || ""}
-                helperText={
-                  inputBacktesterFormik.touched[indicator_config.name] &&
-                  t(inputBacktesterFormik.errors[indicator_config.name])
-                }
               />
             )}
           </GenericCard>
