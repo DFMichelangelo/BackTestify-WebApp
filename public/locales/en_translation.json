@@ -246,7 +246,7 @@
 		"benchmarkPerformance": "Benchmark Performance (B&H)",
 		"strategyPerformance": "Strategy Performance",
 		"commissions": "Commissions",
-		"OnOrderFill": "On Order Fill",
+		"onOrderFill": "On Order Fill",
 		"commissionsPerOrder": "Per Order",
 		"overnight": "Overnight",
 		"positionSizing": "Position Sizing",
@@ -255,6 +255,7 @@
 		"orderFractioning": "Order Fractioning",
 		"fluidFractioning": "Fluid Fractioning",
 		"minimumOrderSize": "Minimum Order Size",
-		"noMinimumSize": "No Minimum Size"
+		"noMinimumSize": "No Minimum Size",
+		"profitableOrders": "Profitable Orders"
 	}
 }

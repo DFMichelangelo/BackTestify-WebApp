@@ -37,6 +37,7 @@ function Input(props) {
   const [strategySelected, setStrategySelected] = useState(null)
   const { t } = useTranslation();
   const { fetch: fetchStrategies, loading: loadingStrategies } = useFetch();
+  const [validationTrigger, setValidationTrigger] = useState(true);
   //const [typeStartDate, setTypeStartDate] = useState("date");
   const [initialValues, setInitialValues] = useState({
     initial: {
@@ -59,8 +60,14 @@ function Input(props) {
       commissionsOvernightEnabled: true,
       commissionsOvernightType: "percentage",
       commissionsOvernightAmount: 5,
-      orderFractioning: 0
-
+      orderFractioning: 0,
+      minimumOrderSize: 0,
+      takeProfitEnabled: true,
+      takeProfitType: "percentage",
+      takeProfitAmount: 5,
+      stopLossEnabled: true,
+      stopLossType: "percentage",
+      stopLossAmount: 5,
     },
     additional: {}
   });
@@ -156,9 +163,7 @@ function Input(props) {
     validationSchema,
     validate: async (values) => {
       //validationSchema.isValid(values).then((e) => validationTrigger ? setDisableButton(!e) : setDisableButton(true));
-      console.log(values, validationSchema)
-
-      validationSchema.isValid(values).then((e) => setDisableButton(!e));
+      if (validationTrigger) validationSchema.isValid(values).then((e) => setDisableButton(!e));
     },
   });
 
@@ -342,6 +347,7 @@ function Input(props) {
             id="strategy"
             size="small"
             onChange={(newValue) => {
+              setValidationTrigger(false);
               setStrategySelected(newValue.target.value)
               let obj = {}
               newValue.target.value.indicators_parameters_config.map(indicator => obj[indicator.name] = indicator.default_value)
@@ -355,7 +361,10 @@ function Input(props) {
                   strategy: newValue.target.value,
                   ...obj
                 }
-              ).then((e) => setDisableButton(!e));
+              ).then((e) => {
+                setDisableButton(!e)
+                setValidationTrigger(true);
+              });
             }
             }
             value={inputBacktesterFormik.values.strategy}
@@ -386,7 +395,7 @@ function Input(props) {
               <FormControlLabel
                 id="commissionsOnOrderFillEnabled"
                 control={<Checkbox />}
-                label={t("backtester.OnOrderFill")}
+                label={t("backtester.onOrderFill")}
                 checked={inputBacktesterFormik.values.commissionsOnOrderFillEnabled}
                 onChange={newValue => inputBacktesterFormik.setFieldValue("commissionsOnOrderFillEnabled", newValue.target.checked)}
               />
@@ -486,7 +495,7 @@ function Input(props) {
                 id="minimumOrderSize"
                 size="small"
                 onChange={(newValue) => inputBacktesterFormik.setFieldValue("minimumOrderSize", newValue.target.value)}
-                value={inputBacktesterFormik.values.orderFractioning}
+                value={inputBacktesterFormik.values.minimumOrderSize}
                 label={t("backtester.minimumOrderSize")}
               >
                 <MenuItem value={100}>100</MenuItem>
@@ -504,6 +513,87 @@ function Input(props) {
           marginTop: "10px",
           marginBottom: "10px",
         }}>
+          <span className="tbd">
+            <FormGroup>
+              <FormControlLabel
+                id="takeProfitEnabled"
+                control={<Checkbox />}
+                label={t("backtester.takeProfitEnabled")}
+                checked={inputBacktesterFormik.values.takeProfitEnabled}
+                onChange={newValue => inputBacktesterFormik.setFieldValue("takeProfitEnabled", newValue.target.checked)}
+              />
+            </FormGroup>
+            <div className="flex items-center  max-w-fit">
+              <ToggleButtonGroup
+                id="takeProfitType"
+                color="primary"
+                value={inputBacktesterFormik.values.takeProfitEnabled ? inputBacktesterFormik.values.takeProfitType : ""}
+                exclusive
+                size="small"
+                disabled={!inputBacktesterFormik.values.takeProfitEnabled}
+                onChange={(newValue) => inputBacktesterFormik.setFieldValue("takeProfitType", newValue.target.value)}
+              >
+                <ToggleButton value="absoluteValue"><PinOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
+                <ToggleButton value="percentage"><PercentOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
+              </ToggleButtonGroup>
+              <FormikTextField
+                size="small"
+                formikInstance={inputBacktesterFormik}
+                id="takeProfitAmount"
+                label={t("backtester.takeProfitAmount")}
+                type="number"
+                disabled={!inputBacktesterFormik.values.takeProfitEnabled}
+                InputProps={{
+                  endAdornment:
+                    <InputAdornment position="end">
+                      <span className={inputBacktesterFormik.values.takeProfitType == "percentage" ? "opacity-100" : "opacity-0"}>%</span>
+                    </InputAdornment>
+                }}
+              />
+            </div>
+            <FormGroup>
+              <FormControlLabel
+                id="stopLossEnabled"
+                control={<Checkbox />}
+                label={t("backtester.stopLossEnabled")}
+                checked={inputBacktesterFormik.values.stopLossEnabled}
+                onChange={newValue => inputBacktesterFormik.setFieldValue("stopLossEnabled", newValue.target.checked)}
+              />
+            </FormGroup>
+            <div className="flex items-center  max-w-fit">
+              <ToggleButtonGroup
+                id="stopLossType"
+                color="primary"
+                value={inputBacktesterFormik.values.stopLossEnabled ? inputBacktesterFormik.values.stopLossType : ""}
+                exclusive
+                size="small"
+                disabled={!inputBacktesterFormik.values.stopLossEnabled}
+                onChange={(newValue) => inputBacktesterFormik.setFieldValue("stopLossType", newValue.target.value)}
+              >
+                <ToggleButton value="absoluteValue"><PinOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
+                <ToggleButton value="percentage"><PercentOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
+              </ToggleButtonGroup>
+              <FormikTextField
+                size="small"
+                formikInstance={inputBacktesterFormik}
+                id="stopLossAmount"
+                label={t("backtester.stopLossAmount")}
+                type="number"
+                disabled={!inputBacktesterFormik.values.stopLossEnabled}
+                InputProps={{
+                  endAdornment:
+                    <InputAdornment position="end">
+                      <span className={inputBacktesterFormik.values.stopLossType == "percentage" ? "opacity-100" : "opacity-0"}>%</span>
+                    </InputAdornment>
+                }}
+              />
+            </div>
+            {((inputBacktesterFormik.values.stopLossEnabled && inputBacktesterFormik.values.takeProfitEnabled)
+              && (inputBacktesterFormik.values.stopLossType == inputBacktesterFormik.values.takeProfitType)) &&
+              <Typography align="center" variant="body1" >
+                {t("backtester.rewardToRiskRatio") + ": " + (inputBacktesterFormik.values.takeProfitAmount / inputBacktesterFormik.values.stopLossAmount).toFixed(2)}
+              </Typography>}
+          </span>
         </GenericCard>
       </Masonry>
     </form >

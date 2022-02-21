@@ -247,7 +247,7 @@
 		"benchmarkPerformance": "Benchmark Performance (B&H)",
 		"strategyPerformance": "Performance della Strategia",
 		"commissions": "Commissioni",
-		"OnOrderFill": "All'Esecuzione dell'Ordine",
+		"onOrderFill": "All'Esecuzione dell'Ordine",
 		"commissionsPerOrder": "Per Ordine",
 		"overnight": "Durante la Notte",
 		"positionSizing": "Dimensione degli Ordini",
@@ -256,6 +256,7 @@
 		"orderFractioning": "Frazionamento degli Ordini",
 		"fluidFractioning": "Frazionamento Fluido",
 		"minimumOrderSize": "Dimensione Minima dell'Ordine",
-		"noMinimumSize": "Nessuna Dimensione Minima"
+		"noMinimumSize": "Nessuna Dimensione Minima",
+		"profitableOrders": "Ordini Profittevoli"
 	}
 }
