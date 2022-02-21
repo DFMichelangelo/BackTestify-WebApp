@@ -17,7 +17,8 @@ export default function Theme(props) {
   const matches = useMediaQuery("(max-width:" + config.mobileScreenWidth + ")");
 
   const DivBehindDrawer = styled('div')(({ theme }) => ({
-    width: `calc(${theme.spacing(7)} + 1px)`,
+    width: `calc(${theme.spacing(9)} + 5px)`,
+    //backgroundColor: "red",
   }));
 
   const isOpen = (value, openType) => {
@@ -45,7 +46,7 @@ export default function Theme(props) {
         <Header handleDrawerOpenOnClick={handleDrawerOpenOnClick} />
       )}
       {themeContext.showSidebarComponents(matches) && (<>
-        <DivBehindDrawer className="hello" />
+        <DivBehindDrawer />
         <Sidebar
           handleDrawerOpenOnHover={handleDrawerOpenOnHover}
           handleDrawerCloseOnHover={handleDrawerCloseOnHover}

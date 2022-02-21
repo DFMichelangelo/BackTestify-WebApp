@@ -172,7 +172,7 @@
 		"benchmarkFinancialInstrumentName": "Nome Strumento di Benchmark",
 		"timeframe": "Timeframe",
 		"strategy": "Strategia",
-		"exogenVariables": "Variabili Eseogene",
+		"exogenVariables": "Variabili Esogene",
 		"dataInput": "Dati di Input",
 		"rawData": "Dati Raw",
 		"duration": "Durata",
@@ -245,6 +245,17 @@
 		"return": "Ritorno",
 		"volatility": "Volatilità",
 		"benchmarkPerformance": "Benchmark Performance (B&H)",
-		"strategyPerformance": "Performance della Strategia"
+		"strategyPerformance": "Performance della Strategia",
+		"commissions": "Commissioni",
+		"OnOrderFill": "All'Esecuzione dell'Ordine",
+		"commissionsPerOrder": "Per Ordine",
+		"overnight": "Durante la Notte",
+		"positionSizing": "Dimensione degli Ordini",
+		"stopLossAndTakeProfit": "Stop Loss e Take Profit",
+		"brokerSettings": "Impostazioni del Broker",
+		"orderFractioning": "Frazionamento degli Ordini",
+		"fluidFractioning": "Frazionamento Fluido",
+		"minimumOrderSize": "Dimensione Minima dell'Ordine",
+		"noMinimumSize": "Nessuna Dimensione Minima"
 	}
 }

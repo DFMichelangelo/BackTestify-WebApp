@@ -6,16 +6,17 @@ import NumberFormat from "react-number-format";
 
 
 let NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
-    const { id, onChange, formikInstance, ...other } = props;
+    const { id, onChange, ...other } = props;
     return (
         <NumberFormat
+            id={id}
             key={id}
             getInputRef={ref}
             //onValueChange={(values, sourceInfo) => formikInstance.setFieldValue(id, values.floatValue)}
             onValueChange={values => onChange(values.floatValue)}
-            thousandSeparator
-            //thousandSeparator="."
-            //decimalSeparator=","
+            //onBlur={formikInstance.handleBlur}
+            thousandSeparator="˙"
+            decimalSeparator="."
             isNumericString
             {...other}
         />
@@ -23,16 +24,18 @@ let NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref
 });
 
 function FormikTextField(props) {
-    const { formikInstance, id, label, type, disabled, readOnly, style, errorAfterTouch } = props
+    const { formikInstance, id, label, type, disabled, readOnly, size, style, InputProps, triggerAfterTouch } = props
     const { t } = useTranslation();
 
     const onChangeNonNumber = e => formikInstance.handleChange(e)
     const onChangeNumber = e => formikInstance.setFieldValue(id, e)
+
     return (
         <TextField
-            error={errorAfterTouch ? Boolean(formikInstance.touched[id] && formikInstance.errors[id]) : Boolean(formikInstance.errors[id])}
+            error={triggerAfterTouch ? Boolean(formikInstance.touched[id] && formikInstance.errors[id]) : Boolean(formikInstance.errors[id])}
             style={style}
             id={id}
+            size={size}
             label={t(label)}
             //type={type}
             onChange={type == "number" ? onChangeNumber : onChangeNonNumber}
@@ -40,11 +43,17 @@ function FormikTextField(props) {
             value={formikInstance.values[id] || ""}
             disabled={disabled}
             readOnly={readOnly}
-            helperText={t(formikInstance.errors[id])}
-            //inputProps={{ inputProps }}//{{ inputMode: 'numeric', pattern: '[0-9]*' }}
+            helperText={
+                triggerAfterTouch
+                    ?
+                    formikInstance.touched[id] && t(formikInstance.errors[id])
+                    :
+                    t(formikInstance.errors[id])
+            }
             InputProps={(type == "number" ? {
                 inputComponent: NumberFormatCustom,
-            } : {})}
+                ...InputProps
+            } : InputProps)}
 
         />
     )

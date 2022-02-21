@@ -244,6 +244,17 @@
 		"return": "Return",
 		"volatility": "Volatility",
 		"benchmarkPerformance": "Benchmark Performance (B&H)",
-		"strategyPerformance": "Strategy Performance"
+		"strategyPerformance": "Strategy Performance",
+		"commissions": "Commissions",
+		"OnOrderFill": "On Order Fill",
+		"commissionsPerOrder": "Per Order",
+		"overnight": "Overnight",
+		"positionSizing": "Position Sizing",
+		"stopLossAndTakeProfit": "Stop Loss and Take Profit",
+		"brokerSettings": "Broker Settings",
+		"orderFractioning": "Order Fractioning",
+		"fluidFractioning": "Fluid Fractioning",
+		"minimumOrderSize": "Minimum Order Size",
+		"noMinimumSize": "No Minimum Size"
 	}
 }
