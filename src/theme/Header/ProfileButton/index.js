@@ -34,7 +34,6 @@ function ProfileButton(props) {
   const { t } = useTranslation();
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
-
   return (
     <div className="profileButton flex-grow flex justify-end">
       <Tooltip title={t("profileButton.profile")}>

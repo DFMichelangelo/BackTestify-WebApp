@@ -21,8 +21,8 @@ const SidebarMenu = [
       },
       {
         type: "item",
-        id: "backtester.underlying",
-        to: "/p/backtester/underlying",
+        id: "backtester.benchmark",
+        to: "/p/backtester/benchmark",
         icon: <ShowChartOutlinedIcon />,
         exact: true,
       },

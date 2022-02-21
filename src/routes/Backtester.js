@@ -2,7 +2,7 @@ import React, { lazy, useContext } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { BacktesterContext } from "contexts/Providers/BacktesterProvider";
 const Input = lazy(() => import("views/Input"));
-const Underlying = lazy(() => import("views/Underlying"));
+const Benchmark = lazy(() => import("views/Benchmark"));
 const Portfolio = lazy(() => import("views/Portfolio"));
 const Orders = lazy(() => import("views/Orders"));
 const Performance = lazy(() => import("views/Performance"));
@@ -19,7 +19,7 @@ function Backtester() {
         <Switch>
             <Route path="/p/backtester/input" component={Input} />
             {backtesterContext.backtesterResults ? (<>
-                <Route path="/p/backtester/underlying" component={Underlying} />
+                <Route path="/p/backtester/benchmark" component={Benchmark} />
                 <Route path="/p/backtester/orders" component={Orders} />
                 <Route path="/p/backtester/portfolio" component={Portfolio} />
                 <Route path="/p/backtester/performance" component={Performance} />

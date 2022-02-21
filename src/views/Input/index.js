@@ -8,17 +8,17 @@ import { DateTime } from "luxon";
 import MenuItem from '@mui/material/MenuItem';
 import GenericCard from "components/GenericCard";
 import RoundLoader from "components/RoundLoader";
+import Switch from '@mui/material/Switch';
 import Endpoints from "Endpoints";
 import InputOutlinedIcon from '@mui/icons-material/InputOutlined';
 import * as Yup from "yup";
 import InputAdornment from '@mui/material/InputAdornment';
 import DatePicker from '@mui/lab/DatePicker';
-import FormGroup from '@mui/material/FormGroup';
+import classnames from "classnames";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormikTextField from "components/FormikComponents/FormikTextField";
 import TextField from '@mui/material/TextField';
-import Switch from '@mui/material/Switch';
-import PercentOutlinedIcon from '@mui/icons-material/PercentOutlined';
+import Tooltip from '@mui/material/Tooltip';
 import { Typography } from "@mui/material";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -26,7 +26,6 @@ import Divider from '@mui/material/Divider';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Checkbox from '@mui/material/Checkbox';
 import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
-import PinOutlinedIcon from '@mui/icons-material/PinOutlined';
 import Masonry from '@mui/lab/Masonry';
 
 function Input(props) {
@@ -35,10 +34,11 @@ function Input(props) {
   const [disableButton, setDisableButton] = useState(true);
   const [strategies, setStrategies] = useState([])
   const [strategySelected, setStrategySelected] = useState(null)
+  const [advancedSettings, setAdvancedSettings] = useState(true)
   const { t } = useTranslation();
   const { fetch: fetchStrategies, loading: loadingStrategies } = useFetch();
   const [validationTrigger, setValidationTrigger] = useState(true);
-  //const [typeStartDate, setTypeStartDate] = useState("date");
+
   const [initialValues, setInitialValues] = useState({
     initial: {
       startDate: DateTime.now().minus({ years: 1 }),
@@ -68,6 +68,7 @@ function Input(props) {
       stopLossEnabled: true,
       stopLossType: "percentage",
       stopLossAmount: 5,
+      openNewOrderOnContrarianSignal: true
     },
     additional: {}
   });
@@ -94,9 +95,6 @@ function Input(props) {
     strategy: Yup.object().required(),
   });
 
-  useEffect(() => {
-
-  }, [strategySelected])
   useEffect(async () => {
     themeContext.setTitle("backtester.input", <InputOutlinedIcon />);
     const result = await fetchStrategies({
@@ -167,24 +165,51 @@ function Input(props) {
     },
   });
 
+  useEffect(() => {
+    let show = advancedSettings
+    inputBacktesterFormik.setFieldValue("commissionsOnOrderFillEnabled", show)
+    inputBacktesterFormik.setFieldValue("commissionsOvernightEnabled", show)
+    if (show == false) {
+      inputBacktesterFormik.setFieldValue("orderFractioning", 0)
+      inputBacktesterFormik.setFieldValue("minimumOrderSize", 0)
+    }
+  }, [advancedSettings])
 
+  const toggleButtons = [
+
+    <ToggleButton key="absoluteValue" value="absoluteValue">123</ToggleButton>,
+
+    <ToggleButton key="percentage" value="percentage">%</ToggleButton>
+
+  ]
   if (loadingStrategies) return <RoundLoader />;
 
+  const showRewardRiskRatio = ((inputBacktesterFormik.values.stopLossEnabled && inputBacktesterFormik.values.takeProfitEnabled)
+    && (inputBacktesterFormik.values.stopLossType == inputBacktesterFormik.values.takeProfitType))
   return (
     <form onSubmit={inputBacktesterFormik.handleSubmit} >
-      <LoadingButton
-        style={{ margin: "10px" }}
-        size="large"
-        loading={inputBacktesterFormik.isSubmitting}
-        endIcon={<UpdateOutlinedIcon />}
-        type="submit"
-        variant="contained"
-        disabled={disableButton}
-        loadingPosition="end"
-      >
-        {t("backtester.backtest")}
-      </LoadingButton>
-      <Masonry columns={4} spacing={2} sx={{ margin: "0px !important" }}>
+      <div className="flex items-center">
+        <LoadingButton
+          style={{ margin: "10px" }}
+          size="large"
+          loading={inputBacktesterFormik.isSubmitting}
+          endIcon={<UpdateOutlinedIcon />}
+          type="submit"
+          variant="contained"
+          disabled={disableButton}
+          loadingPosition="end"
+        >
+          {t("backtester.backtest")}
+        </LoadingButton>
+
+        <FormControlLabel
+          control={<Switch size="large" />}
+          label={t("backtester.advancedSettings")}
+          checked={advancedSettings}
+          onChange={() => setAdvancedSettings(!advancedSettings)}
+        />
+      </div>
+      <Masonry columns={5} spacing={3} sx={{ margin: "0px !important" }}>
         <GenericCard title="backtester.dataInput" classNameContent="flex flex-col" width="300px" margins={{
           margin: "0px",
           marginTop: "10px",
@@ -302,8 +327,7 @@ function Input(props) {
                 size="small"
                 onChange={(newValue) => inputBacktesterFormik.setFieldValue("positionSizingType", newValue.target.value)}
               >
-                <ToggleButton value="absoluteValue"><PinOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
-                <ToggleButton value="percentage"><PercentOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
+                {toggleButtons}
               </ToggleButtonGroup>
               <FormikTextField
                 formikInstance={inputBacktesterFormik}
@@ -342,6 +366,17 @@ function Input(props) {
           marginTop: "10px",
           marginBottom: "10px",
         }}>
+          <span className="tbd">
+            <FormControlLabel
+              sx={{ margin: "0px" }}
+              control={
+                <Switch
+                  checked={inputBacktesterFormik.values.openNewOrderOnContrarianSignal}
+                  onChange={(e) => inputBacktesterFormik.setFieldValue("openNewOrderOnContrarianSignal", e.target.checked)}
+                />}
+              label={<Typography variant="body2" gutterBottom>{t("backtester.openNewOrderOnContrarianSignal")}</Typography>} />
+          </span>
+          <Divider variant="middle" />
           <TextField
             select
             id="strategy"
@@ -385,21 +420,21 @@ function Input(props) {
             />
           )}
         </GenericCard>
-        <GenericCard title="backtester.commissions" classNameContent="flex flex-col" margin={{
+
+        {advancedSettings && <GenericCard title="backtester.commissions" classNameContent="flex flex-col" margin={{
           margin: "0px",
           marginTop: "10px",
           marginBottom: "10px",
         }}>
           <span className="tbd">
-            <FormGroup>
-              <FormControlLabel
-                id="commissionsOnOrderFillEnabled"
-                control={<Checkbox />}
-                label={t("backtester.onOrderFill")}
-                checked={inputBacktesterFormik.values.commissionsOnOrderFillEnabled}
-                onChange={newValue => inputBacktesterFormik.setFieldValue("commissionsOnOrderFillEnabled", newValue.target.checked)}
-              />
-            </FormGroup>
+
+            <FormControlLabel
+              id="commissionsOnOrderFillEnabled"
+              control={<Checkbox />}
+              label={t("backtester.onOrderFill")}
+              checked={inputBacktesterFormik.values.commissionsOnOrderFillEnabled}
+              onChange={newValue => inputBacktesterFormik.setFieldValue("commissionsOnOrderFillEnabled", newValue.target.checked)}
+            />
             <div className="flex items-center  max-w-fit">
               <ToggleButtonGroup
                 id="commissionsOnOrderFillType"
@@ -410,8 +445,7 @@ function Input(props) {
                 disabled={!inputBacktesterFormik.values.commissionsOnOrderFillEnabled}
                 onChange={(newValue) => inputBacktesterFormik.setFieldValue("commissionsOnOrderFillType", newValue.target.value)}
               >
-                <ToggleButton value="absoluteValue"><PinOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
-                <ToggleButton value="percentage"><PercentOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
+                {toggleButtons}
               </ToggleButtonGroup>
               <FormikTextField
                 size="small"
@@ -430,15 +464,14 @@ function Input(props) {
             </div>
             <Divider variant="middle" />
 
-            <FormGroup>
-              <FormControlLabel
-                id="commissionsOvernightEnabled"
-                control={<Checkbox />}
-                label={t("backtester.overnight")}
-                checked={inputBacktesterFormik.values.commissionsOvernightEnabled}
-                onChange={newValue => inputBacktesterFormik.setFieldValue("commissionsOvernightEnabled", newValue.target.checked)}
-              />
-            </FormGroup>
+
+            <FormControlLabel
+              id="commissionsOvernightEnabled"
+              control={<Checkbox />}
+              label={t("backtester.overnight")}
+              checked={inputBacktesterFormik.values.commissionsOvernightEnabled}
+              onChange={newValue => inputBacktesterFormik.setFieldValue("commissionsOvernightEnabled", newValue.target.checked)}
+            />
             <div className="flex items-center  max-w-fit">
               <ToggleButtonGroup
                 id="commissionsOvernightType"
@@ -449,8 +482,7 @@ function Input(props) {
                 disabled={!inputBacktesterFormik.values.commissionsOvernightEnabled}
                 onChange={(newValue) => inputBacktesterFormik.setFieldValue("commissionsOvernightType", newValue.target.value)}
               >
-                <ToggleButton value="absoluteValue"><PinOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
-                <ToggleButton value="percentage"><PercentOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
+                {toggleButtons}
               </ToggleButtonGroup>
               <FormikTextField
                 size="small"
@@ -468,7 +500,7 @@ function Input(props) {
               />
             </div>
           </span>
-        </GenericCard>
+        </GenericCard>}
         <GenericCard title="backtester.brokerSettings" margin={{
           margin: "0px",
           marginTop: "10px",
@@ -514,15 +546,14 @@ function Input(props) {
           marginBottom: "10px",
         }}>
           <span className="tbd">
-            <FormGroup>
-              <FormControlLabel
-                id="takeProfitEnabled"
-                control={<Checkbox />}
-                label={t("backtester.takeProfitEnabled")}
-                checked={inputBacktesterFormik.values.takeProfitEnabled}
-                onChange={newValue => inputBacktesterFormik.setFieldValue("takeProfitEnabled", newValue.target.checked)}
-              />
-            </FormGroup>
+            <FormControlLabel
+              id="takeProfitEnabled"
+              control={<Checkbox />}
+              label={t("backtester.takeProfitEnabled")}
+              checked={inputBacktesterFormik.values.takeProfitEnabled}
+              onChange={newValue => inputBacktesterFormik.setFieldValue("takeProfitEnabled", newValue.target.checked)}
+            />
+
             <div className="flex items-center  max-w-fit">
               <ToggleButtonGroup
                 id="takeProfitType"
@@ -533,8 +564,7 @@ function Input(props) {
                 disabled={!inputBacktesterFormik.values.takeProfitEnabled}
                 onChange={(newValue) => inputBacktesterFormik.setFieldValue("takeProfitType", newValue.target.value)}
               >
-                <ToggleButton value="absoluteValue"><PinOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
-                <ToggleButton value="percentage"><PercentOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
+                {toggleButtons}
               </ToggleButtonGroup>
               <FormikTextField
                 size="small"
@@ -551,15 +581,15 @@ function Input(props) {
                 }}
               />
             </div>
-            <FormGroup>
-              <FormControlLabel
-                id="stopLossEnabled"
-                control={<Checkbox />}
-                label={t("backtester.stopLossEnabled")}
-                checked={inputBacktesterFormik.values.stopLossEnabled}
-                onChange={newValue => inputBacktesterFormik.setFieldValue("stopLossEnabled", newValue.target.checked)}
-              />
-            </FormGroup>
+            <FormControlLabel
+
+              id="stopLossEnabled"
+              control={<Checkbox />}
+              label={t("backtester.stopLossEnabled")}
+              checked={inputBacktesterFormik.values.stopLossEnabled}
+              onChange={newValue => inputBacktesterFormik.setFieldValue("stopLossEnabled", newValue.target.checked)}
+            />
+
             <div className="flex items-center  max-w-fit">
               <ToggleButtonGroup
                 id="stopLossType"
@@ -570,8 +600,7 @@ function Input(props) {
                 disabled={!inputBacktesterFormik.values.stopLossEnabled}
                 onChange={(newValue) => inputBacktesterFormik.setFieldValue("stopLossType", newValue.target.value)}
               >
-                <ToggleButton value="absoluteValue"><PinOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
-                <ToggleButton value="percentage"><PercentOutlinedIcon sx={{ fontSize: 24 }} /></ToggleButton>
+                {toggleButtons}
               </ToggleButtonGroup>
               <FormikTextField
                 size="small"
@@ -588,11 +617,12 @@ function Input(props) {
                 }}
               />
             </div>
-            {((inputBacktesterFormik.values.stopLossEnabled && inputBacktesterFormik.values.takeProfitEnabled)
-              && (inputBacktesterFormik.values.stopLossType == inputBacktesterFormik.values.takeProfitType)) &&
+            {/*            <span className={classnames(showRewardRiskRatio ? "visible" : "invisible")}>*/}
+            {showRewardRiskRatio &&
               <Typography align="center" variant="body1" >
                 {t("backtester.rewardToRiskRatio") + ": " + (inputBacktesterFormik.values.takeProfitAmount / inputBacktesterFormik.values.stopLossAmount).toFixed(2)}
               </Typography>}
+            {/*</span>*/}
           </span>
         </GenericCard>
       </Masonry>

@@ -8,6 +8,7 @@ import RoutingPublic from "./Public";
 import i18n from "i18n";
 import { DateTime } from "luxon";
 import Theme from "theme";
+import classnames from "classnames";
 import useFetch from "hooks/useFetch";
 import Endpoints from "Endpoints";
 import CookieConsentDrawer from "theme/CookieConsentDrawer";
@@ -79,7 +80,7 @@ function App(props) {
   };
 
   return (
-    <span>
+    <span className={classnames(themeContext.muiType == "light" ? "lightTheme" : "darkTheme")}>
       <CookieConsentDrawer />
       <Switch>
         <Route path="/terms-and-conditions" component={TermsAndConditions} />

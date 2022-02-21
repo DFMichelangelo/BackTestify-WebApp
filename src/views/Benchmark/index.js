@@ -10,66 +10,66 @@ import OverPeriodAnnualizedCard from "components/OverPeriodAnnualizedCard";
 import customTooltip from "components/ChartComponents/CustomTooltip";
 import customLegend from "components/ChartComponents/CustomLegend";
 
-function Underlying(props) {
+function Benchmark(props) {
     const themeContext = useContext(ThemeContext);
     const backtesterContext = useContext(BacktesterContext);
     const { t } = useTranslation();
     useEffect(() => {
-        themeContext.setTitle("backtester.underlying", <ShowChartOutlinedIcon />);
+        themeContext.setTitle("backtester.benchmark", <ShowChartOutlinedIcon />);
     }, []);
 
-    let underlyingPrices = [];
-    let underlyingReturns = [];
-    let underlyingReturnsDistribution = [];
-    let underlyingAcf = [];
-    let underlyingPacf = [];
+    let benchmarkPrices = [];
+    let benchmarkReturns = [];
+    let benchmarkReturnsDistribution = [];
+    let benchmarkAcf = [];
+    let benchmarkPacf = [];
     if (backtesterContext?.backtesterResults) {
-        underlyingPrices = backtesterContext?.backtesterResults?.raw_data.underlying.map((price, index) => {
+        benchmarkPrices = backtesterContext?.backtesterResults?.raw_data.benchmark.map((price, index) => {
             return {
                 date: index,
                 price
             }
         })
-        underlyingReturns = backtesterContext?.backtesterResults?.analytics.underlying.returns.map((returnValue, index) => {
+        benchmarkReturns = backtesterContext?.backtesterResults?.analytics.benchmark.returns.map((returnValue, index) => {
             return {
                 date: index,
                 returnValue: returnValue * 100
             }
         })
 
-        underlyingReturnsDistribution = backtesterContext?.backtesterResults?.analytics.underlying.returns_distribution.map((elem, index) => {
+        benchmarkReturnsDistribution = backtesterContext?.backtesterResults?.analytics.benchmark.returns_distribution.map((elem, index) => {
             return {
                 bin_edge: 100 * elem.bin_edge,
                 amount: elem.amount
             }
         })
-        underlyingAcf = backtesterContext?.backtesterResults?.analytics.underlying.autocorrelation_function.autocorrelation.map((autocorrelation, index) => {
+        benchmarkAcf = backtesterContext?.backtesterResults?.analytics.benchmark.autocorrelation_function.autocorrelation.map((autocorrelation, index) => {
             return {
                 lag: index + 1,
                 autocorrelation,
-                confidenceInterval: backtesterContext?.backtesterResults?.analytics.underlying.autocorrelation_function.confidence_intervals[index]
+                confidenceInterval: backtesterContext?.backtesterResults?.analytics.benchmark.autocorrelation_function.confidence_intervals[index]
             }
         })
 
-        underlyingPacf = backtesterContext?.backtesterResults?.analytics.underlying.partial_autocorrelation_function.partialAutocorrelation.map((partialAutocorrelation, index) => {
+        benchmarkPacf = backtesterContext?.backtesterResults?.analytics.benchmark.partial_autocorrelation_function.partialAutocorrelation.map((partialAutocorrelation, index) => {
             return {
                 lag: index + 1,
                 partialAutocorrelation,
-                confidenceInterval: backtesterContext?.backtesterResults?.analytics.underlying.partial_autocorrelation_function.confidence_intervals[index]
+                confidenceInterval: backtesterContext?.backtesterResults?.analytics.benchmark.partial_autocorrelation_function.confidence_intervals[index]
             }
         })
     }
 
 
-    let stdReturns = backtesterContext.backtesterResults.analytics.underlying.returns_std * 100
-    let meanReturns = backtesterContext.backtesterResults.analytics.underlying.returns_mean * 100
+    let stdReturns = backtesterContext.backtesterResults.analytics.benchmark.returns_std * 100
+    let meanReturns = backtesterContext.backtesterResults.analytics.benchmark.returns_mean * 100
 
     return (
         <div>
             <div className="flex flex-row w-full">
                 <GenericCard title="backtester.timeseries" width={"50%"}>
                     <ResponsiveContainer minHeight={300} >
-                        <LineChart data={underlyingPrices} >
+                        <LineChart data={benchmarkPrices} >
                             <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} />
                             <YAxis type="number" domain={['auto', 'auto']} />
                             <Line dot={false} type="monotone" dataKey="price" stroke="#8884d8" />
@@ -81,7 +81,7 @@ function Underlying(props) {
                 </GenericCard>
                 <GenericCard title="backtester.pricesDistribution" width={"50%"}>
                     <ResponsiveContainer minHeight={300} >
-                        <BarChart layout="vertical" data={backtesterContext?.backtesterResults?.analytics.underlying.prices_distribution} >
+                        <BarChart layout="vertical" data={backtesterContext?.backtesterResults?.analytics.benchmark.prices_distribution} >
                             <YAxis reversed={true} type="number" dataKey="bin_edge" domain={['auto', 'auto']} />
                             <XAxis type="number" />
                             <Bar dot={false} type="monotone" dataKey="amount" fill="#8884d8" />
@@ -94,18 +94,18 @@ function Underlying(props) {
             </div>
             <div className="flex flex-row w-full">
                 <OverPeriodAnnualizedCard
-                    title="backtester.underlyingAbsoluteReturn"
-                    data={[backtesterContext?.backtesterResults?.analytics.underlying.absolute_return_over_period.toFixed(2),
-                    backtesterContext?.backtesterResults?.analytics.underlying.absolute_return_annualized.toFixed(2)]} />
+                    title="backtester.absoluteReturn"
+                    data={[backtesterContext?.backtesterResults?.analytics.benchmark.absolute_return_over_period.toFixed(2),
+                    backtesterContext?.backtesterResults?.analytics.benchmark.absolute_return_annualized.toFixed(2)]} />
 
                 <OverPeriodAnnualizedCard
-                    title="backtester.underlyingPercentageReturn"
-                    data={[(100 * backtesterContext?.backtesterResults?.analytics.underlying.percentage_return_over_period).toFixed(2) + " %",
-                    (100 * backtesterContext?.backtesterResults?.analytics.underlying.percentage_return_annualized).toFixed(2) + " %"]} />
+                    title="backtester.percentageReturn"
+                    data={[(100 * backtesterContext?.backtesterResults?.analytics.benchmark.percentage_return_over_period).toFixed(2) + " %",
+                    (100 * backtesterContext?.backtesterResults?.analytics.benchmark.percentage_return_annualized).toFixed(2) + " %"]} />
                 <OverPeriodAnnualizedCard
-                    title="backtester.underlyingPercentageVolatility"
-                    data={[(100 * backtesterContext?.backtesterResults?.analytics.underlying.volatility_over_period).toFixed(2) + " %",
-                    (100 * backtesterContext?.backtesterResults?.analytics.underlying.volatility_annualized).toFixed(2) + " %"]} />
+                    title="backtester.percentageVolatility"
+                    data={[(100 * backtesterContext?.backtesterResults?.analytics.benchmark.volatility_over_period).toFixed(2) + " %",
+                    (100 * backtesterContext?.backtesterResults?.analytics.benchmark.volatility_annualized).toFixed(2) + " %"]} />
             </div>
             <div className="flex flex-row w-full">
                 <MetricCard title="backtester.returns" width={"50%"}
@@ -120,11 +120,11 @@ function Underlying(props) {
                         }]}
                 >
                     <ResponsiveContainer minHeight={300} >
-                        <BarChart data={underlyingReturns}>
+                        <BarChart data={benchmarkReturns}>
                             <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} />
                             <YAxis type="number" unit={"%"} domain={['auto', 'auto']} />
                             <CartesianGrid stroke="#ccc" />
-                            <ReferenceArea x1={0} x2={underlyingReturns.length - 1} y1={meanReturns - stdReturns} y2={meanReturns + stdReturns} stroke="red" strokeOpacity={0.3} />
+                            <ReferenceArea x1={0} x2={benchmarkReturns.length - 1} y1={meanReturns - stdReturns} y2={meanReturns + stdReturns} stroke="red" strokeOpacity={0.3} />
                             <ReferenceLine y={0} stroke="#000" />
                             <ReferenceLine y={meanReturns} stroke="green" strokeDasharray="3 3" />
 
@@ -136,11 +136,11 @@ function Underlying(props) {
                 </MetricCard>
                 <GenericCard title="backtester.returnsDistribution" width={"50%"}>
                     <ResponsiveContainer minHeight={300} >
-                        <BarChart data={underlyingReturnsDistribution} >
+                        <BarChart data={benchmarkReturnsDistribution} >
                             <XAxis type="number" unit={"%"} dataKey="bin_edge" domain={['auto', 'auto']} />
                             <YAxis type="number" />
                             <CartesianGrid stroke="#ccc" />
-                            <ReferenceArea x1={meanReturns - stdReturns} x2={meanReturns + stdReturns} y1={0} y2={Math.max(...underlyingReturnsDistribution.map(elem => elem.amount))} stroke="red" strokeOpacity={0.3} />
+                            <ReferenceArea x1={meanReturns - stdReturns} x2={meanReturns + stdReturns} y1={0} y2={Math.max(...benchmarkReturnsDistribution.map(elem => elem.amount))} stroke="red" strokeOpacity={0.3} />
                             <Bar dataKey="amount" fill="#8884d8" />
 
                             <ReferenceLine x={0} stroke="#000" />
@@ -154,7 +154,7 @@ function Underlying(props) {
             <div className="flex flex-row w-full">
                 <GenericCard title="backtester.autocorrelationFunction" width={"50%"}>
                     <ResponsiveContainer minHeight={300} >
-                        <ComposedChart data={underlyingAcf}>
+                        <ComposedChart data={benchmarkAcf}>
                             <XAxis dataKey="lag" />
                             <YAxis />
                             <CartesianGrid stroke="#ccc" />
@@ -168,7 +168,7 @@ function Underlying(props) {
                 </GenericCard>
                 <GenericCard title="backtester.partialAutocorrelationFunction" width={"50%"}>
                     <ResponsiveContainer minHeight={300} >
-                        <ComposedChart data={underlyingPacf}>
+                        <ComposedChart data={benchmarkPacf}>
                             <XAxis dataKey="lag" />
                             <YAxis />
                             <CartesianGrid stroke="#ccc" />
@@ -184,4 +184,4 @@ function Underlying(props) {
         </div>)
 }
 
-export default Underlying;
+export default Benchmark;

@@ -172,8 +172,8 @@ function StandardDialog(props) {
       validationSchema={validationSchema}
       initialValues={{
         text: "",
-      }}
-      render={(formikBag) => {
+      }}>
+      {(formikBag) => {
         const buttons = createButtons(formikBag, showMoreInfo);
         return (
           <Form>
@@ -208,7 +208,7 @@ function StandardDialog(props) {
           </Form>
         );
       }}
-    />
+    </Formik>
   );
 }
 

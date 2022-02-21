@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import classnames from 'classnames';
 import "./style.scss"
 
-function ChartCard(props) {
+function GenericCard(props) {
     const { title, subtitle, classNameContent, showSubtitle } = props;
     const { t } = useTranslation();
     return (
@@ -22,7 +22,7 @@ function ChartCard(props) {
                 //marginRight: props?.margins?.marginRight + "px !important",
 
             }}>
-            <Typography align="center" variant="subtitle1">
+            <Typography align="center" variant="subtitle1" gutterBottom>
                 <span style={{
                     fontWeight: "bold",
                 }}>
@@ -44,4 +44,4 @@ function ChartCard(props) {
         </Card >
     )
 }
-export default ChartCard
+export default GenericCard

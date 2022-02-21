@@ -23,7 +23,7 @@ function Performance(props) {
         equityLineValue = backtesterContext?.backtesterResults?.raw_data.portfolio_value_history.map((portfolioValue, index) => {
             return {
                 date: index, // TODO - provsional
-                benchmarkAssetValue: backtesterContext?.backtesterResults?.raw_data.benchmark[index],
+                benchmarkAssetValue: backtesterContext?.backtesterResults?.raw_data.benchmark[index + backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today],
                 equityValue: portfolioValue.liquidity + portfolioValue.assets_value - portfolioInitialValue
             }
         })
@@ -83,72 +83,72 @@ function Performance(props) {
                 <div className="flex flex-row">
                     <MetricCard title="backtester.strategyPerformance" multiMetricData={[
                         {
-                            subsubtitle: "backtester.return",
+                            subtitle: "backtester.return",
                             metrics: [{
-                                subtitle: "backtester.overPeriod",
+                                subsubtitle: "backtester.overPeriod",
                                 metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.percentage_return_over_period).toFixed(2) + " %"
                             },
                             {
-                                subtitle: "backtester.annualized",
+                                subsubtitle: "backtester.annualized",
                                 metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.percentage_return_annualized).toFixed(2) + " %"
                             }]
                         },
                         {
-                            subsubtitle: "backtester.volatility",
+                            subtitle: "backtester.volatility",
                             metrics: [{
-                                subtitle: "backtester.overPeriod",
+                                subsubtitle: "backtester.overPeriod",
                                 metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.volatility_over_period).toFixed(2) + " %"
                             },
                             {
-                                subtitle: "backtester.annualized",
+                                subsubtitle: "backtester.annualized",
                                 metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.volatility_annualized).toFixed(2) + " %"
                             }]
                         },
                     ]} />
                     <MetricCard title="backtester.underlyingPerformance" multiMetricData={[
                         {
-                            subsubtitle: "backtester.return",
+                            subtitle: "backtester.return",
                             metrics: [{
-                                subtitle: "backtester.overPeriod",
+                                subsubtitle: "backtester.overPeriod",
                                 metricValue: (100 * backtesterContext?.backtesterResults?.analytics.underlying.percentage_return_over_period).toFixed(2) + " %"
                             },
                             {
-                                subtitle: "backtester.annualized",
+                                subsubtitle: "backtester.annualized",
                                 metricValue: (100 * backtesterContext?.backtesterResults?.analytics.underlying.percentage_return_annualized).toFixed(2) + " %"
                             }]
                         },
                         {
-                            subsubtitle: "backtester.volatility",
+                            subtitle: "backtester.volatility",
                             metrics: [{
-                                subtitle: "backtester.overPeriod",
+                                subsubtitle: "backtester.overPeriod",
                                 metricValue: (100 * backtesterContext?.backtesterResults?.analytics.underlying.volatility_over_period).toFixed(2) + " %"
                             },
                             {
-                                subtitle: "backtester.annualized",
+                                subsubtitle: "backtester.annualized",
                                 metricValue: (100 * backtesterContext?.backtesterResults?.analytics.underlying.volatility_annualized).toFixed(2) + " %"
                             }]
                         },
                     ]} />
                     <MetricCard title="backtester.benchmarkPerformance" multiMetricData={[
                         {
-                            subsubtitle: "backtester.return",
+                            subtitle: "backtester.return",
                             metrics: [{
-                                subtitle: "backtester.overPeriod",
+                                subsubtitle: "backtester.overPeriod",
                                 metricValue: (100 * backtesterContext?.backtesterResults?.analytics.benchmark.percentage_return_over_period).toFixed(2) + " %"
                             },
                             {
-                                subtitle: "backtester.annualized",
+                                subsubtitle: "backtester.annualized",
                                 metricValue: (100 * backtesterContext?.backtesterResults?.analytics.benchmark.percentage_return_annualized).toFixed(2) + " %"
                             }]
                         },
                         {
-                            subsubtitle: "backtester.volatility",
+                            subtitle: "backtester.volatility",
                             metrics: [{
-                                subtitle: "backtester.overPeriod",
+                                subsubtitle: "backtester.overPeriod",
                                 metricValue: (100 * backtesterContext?.backtesterResults?.analytics.benchmark.volatility_over_period).toFixed(2) + " %"
                             },
                             {
-                                subtitle: "backtester.annualized",
+                                subsubtitle: "backtester.annualized",
                                 metricValue: (100 * backtesterContext?.backtesterResults?.analytics.benchmark.volatility_annualized).toFixed(2) + " %"
                             }]
                         },

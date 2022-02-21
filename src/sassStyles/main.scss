@@ -20,8 +20,21 @@ html {
 	border-radius: 5%;
 	display: flex;
 	flex-direction: column;
-  }
-  
+}
+
+
+.recharts-default-tooltip{
+	border-radius: $standardBorderRadius !important;
+}
+.lightTheme{
+
+}
+.darkTheme{
+	.recharts-default-tooltip{
+		background-color: rgb(35,35,35) !important;
+		border-color: rgb(35,35,35) !important;
+	}
+}
 .MuiTextField-root {
 	margin: 10px !important;
 }

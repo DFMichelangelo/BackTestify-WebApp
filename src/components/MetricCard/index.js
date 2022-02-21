@@ -15,7 +15,7 @@ function MetricCard(props) {
             {props.children}
             {multiMetricData ?
                 multiMetricData.map((value, valueIndex) =>
-                    <div key={valueIndex} className={classnames(valueIndex !== multiMetricData.length - 1 && "mb-5")}>
+                    <div key={valueIndex} className={classnames(valueIndex !== multiMetricData.length - 1 && "mb-3")}>
                         {value.metrics ?
                             <span key={value.subtitle}>
                                 <div className="text-center">
@@ -24,14 +24,14 @@ function MetricCard(props) {
                                         fontSize: "14px !important"
                                     }}>
                                         <Typography
-                                            align="center" variant="button"  >
+                                            align="center" variant="button" >
                                             {t(value.subtitle)}</Typography></span></div>
                                 <div className="flex flex-row justify-center">
                                     {value.metrics.map((metric, ind) =>
                                         <span key={metric.subtitle} className={classnames(ind !== value.metrics.length - 1 && "mr-2")}>
                                             <span className="flex flex-row">
                                                 <span className="flex flex-col">
-                                                    <Typography align="center" variant="overline" gutterBottom >
+                                                    <Typography align="center" variant="overline" >
                                                         <span style={{
                                                             color: "rgb(100, 100, 100)",
                                                         }}>
@@ -46,7 +46,7 @@ function MetricCard(props) {
                                                         </span>
                                                     </Typography>
                                                 </span>
-                                                {ind < value.metrics.length - 1 && <span className="ml-1">
+                                                {ind < value.metrics.length - 1 && <span className="ml-2">
                                                     <Divider orientation="vertical" />
                                                 </span>}
                                             </span>
@@ -55,7 +55,7 @@ function MetricCard(props) {
                                 </div>
                             </span>
                             :
-                            <span key={value.subtitle}><Typography variant="overline" gutterBottom >
+                            <span key={value.subtitle}><Typography variant="overline" >
                                 <span style={{
                                     color: "rgb(100, 100, 100)",
                                 }}>

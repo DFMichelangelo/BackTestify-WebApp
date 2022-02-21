@@ -26,7 +26,7 @@ function Portfolio(props) {
             return {
                 ...portfolioValue,
                 date: index, // TODO - provsional
-                benchmarkAssetValue: backtesterContext?.backtesterResults?.raw_data.benchmark[index],
+                benchmarkAssetValue: backtesterContext?.backtesterResults?.raw_data.benchmark[index + backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today],
                 totalPortfolioValue: portfolioValue.liquidity + portfolioValue.assets_value
             }
         })
@@ -73,16 +73,16 @@ function Portfolio(props) {
             <div>
                 <div className="flex flex-row">
                     <OverPeriodAnnualizedCard
-                        title="backtester.portfolioAbsoluteReturn"
+                        title="backtester.absoluteReturn"
                         data={[backtesterContext?.backtesterResults?.analytics.portfolio.absolute_return_over_period.toFixed(2),
                         backtesterContext?.backtesterResults?.analytics.portfolio.absolute_return_annualized.toFixed(2)]} />
 
                     <OverPeriodAnnualizedCard
-                        title="backtester.portfolioPercentageReturn"
+                        title="backtester.percentageReturn"
                         data={[(100 * backtesterContext?.backtesterResults?.analytics.portfolio.percentage_return_over_period).toFixed(2) + " %",
                         (100 * backtesterContext?.backtesterResults?.analytics.portfolio.percentage_return_annualized).toFixed(2) + " %"]} />
                     <OverPeriodAnnualizedCard
-                        title="backtester.portfolioPercentageVolatility"
+                        title="backtester.percentageVolatility"
                         data={[(100 * backtesterContext?.backtesterResults?.analytics.portfolio.volatility_over_period).toFixed(2) + " %",
                         (100 * backtesterContext?.backtesterResults?.analytics.portfolio.volatility_annualized).toFixed(2) + " %"]} />
 
