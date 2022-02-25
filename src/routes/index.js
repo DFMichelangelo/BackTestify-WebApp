@@ -80,7 +80,7 @@ function App(props) {
   };
 
   return (
-    <span className={classnames(themeContext.muiType == "light" ? "lightTheme" : "darkTheme")}>
+    <span className={classnames(themeContext.muiType === "light" ? "lightTheme" : "darkTheme")}>
       <CookieConsentDrawer />
       <Switch>
         <Route path="/terms-and-conditions" component={TermsAndConditions} />
