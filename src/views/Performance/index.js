@@ -9,6 +9,9 @@ import GenericCard from "components/GenericCard";
 import CustomLegend from 'components/ChartComponents/CustomLegend';
 import CustomTooltip from "components/ChartComponents/CustomTooltip";
 import { fromTimestampToDateString } from "auxiliaries/dates";
+import Chip from '@mui/material/Chip';
+import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
+import DoneOutlineOutlinedIcon from '@mui/icons-material/DoneOutlineOutlined';
 function Performance(props) {
     const themeContext = useContext(ThemeContext);
     const backtesterContext = useContext(BacktesterContext);
@@ -18,9 +21,13 @@ function Performance(props) {
     }, []);
 
     let equityLineValue = [];
+    let drawdownValues = [];
+    let underwaterValues = [];
     if (backtesterContext?.backtesterResults) {
+        const initialPortfolioValue = backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[0].liquidity
+        const initialBenchmarkValue = backtesterContext?.backtesterResults?.raw_data.benchmark[0]
         equityLineValue = backtesterContext?.backtesterResults?.raw_data.benchmark.map((benchmarkAssetValue, index) => {
-            const initialPortfolioValue = backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[0].liquidity
+
             const liquidity = index >= backtesterContext?.backtesterResults.amount_of_data_for_strategy_from_today
                 ? backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[index + 1 - backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today].liquidity
                 : initialPortfolioValue
@@ -30,8 +37,21 @@ function Performance(props) {
 
             return {
                 date: backtesterContext?.backtesterResults?.raw_data.dates[index],
-                benchmarkAssetValue,
+                benchmarkAssetValue: benchmarkAssetValue - initialBenchmarkValue,
                 equityValue
+            }
+        })
+
+        drawdownValues = backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.values.map((value, index) => {
+            return {
+                date: backtesterContext?.backtesterResults?.raw_data.dates[index + backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today],
+                value: value * 100
+            }
+        })
+        underwaterValues = backtesterContext?.backtesterResults?.analytics.portfolio.underwater.values.map((value, index) => {
+            return {
+                date: backtesterContext?.backtesterResults?.raw_data.dates[index + backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today],
+                value: value * 100
             }
         })
     }
@@ -73,7 +93,7 @@ function Performance(props) {
                         <MetricCard title="backtester.calmarRatio" multiMetricData={[
                             {
                                 subtitle: "backtester.annualized",
-                                metricValue: undefined,
+                                metricValue: typeof (backtesterContext.backtesterResults.analytics.performance.calmar_ratio_annualized) == "string" ? backtesterContext.backtesterResults.analytics.performance.calmar_ratio_annualized : backtesterContext.backtesterResults.analytics.performance.calmar_ratio_annualized.toFixed(2),
                             }]} />
                         <MetricCard title="backtester.alpha" multiMetricData={[
                             {
@@ -165,8 +185,8 @@ function Performance(props) {
             </div>
             <div className="flex flex-row w-full">
             </div>
-            <div className="flex flex-row w-full">
-                <GenericCard title="backtester.equityLine" width={"50%"}>
+            <div className="flex flex-col w-full">
+                <GenericCard title="backtester.equityLine" width={"100%"}>
                     <ResponsiveContainer minHeight={300} >
                         <ComposedChart minHeight={300} data={equityLineValue} >
                             <CartesianGrid stroke="#ccc" />
@@ -176,7 +196,6 @@ function Performance(props) {
                             <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} tickFormatter={fromTimestampToDateString} />
                             <YAxis yAxisId={0} type="number" domain={['auto', 'auto']} />
                             <YAxis yAxisId={1} orientation="right" type="number" domain={['auto', 'auto']} />
-
                             <defs>
                                 <linearGradient id="splitColor" x1="0" y1="0" x2="0" y2="1">
                                     <stop offset={off} stopColor="green" stopOpacity={1} />
@@ -190,15 +209,84 @@ function Performance(props) {
                         </ComposedChart>
                     </ResponsiveContainer>
                 </GenericCard>
-
-            </div>
-            <div className="flex flex-row w-full">
-                <GenericCard title="backtester.drawdown" width={"50%"}>
-
-                </GenericCard>
-                <GenericCard title="backtester.underwater" width={"50%"}>
-
-                </GenericCard>
+                <MetricCard
+                    title="backtester.drawdown"
+                    width={"100%"}
+                    horizontal
+                    multiMetricData={[
+                        {
+                            subtitle: "backtester.maxDrawdown",
+                            metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.max_drawdown).toFixed(2) + "%"
+                        },
+                        {
+                            subtitle: "backtester.durationOfMaxDrawdown",
+                            metricValue: backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.duration_of_max_drawdown
+                        },
+                        {
+                            subtitle: "backtester.maxDuration",
+                            metricValue: backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.max_duration
+                        },
+                        {
+                            subtitle: "backtester.drawdownOfMaxDuration",
+                            metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.drawdown_of_max_duration).toFixed(2) + "%"
+                        }
+                    ]}
+                >
+                    <ResponsiveContainer minHeight={300} >
+                        <LineChart data={drawdownValues} >
+                            <CartesianGrid stroke="#ccc" />
+                            <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} tickFormatter={fromTimestampToDateString} />
+                            <YAxis type="number" unit={"%"} />
+                            <Line unit={" %"} dot={false} type="monotone" dataKey="value" stroke="#8884d8" />
+                            {CustomTooltip()}
+                            {CustomLegend()}
+                        </LineChart>
+                    </ResponsiveContainer>
+                    <Chip
+                        color={backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.info.max_duration_has_recovered ? "success" : "warning"}
+                        icon={backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.info.max_duration_has_recovered ? <DoneOutlineOutlinedIcon /> : <WarningAmberOutlinedIcon />}
+                        label={t(backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.info.max_duration_has_recovered ? "backtester.maxDurationHasRecovered" : "backtester.maxDurationHasNotRecovered")}
+                    />
+                </MetricCard>
+                <MetricCard
+                    title="backtester.underwater"
+                    width={"100%"}
+                    horizontal
+                    multiMetricData={[
+                        {
+                            subtitle: "backtester.maxUnderwater",
+                            metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.underwater.max_underwater).toFixed(2) + "%"
+                        },
+                        {
+                            subtitle: "backtester.durationOfMaxUnderwater",
+                            metricValue: backtesterContext?.backtesterResults?.analytics.portfolio.underwater.duration_of_max_underwater
+                        },
+                        {
+                            subtitle: "backtester.maxDuration",
+                            metricValue: backtesterContext?.backtesterResults?.analytics.portfolio.underwater.max_duration
+                        },
+                        {
+                            subtitle: "backtester.underwaterOfMaxDuration",
+                            metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.underwater.underwater_of_max_duration).toFixed(2) + "%"
+                        }
+                    ]}
+                >
+                    <ResponsiveContainer minHeight={300} >
+                        <LineChart data={underwaterValues} >
+                            <CartesianGrid stroke="#ccc" />
+                            <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} tickFormatter={fromTimestampToDateString} />
+                            <YAxis type="number" unit={"%"} />
+                            <Line unit={" %"} dot={false} type="monotone" dataKey="value" stroke="#8884d8" />
+                            {CustomTooltip()}
+                            {CustomLegend()}
+                        </LineChart>
+                    </ResponsiveContainer>
+                    <Chip
+                        color={backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.info.max_duration_has_recovered ? "success" : "warning"}
+                        icon={backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.info.max_duration_has_recovered ? <DoneOutlineOutlinedIcon /> : <WarningAmberOutlinedIcon />}
+                        label={t(backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.info.max_duration_has_recovered ? "backtester.maxDurationHasRecovered" : "backtester.maxDurationHasNotRecovered")}
+                    />
+                </MetricCard>
             </div>
         </div>)
 }

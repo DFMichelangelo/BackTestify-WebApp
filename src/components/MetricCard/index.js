@@ -14,7 +14,7 @@ function MetricCard(props) {
         <GenericCard title={title} subtitle={subtitle} width={props.width} classname={classnames("metricCard", classname)} showSubtitle={multiMetricData ? false : true}>
             {props.children}
             {multiMetricData ?
-                <div className={classnames(horizontal && "flex")}>
+                <div className={classnames(horizontal && "flex justify-around")}>
                     {multiMetricData.map((value, valueIndex) =>
                         <div key={valueIndex} className={classnames((valueIndex !== multiMetricData.length - 1 && !horizontal) && "mb-3", (valueIndex !== multiMetricData.length - 1 && horizontal) && "mr-2 ")}>
                             {value.metrics ?
@@ -58,14 +58,14 @@ function MetricCard(props) {
                                     </div>
                                 </span>
                                 :
-                                <span key={value.subtitle}><Typography variant="overline" align={horizontal ? "center" : "left"}>
+                                <span key={value.subtitle}><Typography variant="overline" align="center" >
                                     <span style={{
                                         color: "rgb(100, 100, 100)",
                                     }}>
                                         {value?.subtitle ? t(value?.subtitle) : <br />}
                                     </span>
                                 </Typography>
-                                    <Typography variant="h6" align={horizontal ? "center" : "left"}>
+                                    <Typography variant="h6" align="center">
                                         <span style={{
                                             fontWeight: "semi-bold",
                                         }}>

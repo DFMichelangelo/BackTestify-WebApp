@@ -269,6 +269,17 @@
 		"longOnly": "Solo Long",
 		"shortOnly": "Solo Short",
 		"noLimitations": "Nessuna Limitazione",
-		"totalValueHelperText": "Valore Totale del Portafoglio, pari alla somma del Valore Patrimoniale e della Liquidità"
+		"totalValueHelperText": "Valore Totale del Portafoglio, pari alla somma del Valore Patrimoniale e della Liquidità",
+		"drawdown": "Drawdown",
+		"maxDrawdown": "Massimo Drawdown",
+		"durationOfMaxDrawdown": "Durata del Massimo Drawdown",
+		"maxDuration": "Durata Massima",
+		"drawdownOfMaxDuration": "Drawdown della Durata Massima",
+		"underwater": "Underwater",
+		"maxUnderwater": "Massimo Underwater",
+		"durationOfMaxUnderwater": "Durata del Massimo Underwater",
+		"underwaterOfMaxDuration": "Underwater della Durata Massima",
+		"maxDurationHasRecovered": "La Durata Massima Risulta Recuperata",
+		"maxDurationHasNotRecovered": "La Durata Massima Non Risulta Recuperata"
 	}
 }

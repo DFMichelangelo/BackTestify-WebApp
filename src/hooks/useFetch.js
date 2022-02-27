@@ -267,7 +267,6 @@ function useFetcher(props) {
         err?.response?.status === 500 ||
         err.message.toString() === "Network Error"
       ) {
-        console.log(counter.current[options.url + JSON.stringify(options.data)])
         if (counter.current[options.url + JSON.stringify(options.data)] < calls) {
           counter.current[options.url + JSON.stringify(options.data)] =
             counter.current[options.url + JSON.stringify(options.data)] + 1;

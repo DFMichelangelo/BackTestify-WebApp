@@ -7,8 +7,8 @@ import MetricCard from "components/MetricCard";
 import { useTranslation } from "react-i18next";
 import { BarChart, Brush, ComposedChart, Area, Bar, ReferenceLine, ReferenceArea, Legend, LineChart, Line, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
 import OverPeriodAnnualizedCard from "components/OverPeriodAnnualizedCard";
-import customTooltip from "components/ChartComponents/CustomTooltip";
-import customLegend from "components/ChartComponents/CustomLegend";
+import CustomTooltip from "components/ChartComponents/CustomTooltip";
+import CustomLegend from "components/ChartComponents/CustomLegend";
 
 import { fromTimestampToDateString } from "auxiliaries/dates";
 function Benchmark(props) {
@@ -92,8 +92,8 @@ function Benchmark(props) {
                             <YAxis type="number" domain={['auto', 'auto']} />
                             <Line dot={false} type="monotone" dataKey="price" stroke="#8884d8" />
                             <CartesianGrid stroke="#ccc" />
-                            {customTooltip()}
-                            {customLegend()}
+                            {CustomTooltip()}
+                            {CustomLegend()}
                         </LineChart>
                     </ResponsiveContainer>
                 </GenericCard>
@@ -104,15 +104,18 @@ function Benchmark(props) {
                             <XAxis type="number" />
                             <Bar dot={false} type="monotone" dataKey="amount" fill="#8884d8" />
                             <CartesianGrid stroke="#ccc" />
-                            {customTooltip()}
-                            {customLegend()}
+                            {CustomTooltip()}
+                            {CustomLegend()}
                         </BarChart>
                     </ResponsiveContainer>
                 </GenericCard>
             </div>
 
             <div className="flex flex-row w-full">
-                <MetricCard title="backtester.returns" width={"50%"}
+                <MetricCard
+                    title="backtester.returns"
+                    width={"50%"}
+                    horizontal
                     multiMetricData={[
                         {
                             subtitle: "backtester.mean",
@@ -134,8 +137,8 @@ function Benchmark(props) {
                             <ReferenceLine y={meanReturns} stroke="green" strokeDasharray="3 3" />
 
 
-                            {customTooltip()}
-                            {customLegend()}
+                            {CustomTooltip()}
+                            {CustomLegend()}
                         </BarChart>
                     </ResponsiveContainer>
                 </MetricCard>
@@ -150,8 +153,8 @@ function Benchmark(props) {
 
                             <ReferenceLine x={0} stroke="#000" />
                             <ReferenceLine x={meanReturns} stroke="green" strokeDasharray="3 3" />
-                            {customTooltip()}
-                            {customLegend()}
+                            {CustomTooltip()}
+                            {CustomLegend()}
                         </BarChart>
                     </ResponsiveContainer>
                 </GenericCard>
@@ -166,8 +169,8 @@ function Benchmark(props) {
                             <ReferenceLine y={0} stroke="#000" />
                             <Area type="monotone" dataKey="confidenceInterval" fill="#c3c1eb" stroke="#c3c1eb" />
                             <Bar dataKey="autocorrelation" fill="#8884d8" />
-                            {customLegend()}
-                            {customTooltip()}
+                            {CustomLegend()}
+                            {CustomTooltip()}
                         </ComposedChart>
                     </ResponsiveContainer>
                 </GenericCard>
@@ -180,8 +183,8 @@ function Benchmark(props) {
                             <ReferenceLine y={0} stroke="#000" />
                             <Area type="monotone" dataKey="confidenceInterval" fill="#c3c1eb" stroke="#c3c1eb" />
                             <Bar dataKey="partialAutocorrelation" fill="#8884d8" />
-                            {customLegend()}
-                            {customTooltip()}
+                            {CustomLegend()}
+                            {CustomTooltip()}
                         </ComposedChart>
                     </ResponsiveContainer>
                 </GenericCard>
