@@ -48,8 +48,7 @@ function App(props) {
       //history.push("auth?returnUrl=" + history.location.pathname)
     }
   }, []);
-
-  if (loading) return <RoundLoader />;
+  if (loading) return <RoundLoader />
   return (
     <Suspense fallback={<RoundLoader />}>
       <Switch>

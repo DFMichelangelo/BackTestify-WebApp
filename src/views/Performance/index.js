@@ -8,7 +8,7 @@ import { BarChart, Area, ComposedChart, AreaChart, Bar, ReferenceLine, Reference
 import GenericCard from "components/GenericCard";
 import CustomLegend from 'components/ChartComponents/CustomLegend';
 import CustomTooltip from "components/ChartComponents/CustomTooltip";
-
+import { fromTimestampToDateString } from "auxiliaries/dates";
 function Performance(props) {
     const themeContext = useContext(ThemeContext);
     const backtesterContext = useContext(BacktesterContext);
@@ -19,12 +19,19 @@ function Performance(props) {
 
     let equityLineValue = [];
     if (backtesterContext?.backtesterResults) {
-        let portfolioInitialValue = backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[0].liquidity
-        equityLineValue = backtesterContext?.backtesterResults?.raw_data.portfolio_value_history.map((portfolioValue, index) => {
+        equityLineValue = backtesterContext?.backtesterResults?.raw_data.benchmark.map((benchmarkAssetValue, index) => {
+            const initialPortfolioValue = backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[0].liquidity
+            const liquidity = index >= backtesterContext?.backtesterResults.amount_of_data_for_strategy_from_today
+                ? backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[index + 1 - backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today].liquidity
+                : initialPortfolioValue
+            const assetsValue = index >= backtesterContext?.backtesterResults.amount_of_data_for_strategy_from_today ? backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[index + 1 - backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today].assets_value : 0;
+
+            const equityValue = liquidity + assetsValue - initialPortfolioValue
+
             return {
-                date: index, // TODO - provsional
-                benchmarkAssetValue: backtesterContext?.backtesterResults?.raw_data.benchmark[index + backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today],
-                equityValue: portfolioValue.liquidity + portfolioValue.assets_value - portfolioInitialValue
+                date: backtesterContext?.backtesterResults?.raw_data.dates[index],
+                benchmarkAssetValue,
+                equityValue
             }
         })
     }
@@ -166,7 +173,7 @@ function Performance(props) {
                             <ReferenceLine y={0}
                                 label={0}
                                 stroke="red" strokeDasharray="3 3" />
-                            <XAxis type="number" dataKey="date" />
+                            <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} tickFormatter={fromTimestampToDateString} />
                             <YAxis yAxisId={0} type="number" domain={['auto', 'auto']} />
                             <YAxis yAxisId={1} orientation="right" type="number" domain={['auto', 'auto']} />
 

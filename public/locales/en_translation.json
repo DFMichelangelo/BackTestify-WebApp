@@ -98,6 +98,7 @@
 		"equalTo": "Fields Must Be The Same"
 	},
 	"placeholder": {
+		"desktopOnly": "Available on Desktop Only",
 		"errorNoInternet": "No Internet",
 		"backToHomepage": "Back to Dashboard",
 		"cannotFindPage": "Ooops! You seem lost!",
@@ -264,5 +265,9 @@
 		"openNewOrderOnContrarianSignal": "Open New Order On Contrarian Signal",
 		"size": "Size",
 		"benchmark": "Benchmark",
+		"longOnly": "Long Only",
+		"shortOnly": "Short Only",
+		"noLimitations": "No Limitations",
+		"totalValueHelperText": "Total Value of the Portfolio, equals to the sum of the Assets Value and the Liquidity"
 	}
 }

@@ -10,7 +10,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import { Formik, Form } from "formik";
 import TextField from "@mui/material/TextField";
-import classNames from "classnames";
+import classnames from "classnames";
 import _ from "lodash";
 import PropTypes from "prop-types";
 import "./style.scss";
@@ -62,7 +62,7 @@ function StandardDialog(props) {
         buttons.push(
           <Button
             key={single.text}
-            className={classNames(single.className)}
+            className={classnames(single.className)}
             onClick={single.onClick}
             disabled={single.disabled}
           >
@@ -182,7 +182,7 @@ function StandardDialog(props) {
               onClose={modal ? null : hideDialog(formikBag)}
               scroll="paper"
               maxWidth="md"
-              className={classNames("standard-dialog input", type)}
+              className={classnames("standard-dialog input", type)}
             >
               <DialogTitle className="title">
                 <span>{realIcon}</span>

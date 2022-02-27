@@ -98,6 +98,7 @@
 		"equalTo": "I Campi Devono Essere Uguali"
 	},
 	"placeholder": {
+		"desktopOnly": "Disponibile Solo su Desktop",
 		"errorNoInternet": "Error No Internet",
 		"backToHomepage": "Torna indietro",
 		"cannotFindPage": "Ooops! Ti sei perso!",
@@ -264,6 +265,10 @@
 		"stopLossAmount": "Quantità Stop Loss",
 		"openNewOrderOnContrarianSignal": "Apri un Nuovo Ordine ad un Segnale Contrario",
 		"size": "Dimensione",
-		"benchmark": "Benchmark"
+		"benchmark": "Benchmark",
+		"longOnly": "Solo Long",
+		"shortOnly": "Solo Short",
+		"noLimitations": "Nessuna Limitazione",
+		"totalValueHelperText": "Valore Totale del Portafoglio, pari alla somma del Valore Patrimoniale e della Liquidità"
 	}
 }

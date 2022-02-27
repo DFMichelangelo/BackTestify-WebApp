@@ -9,6 +9,7 @@ import { BarChart, ComposedChart, Bar, ReferenceLine, ReferenceArea, Legend, Lin
 import OverPeriodAnnualizedCard from "components/OverPeriodAnnualizedCard";
 import CustomLegend from 'components/ChartComponents/CustomLegend';
 import CustomTooltip from "components/ChartComponents/CustomTooltip";
+import { fromTimestampToDateString } from "auxiliaries/dates";
 
 function Portfolio(props) {
     const themeContext = useContext(ThemeContext);
@@ -22,18 +23,42 @@ function Portfolio(props) {
 
     let portfolioValue = [];
     if (backtesterContext?.backtesterResults) {
-        portfolioValue = backtesterContext?.backtesterResults?.raw_data.portfolio_value_history.map((portfolioValue, index) => {
+        portfolioValue = backtesterContext?.backtesterResults?.raw_data.benchmark.map((benchmarkAssetValue, index) => {
+            const liquidity = index >= backtesterContext?.backtesterResults.amount_of_data_for_strategy_from_today
+                ? backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[index + 1 - backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today].liquidity
+                : backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[0].liquidity
+            const assetsValue = index >= backtesterContext?.backtesterResults.amount_of_data_for_strategy_from_today ? backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[index + 1 - backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today].assets_value : 0;
             return {
-                ...portfolioValue,
-                date: index, // TODO - provsional
-                benchmarkAssetValue: backtesterContext?.backtesterResults?.raw_data.benchmark[index + backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today],
-                totalPortfolioValue: portfolioValue.liquidity + portfolioValue.assets_value
+                date: backtesterContext?.backtesterResults?.raw_data.dates[index],
+                liquidity,
+                assetsValue,
+                benchmarkAssetValue,
+                totalPortfolioValue: liquidity + assetsValue
             }
         })
     }
 
     return (
         <div>
+            <div className="flex flex-row">
+                <OverPeriodAnnualizedCard
+                    horizontal
+                    title="backtester.absoluteReturn"
+                    data={[backtesterContext?.backtesterResults?.analytics.portfolio.absolute_return_over_period.toFixed(2),
+                    backtesterContext?.backtesterResults?.analytics.portfolio.absolute_return_annualized.toFixed(2)]} />
+
+                <OverPeriodAnnualizedCard
+                    horizontal
+                    title="backtester.percentageReturn"
+                    data={[(100 * backtesterContext?.backtesterResults?.analytics.portfolio.percentage_return_over_period).toFixed(2) + " %",
+                    (100 * backtesterContext?.backtesterResults?.analytics.portfolio.percentage_return_annualized).toFixed(2) + " %"]} />
+                <OverPeriodAnnualizedCard
+                    horizontal
+                    title="backtester.percentageVolatility"
+                    data={[(100 * backtesterContext?.backtesterResults?.analytics.portfolio.volatility_over_period).toFixed(2) + " %",
+                    (100 * backtesterContext?.backtesterResults?.analytics.portfolio.volatility_annualized).toFixed(2) + " %"]} />
+
+            </div>
             <div className="flex flex-row w-full">
                 <GenericCard title="backtester.portfolioValue" width={"50%"}>
                     <ResponsiveContainer minHeight={300} >
@@ -42,7 +67,7 @@ function Portfolio(props) {
                             <ReferenceLine y={portfolioValue?.[0].liquidity}
                                 label={portfolioValue?.[0].liquidity}
                                 stroke="red" strokeDasharray="3 3" />
-                            <XAxis type="number" dataKey="date" />
+                            <XAxis type="number" dataKey="date" domain={['auto', 'auto']} tickFormatter={fromTimestampToDateString} />
                             <YAxis yAxisId={0} type="number" domain={['auto', 'auto']} />
                             <YAxis yAxisId={1} orientation="right" type="number" domain={['auto', 'auto']} />
                             <Line yAxisId={0} dot={false} type="monotone" dataKey="totalPortfolioValue" stroke="#8884d8" />
@@ -59,7 +84,7 @@ function Portfolio(props) {
                             <ReferenceLine y={portfolioValue[0].liquidity}
                                 label={portfolioValue[0].liquidity}
                                 stroke="red" strokeDasharray="3 3" />
-                            <XAxis type="number" dataKey="date" />
+                            <XAxis type="number" dataKey="date" domain={['auto', 'auto']} tickFormatter={fromTimestampToDateString} />
                             <XAxis type="number" dataKey="date" />
                             <YAxis type="number" domain={['auto', 'auto']} />
                             <Line dot={false} type="monotone" dataKey="liquidity" stroke="#8884d8" />
@@ -70,24 +95,7 @@ function Portfolio(props) {
                     </ResponsiveContainer>
                 </GenericCard>
             </div>
-            <div>
-                <div className="flex flex-row">
-                    <OverPeriodAnnualizedCard
-                        title="backtester.absoluteReturn"
-                        data={[backtesterContext?.backtesterResults?.analytics.portfolio.absolute_return_over_period.toFixed(2),
-                        backtesterContext?.backtesterResults?.analytics.portfolio.absolute_return_annualized.toFixed(2)]} />
 
-                    <OverPeriodAnnualizedCard
-                        title="backtester.percentageReturn"
-                        data={[(100 * backtesterContext?.backtesterResults?.analytics.portfolio.percentage_return_over_period).toFixed(2) + " %",
-                        (100 * backtesterContext?.backtesterResults?.analytics.portfolio.percentage_return_annualized).toFixed(2) + " %"]} />
-                    <OverPeriodAnnualizedCard
-                        title="backtester.percentageVolatility"
-                        data={[(100 * backtesterContext?.backtesterResults?.analytics.portfolio.volatility_over_period).toFixed(2) + " %",
-                        (100 * backtesterContext?.backtesterResults?.analytics.portfolio.volatility_annualized).toFixed(2) + " %"]} />
-
-                </div>
-            </div>
         </div>)
 }
 

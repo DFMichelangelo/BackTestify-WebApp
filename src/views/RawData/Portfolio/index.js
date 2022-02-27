@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
 import { BacktesterContext } from "contexts/Providers/BacktesterProvider";
 import { useTranslation } from "react-i18next";
-
+import { fromTimestampToDateString } from "auxiliaries/dates";
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import GenericCard from "components/GenericCard";
 import EnhancedTable from "components/EnhancedTable";
@@ -41,7 +41,7 @@ function Portfolio(props) {
             return {
                 id: portfolio_row.date,
                 date: {
-                    value: portfolio_row.date,
+                    value: fromTimestampToDateString(portfolio_row.date),
                 },
                 liquidity: {
                     value: portfolio_row.liquidity.toFixed(2),

@@ -5,7 +5,7 @@ import MarkAsUnreadOutlinedIcon from '@mui/icons-material/MarkAsUnreadOutlined';
 import { BacktesterContext } from "contexts/Providers/BacktesterProvider";
 import GenericCard from "components/GenericCard";
 import EnhancedTable from "components/EnhancedTable";
-
+import { fromTimestampToDateString } from "auxiliaries/dates";
 function Orders(props) {
     const themeContext = useContext(ThemeContext);
     const backtesterContext = useContext(BacktesterContext);
@@ -35,11 +35,11 @@ function Orders(props) {
         rows = backtesterContext?.backtesterResults?.raw_data?.orders.map(order => {
             return {
                 id: order.ID,
-                closeDate: { value: order.close_date },
+                closeDate: { value: fromTimestampToDateString(order.close_date) },
                 closePrice: { value: order.close_price.toFixed(2) },
-                creationDate: { value: order.creation_date },
+                creationDate: { value: fromTimestampToDateString(order.creation_date) },
                 creationPrice: { value: order.creation_price.toFixed(2) },
-                openDate: { value: order.open_date },
+                openDate: { value: fromTimestampToDateString(order.open_date) },
                 openPrice: { value: order.open_price.toFixed(2) },
                 position: { value: order.position },
                 size: { value: order.size },

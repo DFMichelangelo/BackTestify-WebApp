@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import ErrorNotFound from "theme/views/Placeholders/ErrorNotFound";
 import Backtester from "./Backtester";
 
-function Public() {
+function Public(props) {
 
     return (
         <Switch>

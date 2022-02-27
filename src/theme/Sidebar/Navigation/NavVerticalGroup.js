@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import NavVerticalCollapse from "./NavVerticalCollapse";
 import NavVerticalItem from "./NavVerticalItem";
 import { ListSubheader } from "@mui/material";
-import classNames from "classnames";
 import PropTypes from "prop-types";
 import config from "configuration/config";
 import { useTranslation } from "react-i18next";
@@ -81,7 +80,7 @@ function NavVerticalGroup(props) {
           <ListSubheader disableSticky={true}>
             <span className={classnames(classes.uppercaseText)}>
               <Typography variant="body2">
-                <span className={classNames(listItemPadding)}>
+                <span className={classnames(listItemPadding)}>
                   {t(item.id)}
                 </span>
               </Typography>

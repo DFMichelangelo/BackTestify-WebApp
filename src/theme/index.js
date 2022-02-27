@@ -10,11 +10,11 @@ import Backdrop from '@mui/material/Backdrop';
 
 export default function Theme(props) {
   const themeContext = useContext(ThemeContext);
+  const matches = useMediaQuery("(max-width:" + config.mobileScreenWidth + ")");
   const handleDrawerCloseOnHover = () => isOpen(false, "hover");
   const handleDrawerOpenOnHover = () => isOpen(true, "hover");
   const handleDrawerOpenOnClick = () => isOpen(true, "click");
   const handleDrawerCloseOnClick = () => isOpen(false, "click");
-  const matches = useMediaQuery("(max-width:" + config.mobileScreenWidth + ")");
 
   const DivBehindDrawer = styled('div')(({ theme }) => ({
     width: `calc(${theme.spacing(9)} + 5px)`,
@@ -46,7 +46,7 @@ export default function Theme(props) {
         <Header handleDrawerOpenOnClick={handleDrawerOpenOnClick} />
       )}
       {themeContext.showSidebarComponents(matches) && (<>
-        <DivBehindDrawer />
+        {!matches && <DivBehindDrawer />}
         <Sidebar
           handleDrawerOpenOnHover={handleDrawerOpenOnHover}
           handleDrawerCloseOnHover={handleDrawerCloseOnHover}

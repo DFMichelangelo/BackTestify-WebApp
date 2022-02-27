@@ -1,3 +1,4 @@
+import { fromTimestampToDateString } from "auxiliaries/dates";
 import React, { useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Tooltip } from 'recharts';
@@ -8,7 +9,7 @@ function CustomTooltip(props) {
     return (
         [<Tooltip
             key="tooltip"
-            //labelFormatter={() => 'Info'}
+            labelFormatter={elem => fromTimestampToDateString(elem)}
             formatter={(value, name, props) => {
                 const formatValue = (v) => {
                     if (typeof v == 'number') return v.toFixed(2)

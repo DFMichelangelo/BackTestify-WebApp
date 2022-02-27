@@ -14,11 +14,9 @@ import InputOutlinedIcon from '@mui/icons-material/InputOutlined';
 import * as Yup from "yup";
 import InputAdornment from '@mui/material/InputAdornment';
 import DatePicker from '@mui/lab/DatePicker';
-import classnames from "classnames";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormikTextField from "components/FormikComponents/FormikTextField";
 import TextField from '@mui/material/TextField';
-import Tooltip from '@mui/material/Tooltip';
 import { Typography } from "@mui/material";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -27,7 +25,9 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Checkbox from '@mui/material/Checkbox';
 import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
 import Masonry from '@mui/lab/Masonry';
-
+import CallMadeOutlinedIcon from '@mui/icons-material/CallMadeOutlined';
+import CallReceivedOutlinedIcon from '@mui/icons-material/CallReceivedOutlined';
+import CallSplitOutlinedIcon from '@mui/icons-material/CallSplitOutlined';
 function Input(props) {
   const themeContext = useContext(ThemeContext);
   const backtesterContext = useContext(BacktesterContext);
@@ -41,8 +41,8 @@ function Input(props) {
 
   const [initialValues, setInitialValues] = useState({
     initial: {
-      startDate: DateTime.now().minus({ years: 1 }),
-      endDate: DateTime.now(),
+      startDate: DateTime.now().minus({ years: 1, days: 1 }),
+      endDate: DateTime.now().minus({ days: 1 }),
       initialPortfolioValue: 500,
       riskFreeRate: 1,
       financialInstrumentName: "AAPL",
@@ -68,7 +68,9 @@ function Input(props) {
       stopLossEnabled: true,
       stopLossType: "percentage",
       stopLossAmount: 5,
-      openNewOrderOnContrarianSignal: true
+      openNewOrderOnContrarianSignal: true,
+      ordersPositionsLimitations: "noLimitations", // INFO - noLimitations, longOnly, shortOnly
+
     },
     additional: {}
   });
@@ -129,9 +131,9 @@ function Input(props) {
       //INFO - Creation of the object to send
       let payload = {
         start_date: values.typeStartDate === "date" ?
-          values.startDate.set({ hours: 0, minutes: 0, seconds: 0 }).toFormat("d/MM/y HH:mm:ss")
-          : values.endDate.set({ hours: 0, minutes: 0, seconds: 0 }).minus({ days: values.days, months: values.months, years: values.years }).toFormat("d/MM/y HH:mm:ss"),
-        end_date: values.endDate.set({ hours: 0, minutes: 0, seconds: 0 }).toFormat("d/MM/y HH:mm:ss"),
+          values.startDate.set({ hours: 0, minutes: 0, seconds: 0 }).toMillis()
+          : values.endDate.set({ hours: 0, minutes: 0, seconds: 0 }).minus({ [values.durationType]: values.durationAmount }).toMillis(),
+        end_date: values.endDate.set({ hours: 0, minutes: 0, seconds: 0 }).toMillis(),
         initial_portfolio_value: values.initialPortfolioValue,
         risk_free_rate: values.riskFreeRate / 100,
         benchmark_financial_instrument_name: values.benchmarkFinancialInstrumentName,
@@ -155,7 +157,7 @@ function Input(props) {
         backtesterContext.setBacktesterResults(result)
         themeContext.showSuccessSnackbar({ message: "backtester.backtestCompleted" });
       } catch (e) {
-        themeContext.showErrorSnackbar({ message: e.data.detail });
+        themeContext.showErrorSnackbar({ message: e.data });
       }
     },
     validationSchema,
@@ -243,9 +245,9 @@ function Input(props) {
               <TextField
                 style={{ width: "45%" }}
                 select
-                id="duration"
+                id="durationType"
                 size="small"
-                onChange={(newValue) => inputBacktesterFormik.setFieldValue("dirationType", newValue.target.value)}
+                onChange={(newValue) => inputBacktesterFormik.setFieldValue("durationType", newValue.target.value)}
                 value={inputBacktesterFormik.values.durationType}
                 label={t("backtester.durationType")}
               >
@@ -258,7 +260,7 @@ function Input(props) {
             <DatePicker
               id="startDate"
               label={t("backtester.startDate")}
-              maxDate={DateTime.now()}
+              maxDate={DateTime.now().minus({ years: 1 })}
               value={inputBacktesterFormik.values.startDate}
               onChange={(e) => inputBacktesterFormik.setFieldValue("startDate", e)}
               renderInput={(params) => <TextField {...params} size="small" />}
@@ -268,7 +270,7 @@ function Input(props) {
           <DatePicker
             id="endDate"
             label={t("backtester.endDate")}
-            maxDate={DateTime.now()}
+            maxDate={DateTime.now().minus({ days: 1 })}
             value={inputBacktesterFormik.values.endDate}
             onChange={(e) => inputBacktesterFormik.setFieldValue("endDate", e)}
             renderInput={(params) => <TextField {...params} size="small" />}
@@ -367,14 +369,36 @@ function Input(props) {
           marginBottom: "10px",
         }}>
           <span className="tbd">
-            <FormControlLabel
-              sx={{ margin: "0px" }}
-              control={
-                <Switch
-                  checked={inputBacktesterFormik.values.openNewOrderOnContrarianSignal}
-                  onChange={(e) => inputBacktesterFormik.setFieldValue("openNewOrderOnContrarianSignal", e.target.checked)}
-                />}
-              label={<Typography variant="body2" gutterBottom>{t("backtester.openNewOrderOnContrarianSignal")}</Typography>} />
+            <div className="flex justify-center items-center">
+              <ToggleButtonGroup
+                id="ordersPositionsLimitations"
+                color="primary"
+                value={inputBacktesterFormik.values.ordersPositionsLimitations}
+                exclusive
+                size="small"
+                onChange={(newValue) => inputBacktesterFormik.setFieldValue("ordersPositionsLimitations", newValue.target.value)}
+              >
+                <ToggleButton value="longOnly">
+                  {t("backtester.longOnly")}
+                </ToggleButton>
+                <ToggleButton value="noLimitations">
+                  {t("backtester.noLimitations")}
+                </ToggleButton>
+                <ToggleButton value="shortOnly">
+                  {t("backtester.shortOnly")}
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </div>
+            {inputBacktesterFormik.values.ordersPositionsLimitations == "noLimitations" &&
+              <FormControlLabel
+                sx={{ marginTop: 1 }}
+                control={
+                  <Switch
+                    checked={inputBacktesterFormik.values.openNewOrderOnContrarianSignal}
+                    onChange={(e) => inputBacktesterFormik.setFieldValue("openNewOrderOnContrarianSignal", e.target.checked)}
+                  />}
+                label={<Typography variant="body2" gutterBottom>{t("backtester.openNewOrderOnContrarianSignal")}</Typography>} />
+            }
           </span>
           <Divider variant="middle" />
           <TextField
@@ -501,7 +525,7 @@ function Input(props) {
             </div>
           </span>
         </GenericCard>}
-        <GenericCard title="backtester.brokerSettings" margin={{
+        {advancedSettings && <GenericCard title="backtester.brokerSettings" margin={{
           margin: "0px",
           marginTop: "10px",
           marginBottom: "10px",
@@ -540,6 +564,7 @@ function Input(props) {
             </div>
           </span>
         </GenericCard>
+        }
         <GenericCard title="backtester.stopLossAndTakeProfit" margin={{
           margin: "0px",
           marginTop: "10px",

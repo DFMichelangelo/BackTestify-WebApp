@@ -10,6 +10,7 @@ import OverPeriodAnnualizedCard from "components/OverPeriodAnnualizedCard";
 import customTooltip from "components/ChartComponents/CustomTooltip";
 import customLegend from "components/ChartComponents/CustomLegend";
 
+import { fromTimestampToDateString } from "auxiliaries/dates";
 function Benchmark(props) {
     const themeContext = useContext(ThemeContext);
     const backtesterContext = useContext(BacktesterContext);
@@ -26,13 +27,13 @@ function Benchmark(props) {
     if (backtesterContext?.backtesterResults) {
         benchmarkPrices = backtesterContext?.backtesterResults?.raw_data.benchmark.map((price, index) => {
             return {
-                date: index,
+                date: backtesterContext?.backtesterResults?.raw_data.dates[index],
                 price
             }
         })
         benchmarkReturns = backtesterContext?.backtesterResults?.analytics.benchmark.returns.map((returnValue, index) => {
             return {
-                date: index,
+                date: backtesterContext?.backtesterResults?.raw_data.dates[index + 1],
                 returnValue: returnValue * 100
             }
         })
@@ -63,14 +64,31 @@ function Benchmark(props) {
 
     let stdReturns = backtesterContext.backtesterResults.analytics.benchmark.returns_std * 100
     let meanReturns = backtesterContext.backtesterResults.analytics.benchmark.returns_mean * 100
-
     return (
         <div>
+            <div className="flex flex-row w-full">
+                <OverPeriodAnnualizedCard
+                    horizontal
+                    title="backtester.absoluteReturn"
+                    data={[backtesterContext?.backtesterResults?.analytics.benchmark.absolute_return_over_period.toFixed(2),
+                    backtesterContext?.backtesterResults?.analytics.benchmark.absolute_return_annualized.toFixed(2)]} />
+
+                <OverPeriodAnnualizedCard
+                    horizontal
+                    title="backtester.percentageReturn"
+                    data={[(100 * backtesterContext?.backtesterResults?.analytics.benchmark.percentage_return_over_period).toFixed(2) + " %",
+                    (100 * backtesterContext?.backtesterResults?.analytics.benchmark.percentage_return_annualized).toFixed(2) + " %"]} />
+                <OverPeriodAnnualizedCard
+                    horizontal
+                    title="backtester.percentageVolatility"
+                    data={[(100 * backtesterContext?.backtesterResults?.analytics.benchmark.volatility_over_period).toFixed(2) + " %",
+                    (100 * backtesterContext?.backtesterResults?.analytics.benchmark.volatility_annualized).toFixed(2) + " %"]} />
+            </div>
             <div className="flex flex-row w-full">
                 <GenericCard title="backtester.timeseries" width={"50%"}>
                     <ResponsiveContainer minHeight={300} >
                         <LineChart data={benchmarkPrices} >
-                            <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} />
+                            <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} tickFormatter={fromTimestampToDateString} />
                             <YAxis type="number" domain={['auto', 'auto']} />
                             <Line dot={false} type="monotone" dataKey="price" stroke="#8884d8" />
                             <CartesianGrid stroke="#ccc" />
@@ -92,21 +110,7 @@ function Benchmark(props) {
                     </ResponsiveContainer>
                 </GenericCard>
             </div>
-            <div className="flex flex-row w-full">
-                <OverPeriodAnnualizedCard
-                    title="backtester.absoluteReturn"
-                    data={[backtesterContext?.backtesterResults?.analytics.benchmark.absolute_return_over_period.toFixed(2),
-                    backtesterContext?.backtesterResults?.analytics.benchmark.absolute_return_annualized.toFixed(2)]} />
 
-                <OverPeriodAnnualizedCard
-                    title="backtester.percentageReturn"
-                    data={[(100 * backtesterContext?.backtesterResults?.analytics.benchmark.percentage_return_over_period).toFixed(2) + " %",
-                    (100 * backtesterContext?.backtesterResults?.analytics.benchmark.percentage_return_annualized).toFixed(2) + " %"]} />
-                <OverPeriodAnnualizedCard
-                    title="backtester.percentageVolatility"
-                    data={[(100 * backtesterContext?.backtesterResults?.analytics.benchmark.volatility_over_period).toFixed(2) + " %",
-                    (100 * backtesterContext?.backtesterResults?.analytics.benchmark.volatility_annualized).toFixed(2) + " %"]} />
-            </div>
             <div className="flex flex-row w-full">
                 <MetricCard title="backtester.returns" width={"50%"}
                     multiMetricData={[
@@ -121,14 +125,15 @@ function Benchmark(props) {
                 >
                     <ResponsiveContainer minHeight={300} >
                         <BarChart data={benchmarkReturns}>
-                            <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} />
+                            <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} tickFormatter={fromTimestampToDateString} />
                             <YAxis type="number" unit={"%"} domain={['auto', 'auto']} />
                             <CartesianGrid stroke="#ccc" />
-                            <ReferenceArea x1={0} x2={benchmarkReturns.length - 1} y1={meanReturns - stdReturns} y2={meanReturns + stdReturns} stroke="red" strokeOpacity={0.3} />
+                            <Bar unit={" %"} dataKey="returnValue" fill="#8884d8" />
+                            <ReferenceArea x1={benchmarkReturns[0].date} x2={benchmarkReturns[benchmarkReturns.length - 1].date} y1={meanReturns - stdReturns} y2={meanReturns + stdReturns} stroke="red" strokeOpacity={0.3} />
                             <ReferenceLine y={0} stroke="#000" />
                             <ReferenceLine y={meanReturns} stroke="green" strokeDasharray="3 3" />
 
-                            <Bar unit={" %"} dataKey="returnValue" fill="#8884d8" />
+
                             {customTooltip()}
                             {customLegend()}
                         </BarChart>

@@ -2,7 +2,7 @@ import React from "react";
 import MetricCard from 'components/MetricCard';
 
 function OverPeriodAnnualizedCard(props) {
-    const { title, classname, data } = props;
+    const { title, classname, data, horizontal } = props;
     const multiMetricData = [
         {
             subtitle: "backtester.overPeriod",
@@ -14,7 +14,7 @@ function OverPeriodAnnualizedCard(props) {
         },
     ]
     return (
-        <MetricCard title={title} classname={classname} multiMetricData={multiMetricData} />
+        <MetricCard title={title} horizontal={horizontal} classname={classname} multiMetricData={multiMetricData} />
     )
 }
 export default OverPeriodAnnualizedCard

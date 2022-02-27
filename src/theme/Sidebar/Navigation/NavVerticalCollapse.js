@@ -9,7 +9,7 @@ import NavVerticalGroup from "./NavVerticalGroup";
 import NavVerticalItem from "./NavVerticalItem";
 import { Collapse, Icon, ListItem, ListItemText } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import classNames from "classnames";
+import classnames from "classnames";
 import NavBadge from "./NavBadge";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
@@ -19,13 +19,12 @@ import ExpandLessOutlinedIcon from "@mui/icons-material/ExpandLessOutlined";
 import { useHistory } from "react-router-dom";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import config from "configuration/config";
 const useStyles = makeStyles((theme) => ({
   listItem: {
     paddingLeft: 23,
   },
-  listItemIcon: (props) => ({
-    minWidth: props.matches ? 35 : 50,
-  }),
   collapseIcon: {
     opacity: 1,
     transition: theme.transitions.create(["opacity"], {
@@ -72,6 +71,8 @@ let isUrlInChildren = (parent, url) => {
 function NavVerticalCollapse(props) {
   const themeContext = useContext(ThemeContext);
   const history = useHistory();
+  const matches = useMediaQuery("(max-width:" + config.mobileScreenWidth + ")");
+
   const { t } = useTranslation();
   let needsToBeOpened = useCallback(
     (item) =>
@@ -97,26 +98,26 @@ function NavVerticalCollapse(props) {
   const listItemPadding =
     nestedLevel > 0 ? "pl-" + (paddingValue > 80 ? 80 : paddingValue) : "";
   return (
-    <div className={classNames(open && "open")}>
+    <div className={classnames(open && "open")}>
       <ListItem
         button
         onClick={handleClick}
-        className={classNames(styledClasses.listItem, "list-item")}
+        className={classnames(styledClasses.listItem, "list-item")}
       >
-        <ListItemIcon classes={{ root: styledClasses.listItemIcon }}>
+        <ListItemIcon sx={{ minWidth: matches ? 35 : 50 }}>
           <span className="list-item-icon text-16 flex-no-shrink mr-2">
-            <span className={classNames(listItemPadding)}>
+            <span className={classnames(listItemPadding)}>
               {item.icon}
               <span
-                className={classNames(styledClasses.collapseIcon, {
+                className={classnames(styledClasses.collapseIcon, {
                   [styledClasses.collapseIconShift]: themeContext.sidebarOpen,
                 })}
               >
-                {open ? (
+                {!themeContext.sidebarOpen && (open ? (
                   <ExpandLessOutlinedIcon fontSize="small" />
                 ) : (
                   <ExpandMoreOutlinedIcon fontSize="small" />
-                )}
+                ))}
               </span>
             </span>
           </span>
@@ -132,8 +133,9 @@ function NavVerticalCollapse(props) {
         />
         {item.badge && <NavBadge className="mr-4" badge={item.badge} />}
         <Icon
-          className={classNames(
+          className={classnames(
             "w-32  p-0 flex collapseIcon",
+            (themeContext.sidebarOpen && matches) && "mr-2",
             styledClasses.bigCollapseIcon,
             {
               [styledClasses.bigCollapseIconShift]: themeContext.sidebarOpen,
