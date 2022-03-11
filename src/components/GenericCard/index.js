@@ -13,7 +13,7 @@ function GenericCard(props) {
         <Card className="genericCard"
             sx={{
                 padding: "15px",
-                width: props.width ? props.width : "fit-content",
+                width: props.width ? props.width : "initial",
                 height: "fit-content",
                 margin: props?.margins?.magin ? props.margins.magin : "10px",
                 //marginTop: props?.margins?.marginTop + "px !important",

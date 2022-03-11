@@ -24,7 +24,7 @@ let NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref
 });
 
 function FormikTextField(props) {
-    const { formikInstance, id, label, type, disabled, readOnly, size, style, InputProps, triggerAfterTouch } = props
+    const { formikInstance, id, label, fullWidth, type, disabled, readOnly, size, style, InputProps, triggerAfterTouch } = props
     const { t } = useTranslation();
 
     const onChangeNonNumber = e => formikInstance.handleChange(e)
@@ -35,6 +35,7 @@ function FormikTextField(props) {
             error={triggerAfterTouch ? Boolean(formikInstance.touched[id] && formikInstance.errors[id]) : Boolean(formikInstance.errors[id])}
             style={style}
             id={id}
+            fullWidth={fullWidth}
             size={size}
             label={t(label)}
             //type={type}

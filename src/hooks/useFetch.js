@@ -19,7 +19,7 @@ function useFetcher(props) {
   const calls = 1
   useEffect(() => {
     if (Array.isArray(props)) fetchAll(props);
-    else if (typeof props === "object") fetch(props);
+    else if (props?.url && props?.method) fetch(props);
   }, []);
 
   // ? if there is a UrlParams

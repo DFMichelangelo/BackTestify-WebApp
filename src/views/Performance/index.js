@@ -186,7 +186,7 @@ function Performance(props) {
             <div className="flex flex-row w-full">
             </div>
             <div className="flex flex-col w-full">
-                <GenericCard title="backtester.equityLine" width={"100%"}>
+                <GenericCard title="backtester.equityLine" >
                     <ResponsiveContainer minHeight={300} >
                         <ComposedChart minHeight={300} data={equityLineValue} >
                             <CartesianGrid stroke="#ccc" />
@@ -211,7 +211,6 @@ function Performance(props) {
                 </GenericCard>
                 <MetricCard
                     title="backtester.drawdown"
-                    width={"100%"}
                     horizontal
                     multiMetricData={[
                         {
@@ -233,14 +232,20 @@ function Performance(props) {
                     ]}
                 >
                     <ResponsiveContainer minHeight={300} >
-                        <LineChart data={drawdownValues} >
+                        <AreaChart data={drawdownValues} >
                             <CartesianGrid stroke="#ccc" />
                             <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} tickFormatter={fromTimestampToDateString} />
                             <YAxis type="number" unit={"%"} />
-                            <Line unit={" %"} dot={false} type="monotone" dataKey="value" stroke="#8884d8" />
+                            <defs>
+                                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="red" stopOpacity={0} />
+                                    <stop offset="100%" stopColor="red" stopOpacity={0.8} />
+                                </linearGradient>
+                            </defs>
+                            <Area e unit={" %"} dot={false} type="monotone" dataKey="value" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
                             {CustomTooltip()}
                             {CustomLegend()}
-                        </LineChart>
+                        </AreaChart>
                     </ResponsiveContainer>
                     <Chip
                         color={backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.info.max_duration_has_recovered ? "success" : "warning"}
@@ -250,7 +255,6 @@ function Performance(props) {
                 </MetricCard>
                 <MetricCard
                     title="backtester.underwater"
-                    width={"100%"}
                     horizontal
                     multiMetricData={[
                         {
@@ -272,14 +276,21 @@ function Performance(props) {
                     ]}
                 >
                     <ResponsiveContainer minHeight={300} >
-                        <LineChart data={underwaterValues} >
+                        <AreaChart data={underwaterValues} >
+                            <defs>
+                                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="red" stopOpacity={0} />
+                                    <stop offset="100%" stopColor="red" stopOpacity={0.8} />
+                                </linearGradient>
+                            </defs>
                             <CartesianGrid stroke="#ccc" />
                             <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} tickFormatter={fromTimestampToDateString} />
                             <YAxis type="number" unit={"%"} />
-                            <Line unit={" %"} dot={false} type="monotone" dataKey="value" stroke="#8884d8" />
+
+                            <Area unit={" %"} dot={false} type="monotone" dataKey="value" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
                             {CustomTooltip()}
                             {CustomLegend()}
-                        </LineChart>
+                        </AreaChart>
                     </ResponsiveContainer>
                     <Chip
                         color={backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.info.max_duration_has_recovered ? "success" : "warning"}

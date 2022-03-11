@@ -26,7 +26,9 @@ let Endpoints = {
   },
   backtester: {
     getStrategies: "/get_strategies", // ? GET
-    backtestStrategy: "/backtest_strategy" // ? POST
+    backtestStrategy: "/backtest_strategy", // ? POST
+    saveBacktest: "/backtest", // ? POST
+    getAllBacktests: "/backtest/all", // ? GET
   }
 }
 

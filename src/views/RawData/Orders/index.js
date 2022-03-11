@@ -42,7 +42,7 @@ function Orders(props) {
                 openDate: { value: fromTimestampToDateString(order.open_date) },
                 openPrice: { value: order.open_price.toFixed(2) },
                 position: { value: order.position },
-                size: { value: order.size },
+                size: { value: order.size.toFixed(2) },
                 status: { value: order.status },
                 stopLossPrice: { value: order.stop_loss_price.toFixed(2) },
                 takeProfitPrice: { value: order.take_profit_price.toFixed(2) },

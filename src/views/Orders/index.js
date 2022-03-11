@@ -25,7 +25,7 @@ function Orders(props) {
                         },
                         {
                             subsubtitle: "backtester.profitableOrders",
-                            metricValue: ((ordersInfo.long_orders.percentage_profitable_orders + ordersInfo.short_orders.percentage_profitable_orders) * 100).toFixed(2) + " %"
+                            metricValue: ((ordersInfo.long_orders.percentage_profitable + ordersInfo.short_orders.percentage_profitable) * 100).toFixed(2) + " %"
                         }
                         ]
                     },
@@ -41,11 +41,11 @@ function Orders(props) {
                         },
                         {
                             subsubtitle: "backtester.amountProfitable",
-                            metricValue: ordersInfo.long_orders.amount_profitable_orders
+                            metricValue: ordersInfo.long_orders.amount_profitable
                         },
                         {
                             subsubtitle: "backtester.percentageProfitable",
-                            metricValue: (ordersInfo.long_orders.percentage_profitable_orders * 100).toFixed(2) + "%"
+                            metricValue: (ordersInfo.long_orders.percentage_profitable * 100).toFixed(2) + "%"
                         }]
                     },
                     {
@@ -61,11 +61,11 @@ function Orders(props) {
                             },
                             {
                                 subsubtitle: "backtester.amountProfitable",
-                                metricValue: ordersInfo.short_orders.amount_profitable_orders
+                                metricValue: ordersInfo.short_orders.amount_profitable
                             },
                             {
                                 subsubtitle: "backtester.percentageProfitable",
-                                metricValue: (ordersInfo.short_orders.percentage_profitable_orders * 100).toFixed(2) + "%"
+                                metricValue: (ordersInfo.short_orders.percentage_profitable * 100).toFixed(2) + "%"
                             }
                         ]
                     }

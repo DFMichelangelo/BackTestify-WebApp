@@ -11,7 +11,6 @@ function CustomTooltip(props) {
             key="tooltip"
             labelFormatter={elem => fromTimestampToDateString(elem)}
             formatter={(value, name, props) => {
-                console.log(props)
                 const formatValue = (v) => {
                     if (typeof v == 'number') return v.toFixed(2)
                     if (Array.isArray(v)) {

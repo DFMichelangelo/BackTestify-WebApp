@@ -247,7 +247,7 @@
 		"onOrderFill": "On Order Fill",
 		"commissionsPerOrder": "Per Order",
 		"overnight": "Overnight",
-		"positionSizing": "Position Sizing",
+		"orderSize": "Position Sizing",
 		"stopLossAndTakeProfit": "Stop Loss and Take Profit",
 		"brokerSettings": "Broker Settings",
 		"orderFractioning": "Order Fractioning",
@@ -279,6 +279,12 @@
 		"durationOfMaxUnderwater": "Duration of Max Underwater",
 		"inderwaterOfMaxDuration": "Underwater of Max Duration",
 		"maxDurationHasRecovered": "Max Duration Has Recovered",
-		"maxDurationHasNotRecovered": "Max Duration Has Not Recovered"
+		"maxDurationHasNotRecovered": "Max Duration Has Not Recovered",
+		"backtests": "Backtests",
+		"saveBacktest": "Save Backtest",
+		"backtestSavedSuccessfully": "Backtest Saved Successfully",
+		"percentageReturnAnnualized": "Percentage Return (Annualized)",
+		"volatilityAnnualized": "Volatility (Annualized)",
+		"sharpeRatioAnnualized": "Sharpe Ratio (Annualized)"
 	}
 }

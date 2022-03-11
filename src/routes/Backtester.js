@@ -5,6 +5,7 @@ import config from "configuration/config";
 import { useMediaQuery } from "@mui/material";
 const Input = lazy(() => import("views/Input"));
 const Benchmark = lazy(() => import("views/Benchmark"));
+const Backtests = lazy(() => import("views/Backtests"));
 const Portfolio = lazy(() => import("views/Portfolio"));
 const Orders = lazy(() => import("views/Orders"));
 const Performance = lazy(() => import("views/Performance"));
@@ -27,16 +28,18 @@ function Backtester() {
     return (
         <Switch>
             <Route path="/p/backtester/input" component={Input} />
-            {backtesterContext.backtesterResults ? <Switch>
-                <Route path="/p/backtester/benchmark" component={Benchmark} />
-                <Route path="/p/backtester/orders" component={Orders} />
-                <Route path="/p/backtester/portfolio" component={Portfolio} />
-                <Route path="/p/backtester/performance" component={Performance} />
-                <Route path="/p/backtester/logs" component={Logs} />
-                <Route path="/p/backtester/create_strategy" component={CreateStrategy} />
-                <Route path="/p/backtester/raw-data/orders" component={RawOrders} />
-                <Route path="/p/backtester/raw-data/portfolio" component={RawPortfolio} />
-            </Switch>
+            <Route path="/p/backtester/backtests" component={Backtests} />
+            {backtesterContext.backtesterResults ?
+                <Switch>
+                    <Route path="/p/backtester/benchmark" component={Benchmark} />
+                    <Route path="/p/backtester/orders" component={Orders} />
+                    <Route path="/p/backtester/portfolio" component={Portfolio} />
+                    <Route path="/p/backtester/performance" component={Performance} />
+                    <Route path="/p/backtester/logs" component={Logs} />
+                    <Route path="/p/backtester/create_strategy" component={CreateStrategy} />
+                    <Route path="/p/backtester/raw-data/orders" component={RawOrders} />
+                    <Route path="/p/backtester/raw-data/portfolio" component={RawPortfolio} />
+                </Switch>
                 :
                 <Route path="/p/backtester*">
                     <Redirect to="/error/create-backtest" />

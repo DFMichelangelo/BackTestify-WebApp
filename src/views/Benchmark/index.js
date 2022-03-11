@@ -44,7 +44,7 @@ function Benchmark(props) {
                 amount: elem.amount
             }
         })
-        benchmarkAcf = backtesterContext?.backtesterResults?.analytics.benchmark.autocorrelation_function.autocorrelation.map((autocorrelation, index) => {
+        benchmarkAcf = backtesterContext?.backtesterResults?.analytics.benchmark.autocorrelation_function.values.map((autocorrelation, index) => {
             return {
                 lag: index + 1,
                 autocorrelation,
@@ -52,7 +52,7 @@ function Benchmark(props) {
             }
         })
 
-        benchmarkPacf = backtesterContext?.backtesterResults?.analytics.benchmark.partial_autocorrelation_function.partialAutocorrelation.map((partialAutocorrelation, index) => {
+        benchmarkPacf = backtesterContext?.backtesterResults?.analytics.benchmark.partial_autocorrelation_function.values.map((partialAutocorrelation, index) => {
             return {
                 lag: index + 1,
                 partialAutocorrelation,
