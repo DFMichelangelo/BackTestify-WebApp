@@ -12,6 +12,8 @@ import classnames from "classnames";
 import useFetch from "hooks/useFetch";
 import Endpoints from "Endpoints";
 import CookieConsentDrawer from "theme/CookieConsentDrawer";
+const Home = lazy(() => import("theme/views/Home"));
+
 const ErrorInternalServer = lazy(() =>
   import("theme/views/Placeholders/ErrorInternalServer")
 );
@@ -49,9 +51,8 @@ function App(props) {
     } catch (e) {
       if (e?.status === 404) {
         //history.push("auth/login?returnUrl=" + history.location.pathname);
-        //themeContext.showWarningSnackbar({ message: "loginAgain" })
       }
-      //history.push("auth?returnUrl=" + history.location.pathname)
+
     }
   }, []);
 
@@ -94,6 +95,7 @@ function App(props) {
         <Theme>
           <Switch>
             <Route exact strict path="/p/*" component={RoutingPublic} />
+            <Route exact path="/" component={Home} />
             <Route path="/error/create-backtest" component={ErrorCreateBacktest} />
             <Route path="/*" exact component={RoutingApp} />
           </Switch>

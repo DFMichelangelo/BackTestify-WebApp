@@ -72,7 +72,7 @@ function Input(props) {
       stopLossType: "percentage",
       stopLossAmount: -5,
       openNewOrderOnContrarianSignal: true,
-      ordersPositionsLimitations: "noLimitations", // INFO - noLimitations, longOnly, shortOnly
+      ordersPositionsLimitations: "no_limitations", // INFO - no_limitations, long_only, short_only
 
     },
     additional: {}
@@ -183,10 +183,12 @@ function Input(props) {
           take_profit_enabled: values.takeProfitEnabled,
           take_profit_type: values.takeProfitType,
           take_profit_amount: values.takeProfitType === "percentage" ? values.takeProfitAmount / 100 : values.takeProfitAmount,
-          stopLossEnabled: values.stopLossEnabled,
-          stopLossType: values.stopLossType,
-          stopLossAmount: values.stopLossType === "percentage" ? values.stopLossAmount / 100 : values.stopLossAmount,
+          stop_loss_enabled: values.stopLossEnabled,
+          stop_loss_type: values.stopLossType,
+          stop_loss_amount: values.stopLossType === "percentage" ? values.stopLossAmount / 100 : values.stopLossAmount,
         },
+        open_new_order_on_contrarian_signal: values.openNewOrderOnContrarianSignal,
+        orders_positions_limitations: values.ordersPositionsLimitations,
         risk_free_rate: values.riskFreeRate / 100,
         benchmark_financial_instrument_name: values.benchmarkFinancialInstrumentName,
         strategy_name: values.strategy.name,
@@ -235,7 +237,7 @@ function Input(props) {
 
   const toggleButtons = [
 
-    <ToggleButton key="absoluteValue" value="absoluteValue">123</ToggleButton>,
+    <ToggleButton key="absolute_value" value="absolute_value">123</ToggleButton>,
 
     <ToggleButton key="percentage" value="percentage">%</ToggleButton>
 
@@ -268,6 +270,7 @@ function Input(props) {
           />
           {userContext.user &&
             <LoadingButton
+
               size="large"
               loading={loadingSaveBacktest}
               variant="contained"
@@ -437,29 +440,27 @@ function Input(props) {
           marginTop: "10px",
           marginBottom: "10px",
         }}>
-          <span className="tbd">
-            <div className="flex justify-center items-center">
-              <ToggleButtonGroup
-                id="ordersPositionsLimitations"
-                color="primary"
-                value={inputBacktesterFormik.values.ordersPositionsLimitations}
-                exclusive
-                size="small"
-                onChange={(newValue) => inputBacktesterFormik.setFieldValue("ordersPositionsLimitations", newValue.target.value)}
-              >
-                <ToggleButton value="longOnly">
-                  {t("backtester.longOnly")}
-                </ToggleButton>
-                <ToggleButton value="noLimitations">
-                  {t("backtester.noLimitations")}
-                </ToggleButton>
-                <ToggleButton value="shortOnly">
-                  {t("backtester.shortOnly")}
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </div>
-          </span>
-          {inputBacktesterFormik.values.ordersPositionsLimitations == "noLimitations" &&
+          <div className="flex justify-center items-center">
+            <ToggleButtonGroup
+              id="ordersPositionsLimitations"
+              color="primary"
+              value={inputBacktesterFormik.values.ordersPositionsLimitations}
+              exclusive
+              size="small"
+              onChange={(newValue) => inputBacktesterFormik.setFieldValue("ordersPositionsLimitations", newValue.target.value)}
+            >
+              <ToggleButton value="long_only">
+                {t("backtester.longOnly")}
+              </ToggleButton>
+              <ToggleButton value="no_limitations">
+                {t("backtester.noLimitations")}
+              </ToggleButton>
+              <ToggleButton value="short_only">
+                {t("backtester.shortOnly")}
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </div>
+          {inputBacktesterFormik.values.ordersPositionsLimitations == "no_limitations" &&
             <FormControlLabel
               sx={{ marginTop: 1 }}
               control={

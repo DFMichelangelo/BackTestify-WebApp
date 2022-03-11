@@ -144,7 +144,8 @@ function useFetcher(props) {
             if (
               history.location.pathname !== "/" &&
               !history.location.pathname.includes("/auth") &&
-              !history.location.pathname.includes("/p/")
+              !history.location.pathname.includes("/p/") &&
+              !history.location.pathname.includes("/error/")
             )
               themeContext.showWarningSnackbar({
                 message: "apiErrors.loginAgain",

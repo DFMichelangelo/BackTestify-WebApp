@@ -22,12 +22,13 @@ function Portfolio(props) {
 
 
     let portfolioValue = [];
+
     if (backtesterContext?.backtesterResults) {
         portfolioValue = backtesterContext?.backtesterResults?.raw_data.benchmark.map((benchmarkAssetValue, index) => {
             const liquidity = index >= backtesterContext?.backtesterResults.amount_of_data_for_strategy_from_today
-                ? backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[index + 1 - backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today].liquidity
+                ? backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[index - backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today].liquidity
                 : backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[0].liquidity
-            const assetsValue = index >= backtesterContext?.backtesterResults.amount_of_data_for_strategy_from_today ? backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[index + 1 - backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today].assets_value : 0;
+            const assetsValue = index >= backtesterContext?.backtesterResults.amount_of_data_for_strategy_from_today ? backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[index - backtesterContext?.backtesterResults?.amount_of_data_for_strategy_from_today].assets_value : 0;
             return {
                 date: backtesterContext?.backtesterResults?.raw_data.dates[index],
                 liquidity,
@@ -37,7 +38,6 @@ function Portfolio(props) {
             }
         })
     }
-
     return (
         <div>
             <div className="flex flex-row">

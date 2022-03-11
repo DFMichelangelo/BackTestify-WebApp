@@ -14,7 +14,6 @@ import RoundLoader from "components/RoundLoader";
 import { useHistory } from "react-router-dom";
 import useFetch from "hooks/useFetch";
 const ErrorNotFound = lazy(() => import("theme/views/Placeholders/ErrorNotFound"));
-const Home = lazy(() => import("theme/views/Home"));
 
 function App(props) {
   const userContext = useContext(UserContext);
@@ -43,9 +42,7 @@ function App(props) {
     } catch (e) {
       if (e?.status === 404) {
         history.push("auth/login?returnUrl=" + history.location.pathname);
-        //themeContext.showWarningSnackbar({ message: "loginAgain" })
       }
-      //history.push("auth?returnUrl=" + history.location.pathname)
     }
   }, []);
   if (loading) return <RoundLoader />
@@ -53,7 +50,7 @@ function App(props) {
     <Suspense fallback={<RoundLoader />}>
       <Switch>
         <Route path="/account*" exact component={Account} />
-        <Route exact path="/" component={Home} />
+
         <Route component={ErrorNotFound} />
       </Switch>
     </Suspense>
