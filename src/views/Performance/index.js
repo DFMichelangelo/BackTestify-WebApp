@@ -24,7 +24,7 @@ function Performance(props) {
     let drawdownValues = [];
     let underwaterValues = [];
     if (backtesterContext?.backtesterResults) {
-        const initialPortfolioValue = backtesterContext?.backtesterResults?.raw_data.portfolio_value_history[0].liquidity
+        const initialPortfolioValue = backtesterContext?.backtesterResults?.analytics.portfolio.initial_value
         const initialBenchmarkValue = backtesterContext?.backtesterResults?.raw_data.benchmark[0]
         equityLineValue = backtesterContext?.backtesterResults?.raw_data.benchmark.map((benchmarkAssetValue, index) => {
 
@@ -77,7 +77,6 @@ function Performance(props) {
 
                 <div className="flex flex-col">
                     <div className="flex flex-row">
-
                         <MetricCard title="backtester.sharpeRatio" multiMetricData={[
                             {
                                 subtitle: "backtester.annualized",
@@ -88,6 +87,17 @@ function Performance(props) {
                                 subtitle: "backtester.annualized",
                                 metricValue: backtesterContext.backtesterResults.analytics.performance.sortino_ratio_annualized.toFixed(2),
                             }]} />
+
+                        <MetricCard title="backtester.kestnerRatio" multiMetricData={[
+                            {
+                                metricValue: backtesterContext.backtesterResults.analytics.performance.kestner_ratio.toFixed(2),
+                            }]} />
+
+                        <MetricCard title="backtester.beta" multiMetricData={[
+                            {
+                                metricValue: backtesterContext.backtesterResults.analytics.performance.beta.toFixed(2),
+                            }]} />
+
                     </div>
                     <div className="flex flex-row w-full">
                         <MetricCard title="backtester.calmarRatio" multiMetricData={[
@@ -104,7 +114,12 @@ function Performance(props) {
                                     )
                                 ).toFixed(2) + " %",
                             }]} />
+                        <MetricCard title="backtester.correlationWithBenchmark" multiMetricData={[
+                            {
+                                metricValue: backtesterContext.backtesterResults.analytics.performance.correlation_with_benchmark.toFixed(2),
+                            }]} />
                     </div>
+
 
                 </div>
                 <div className="flex flex-row">
@@ -228,6 +243,10 @@ function Performance(props) {
                         {
                             subtitle: "backtester.drawdownOfMaxDuration",
                             metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.drawdown_of_max_duration).toFixed(2) + "%"
+                        },
+                        {
+                            subtitle: "backtester.meanDrawdown",
+                            metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.drawdown.mean_drawdown).toFixed(2) + "%"
                         }
                     ]}
                 >
@@ -272,6 +291,10 @@ function Performance(props) {
                         {
                             subtitle: "backtester.underwaterOfMaxDuration",
                             metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.underwater.underwater_of_max_duration).toFixed(2) + "%"
+                        },
+                        {
+                            subtitle: "backtester.meanUnderwater",
+                            metricValue: (100 * backtesterContext?.backtesterResults?.analytics.portfolio.underwater.mean_underwater).toFixed(2) + "%"
                         }
                     ]}
                 >

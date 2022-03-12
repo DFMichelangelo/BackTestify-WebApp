@@ -25,7 +25,7 @@ function Orders(props) {
                         },
                         {
                             subsubtitle: "backtester.profitableOrders",
-                            metricValue: ((ordersInfo.long_orders.percentage_profitable + ordersInfo.short_orders.percentage_profitable) * 100).toFixed(2) + " %"
+                            metricValue: (100 * ordersInfo.general.percentage_profitable).toFixed(2) + " %"
                         }
                         ]
                     },
