@@ -33,7 +33,7 @@ function Benchmark(props) {
         })
         benchmarkReturns = backtesterContext?.backtesterResults?.analytics.benchmark.returns.map((returnValue, index) => {
             return {
-                date: backtesterContext?.backtesterResults?.raw_data.dates[index + 1],
+                date: backtesterContext?.backtesterResults?.raw_data.dates[index],
                 returnValue: returnValue * 100
             }
         })
@@ -61,7 +61,7 @@ function Benchmark(props) {
         })
     }
 
-
+    console.log(benchmarkReturns);
     let stdReturns = backtesterContext.backtesterResults.analytics.benchmark.returns_std * 100
     let meanReturns = backtesterContext.backtesterResults.analytics.benchmark.returns_mean * 100
     return (
@@ -127,20 +127,19 @@ function Benchmark(props) {
                         }]}
                 >
                     <ResponsiveContainer minHeight={300} >
-                        <BarChart data={benchmarkReturns}>
-                            <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} tickFormatter={fromTimestampToDateString} />
-                            <YAxis type="number" unit={"%"} domain={['auto', 'auto']} />
+                        <BarChart data={benchmarkReturns} >
                             <CartesianGrid stroke="#ccc" />
-                            <Bar unit={" %"} dataKey="returnValue" fill="#8884d8" />
                             <ReferenceArea x1={benchmarkReturns[0].date} x2={benchmarkReturns[benchmarkReturns.length - 1].date} y1={meanReturns - stdReturns} y2={meanReturns + stdReturns} stroke="red" strokeOpacity={0.3} />
                             <ReferenceLine y={0} stroke="#000" />
                             <ReferenceLine y={meanReturns} stroke="green" strokeDasharray="3 3" />
-
-
+                            <XAxis type="number" dataKey="date" domain={['dataMin', 'dataMax']} tickFormatter={fromTimestampToDateString} />
+                            <YAxis type="number" domain={['auto', 'auto']} />
+                            <Bar unit={" %"} dataKey="returnValue" fill="#8884d8" barSize={1.5} />
                             {CustomTooltip()}
                             {CustomLegend()}
                         </BarChart>
                     </ResponsiveContainer>
+
                 </MetricCard>
                 <GenericCard title="backtester.returnsDistribution" width={"50%"}>
                     <ResponsiveContainer minHeight={300} >
