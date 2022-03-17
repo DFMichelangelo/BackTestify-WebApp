@@ -61,7 +61,7 @@ function Benchmark(props) {
         })
     }
 
-    console.log(benchmarkReturns);
+
     let stdReturns = backtesterContext.backtesterResults.analytics.benchmark.returns_std * 100
     let meanReturns = backtesterContext.backtesterResults.analytics.benchmark.returns_mean * 100
     return (

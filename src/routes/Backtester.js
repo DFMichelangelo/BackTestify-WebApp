@@ -7,6 +7,7 @@ const Input = lazy(() => import("views/Input"));
 const Benchmark = lazy(() => import("views/Benchmark"));
 const Backtests = lazy(() => import("views/Backtests"));
 const Portfolio = lazy(() => import("views/Portfolio"));
+const StrategyOptimizer = lazy(() => import("views/StrategyOptimizer"));
 const Orders = lazy(() => import("views/Orders"));
 const Performance = lazy(() => import("views/Performance"));
 const Logs = lazy(() => import("views/Logs"));
@@ -29,6 +30,7 @@ function Backtester() {
         <Switch>
             <Route path="/p/backtester/input" component={Input} />
             <Route path="/p/backtester/backtests" component={Backtests} />
+            <Route path="/p/backtester/strategy-optimizer" component={StrategyOptimizer} />
             {backtesterContext.backtesterResults ?
                 <Switch>
                     <Route path="/p/backtester/benchmark" component={Benchmark} />

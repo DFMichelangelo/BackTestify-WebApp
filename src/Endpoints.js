@@ -29,6 +29,9 @@ let Endpoints = {
     backtestStrategy: "/backtest_strategy", // ? POST
     saveBacktest: "/backtest", // ? POST
     getAllBacktests: "/backtest/all", // ? GET
+  },
+  optimization: {
+    getFitnessFunctions: "/optimization/fitness_functions" // ? GET
   }
 }
 

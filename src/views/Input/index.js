@@ -6,28 +6,24 @@ import { useFormik } from "formik";
 import useFetch from "hooks/useFetch";
 import { useTranslation } from "react-i18next";
 import { DateTime } from "luxon";
-import MenuItem from '@mui/material/MenuItem';
-import GenericCard from "components/GenericCard";
 import RoundLoader from "components/RoundLoader";
 import Switch from '@mui/material/Switch';
 import Endpoints from "Endpoints";
 import InputOutlinedIcon from '@mui/icons-material/InputOutlined';
 import * as Yup from "yup";
-import InputAdornment from '@mui/material/InputAdornment';
-import DatePicker from '@mui/lab/DatePicker';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormikTextField from "components/FormikComponents/FormikTextField";
-import TextField from '@mui/material/TextField';
-import { Typography } from "@mui/material";
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import Divider from '@mui/material/Divider';
 import LoadingButton from '@mui/lab/LoadingButton';
-import Checkbox from '@mui/material/Checkbox';
 import UpdateOutlinedIcon from '@mui/icons-material/UpdateOutlined';
 import Masonry from '@mui/lab/Masonry';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
-
+import FinancialInstruments from "components/FinancialInstruments";
+import Portfolio from "./Portfolio";
+import Broker from "./Broker";
+import ExogenVariables from "./ExogenVariables";
+import Commissions from "./Commissions";
+import StopLossAndTakeProfit from "./StopLossAndTakeProfit";
+import Strategy from "./Strategy";
+import PercentageAbsoluteValueToggleButtons from "components/PercentageAbsoluteValueToggleButtons";
 
 function Input(props) {
   const themeContext = useContext(ThemeContext);
@@ -46,15 +42,15 @@ function Input(props) {
     initial: {
       startDate: DateTime.now().minus({ years: 1, days: 1 }),
       endDate: DateTime.now().minus({ days: 1 }),
-      initialPortfolioValue: 500,
-      riskFreeRate: 1,
-      financialInstrumentName: "AAPL",
       timeframe: "1d",
-      strategy: strategySelected || "",
+      financialInstrumentName: "AAPL",
       benchmarkFinancialInstrumentName: "^GSPC",
       durationType: "years",
       durationAmount: 1,
       typeStartDate: "date",
+      initialPortfolioValue: 500,
+      riskFreeRate: 1,
+      strategy: "",
       orderSizeType: "percentage",
       orderSizeAmount: 10,
       commissionsOnOrderFillEnabled: true,
@@ -91,12 +87,12 @@ function Input(props) {
     ...strategySelected?.indicators_parameters_config && createValidationForInputParameters(),
     startDate: Yup.date().required(),
     endDate: Yup.date().required(),
+    financialInstrumentName: Yup.string().required(),
+    benchmarkFinancialInstrumentName: Yup.string().required(),
     initialPortfolioValue: Yup.number().min(1).required(),
     riskFreeRate: Yup.number().required(),
     durationAmount: Yup.number().min(0).required(),
     durationType: Yup.string().required(),
-    financialInstrumentName: Yup.string().required(),
-    benchmarkFinancialInstrumentName: Yup.string().required(),
     strategy: Yup.object().required(),
     orderSizeType: Yup.string().required(),
     orderSizeAmount: Yup.number().when("orderSizeType",
@@ -192,10 +188,8 @@ function Input(props) {
         risk_free_rate: values.riskFreeRate / 100,
         benchmark_financial_instrument_name: values.benchmarkFinancialInstrumentName,
         strategy_name: values.strategy.name,
-        input_data: {
-          timeframe: values.timeframe,
-          financial_instrument_name: values.financialInstrumentName,
-        },
+        timeframe: values.timeframe,
+        financial_instrument_name: values.financialInstrumentName,
         indicators_parameters
       }
       console.log(payload)
@@ -235,17 +229,8 @@ function Input(props) {
     }
   }, [advancedSettings])
 
-  const toggleButtons = [
-
-    <ToggleButton key="absolute_value" value="absolute_value">123</ToggleButton>,
-
-    <ToggleButton key="percentage" value="percentage">%</ToggleButton>
-
-  ]
   if (loadingStrategies) return <RoundLoader />;
 
-  const showRewardRiskRatio = ((inputBacktesterFormik.values.stopLossEnabled && inputBacktesterFormik.values.takeProfitEnabled)
-    && (inputBacktesterFormik.values.stopLossType == inputBacktesterFormik.values.takeProfitType))
   return (
     <form onSubmit={inputBacktesterFormik.handleSubmit} >
       <div className="flex items-center">
@@ -285,445 +270,25 @@ function Input(props) {
         </div>
       </div>
       <Masonry columns={4} spacing={3} sx={{ margin: "0px !important" }}>
-        <GenericCard title="backtester.dataInput" classNameContent="flex flex-col" width="300px" margins={{
-          margin: "0px",
-          marginTop: "10px",
-          marginBottom: "10px",
-        }}>
-          <div className="flex justify-center items-center">
-            <ToggleButtonGroup
-              id="typeStartDate"
-              color="primary"
-              value={inputBacktesterFormik.values.typeStartDate}
-              exclusive
-              size="small"
-              onChange={(newValue) => inputBacktesterFormik.setFieldValue("typeStartDate", newValue.target.value)}
-            >
-              <ToggleButton value="date">{t("backtester.date")}</ToggleButton>
-              <ToggleButton value="duration">{t("backtester.duration")}</ToggleButton>
-            </ToggleButtonGroup>
-          </div>
-          {inputBacktesterFormik.values.typeStartDate === "duration" ?
-            <div className="flex">
-              <FormikTextField
-                formikInstance={inputBacktesterFormik}
-                style={{ width: "45%" }}
-                id="durationAmount"
-                size="small"
-                label={t("backtester.durationAmount")}
-                type="number"
-                inputProps={{ inputMode: "numberic", pattern: "^[1-9]\d*$" }}
-              />
-
-              <TextField
-                style={{ width: "45%" }}
-                select
-                id="durationType"
-                size="small"
-                onChange={(newValue) => inputBacktesterFormik.setFieldValue("durationType", newValue.target.value)}
-                value={inputBacktesterFormik.values.durationType}
-                label={t("backtester.durationType")}
-              >
-                <MenuItem value={"days"}>{t("backtester.days")}</MenuItem>
-                <MenuItem value={"months"}>{t("backtester.months")}</MenuItem>
-                <MenuItem value={"years"}>{t("backtester.years")}</MenuItem>
-              </TextField>
-            </div>
-            :
-            <DatePicker
-              id="startDate"
-              label={t("backtester.startDate")}
-              //maxDate={DateTime.now().minus({ years: 1 })}
-              value={inputBacktesterFormik.values.startDate}
-              onChange={(e) => inputBacktesterFormik.setFieldValue("startDate", e)}
-              renderInput={(params) => <TextField {...params} size="small" />}
-            />
-          }
-          <Divider variant="middle" />
-          <DatePicker
-            id="endDate"
-            label={t("backtester.endDate")}
-            maxDate={DateTime.now().minus({ days: 1 })}
-            value={inputBacktesterFormik.values.endDate}
-            onChange={(e) => inputBacktesterFormik.setFieldValue("endDate", e)}
-            renderInput={(params) => <TextField {...params} size="small" />}
-          />
-
-          <TextField
-            select
-            id="timeframe"
-            size="small"
-            onChange={(newValue) => inputBacktesterFormik.setFieldValue("timeframe", newValue.target.value)}
-            value={inputBacktesterFormik.values.timeframe}
-            label={t("backtester.timeframe")}
-            disabled
-          >
-            <MenuItem value={"1h"}>{t("backtester.hourly")}</MenuItem>
-            <MenuItem value={"1d"}>{t("backtester.daily")}</MenuItem>
-          </TextField>
-
-          <FormikTextField
-            formikInstance={inputBacktesterFormik}
-            id="financialInstrumentName"
-            label={t("backtester.financialInstrumentName")}
-            size="small"
-          />
-
-          <FormikTextField
-            formikInstance={inputBacktesterFormik}
-            id="benchmarkFinancialInstrumentName"
-            label={t("backtester.benchmarkFinancialInstrumentName")}
-            size="small"
-          />
-        </GenericCard>
-        <GenericCard title="backtester.portfolio" classNameContent="flex flex-col" margin={{
-          margin: "0px",
-          marginTop: "10px",
-          marginBottom: "10px",
-        }}>
-          <FormikTextField
-            id="initialPortfolioValue"
-            label={t("backtester.initialPortfolioValue")}
-            type="number"
-            formikInstance={inputBacktesterFormik}
-            size="small"
-          />
-          <Divider variant="middle" />
-          <Typography variant="button" align="center" gutterBottom>
-            {t("backtester.orderSize")}
-          </Typography>
-          <div className="flex items-center">
-            <ToggleButtonGroup
-              id="orderSizeType"
-              color="primary"
-              value={inputBacktesterFormik.values.orderSizeType}
-              exclusive
-              size="small"
-              onChange={(newValue) => inputBacktesterFormik.setFieldValue("orderSizeType", newValue.target.value)}
-            >
-              {toggleButtons}
-            </ToggleButtonGroup>
-            <FormikTextField
-              fullWidth
-              formikInstance={inputBacktesterFormik}
-              id="orderSizeAmount"
-              label={t("backtester.amount")}
-              type="number"
-              size="small"
-              InputProps={{
-                endAdornment:
-                  <InputAdornment position="end">
-                    <span className={inputBacktesterFormik.values.orderSizeType == "percentage" ? "opacity-100" : "opacity-0"}>%</span>
-                  </InputAdornment>
-              }}
-            />
-          </div>
-        </GenericCard>
-        <GenericCard title="backtester.exogenVariables" classNameContent="flex flex-col" margin={{
-          margin: "0px",
-          marginTop: "10px",
-          marginBottom: "10px",
-        }}>
-          <FormikTextField
-            formikInstance={inputBacktesterFormik}
-            id="riskFreeRate"
-            size="small"
-            label={t("backtester.riskFreeRate")}
-            type="number"
-            InputProps={{
-              endAdornment: <InputAdornment position="end">%</InputAdornment>,
-            }}
-          />
-        </GenericCard>
-        <GenericCard title="backtester.strategy" classNameContent="flex flex-col" margin={{
-          margin: "0px",
-          marginTop: "10px",
-          marginBottom: "10px",
-        }}>
-          <div className="flex justify-center items-center">
-            <ToggleButtonGroup
-              id="ordersPositionsLimitations"
-              color="primary"
-              value={inputBacktesterFormik.values.ordersPositionsLimitations}
-              exclusive
-              size="small"
-              onChange={(newValue) => inputBacktesterFormik.setFieldValue("ordersPositionsLimitations", newValue.target.value)}
-            >
-              <ToggleButton value="long_only">
-                {t("backtester.longOnly")}
-              </ToggleButton>
-              <ToggleButton value="no_limitations">
-                {t("backtester.noLimitations")}
-              </ToggleButton>
-              <ToggleButton value="short_only">
-                {t("backtester.shortOnly")}
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </div>
-          {inputBacktesterFormik.values.ordersPositionsLimitations == "no_limitations" &&
-            <FormControlLabel
-              sx={{ marginTop: 1 }}
-              control={
-                <Switch
-                  checked={inputBacktesterFormik.values.openNewOrderOnContrarianSignal}
-                  onChange={(e) => inputBacktesterFormik.setFieldValue("openNewOrderOnContrarianSignal", e.target.checked)}
-                />}
-              label={<Typography variant="body2" gutterBottom>{t("backtester.openNewOrderOnContrarianSignal")}</Typography>} />
-          }
-
-          <Divider variant="middle" />
-          <TextField
-            select
-            id="strategy"
-            size="small"
-            onChange={(newValue) => {
-              setValidationTrigger(false);
-              setStrategySelected(newValue.target.value)
-              let obj = {}
-              newValue.target.value.indicators_parameters_config.map(indicator => obj[indicator.name] = indicator.default_value)
-              setInitialValues({
-                initial: { ...inputBacktesterFormik.values, strategy: newValue.target.value },
-                additional: obj
-              })
-              validationSchema.isValid(
-                {
-                  ...inputBacktesterFormik.values,
-                  strategy: newValue.target.value,
-                  ...obj
-                }
-              ).then((e) => {
-                setDisableButton(!e)
-                setValidationTrigger(true);
-              });
-            }
-            }
-            value={inputBacktesterFormik.values.strategy}
-            label={t("backtester.strategy")}
-          >
-            {strategies.map((strategy) => <MenuItem key={strategy.name} value={strategy}>{strategy.name}</MenuItem>)}
-          </TextField>
-
-          {strategySelected?.indicators_parameters_config && strategySelected.indicators_parameters_config.map(indicator_config =>
-            <FormikTextField
-              size="small"
-              triggerAfterTouch
-              key={indicator_config.name}
-              formikInstance={inputBacktesterFormik}
-              id={indicator_config.name}
-              label={indicator_config.name}
-              type="number"
-            />
-          )}
-        </GenericCard>
-
-        {advancedSettings && <GenericCard title="backtester.commissions" classNameContent="flex flex-col" margin={{
-          margin: "0px",
-          marginTop: "10px",
-          marginBottom: "10px",
-        }}>
-          <span className="tbd">
-
-            <FormControlLabel
-              id="commissionsOnOrderFillEnabled"
-              control={<Checkbox />}
-              label={t("backtester.onOrderFill")}
-              checked={inputBacktesterFormik.values.commissionsOnOrderFillEnabled}
-              onChange={newValue => inputBacktesterFormik.setFieldValue("commissionsOnOrderFillEnabled", newValue.target.checked)}
-            />
-            <div className="flex items-center">
-              <ToggleButtonGroup
-                id="commissionsOnOrderFillType"
-                color="primary"
-                value={inputBacktesterFormik.values.commissionsOnOrderFillEnabled ? inputBacktesterFormik.values.commissionsOnOrderFillType : ""}
-                exclusive
-                size="small"
-                disabled={!inputBacktesterFormik.values.commissionsOnOrderFillEnabled}
-                onChange={(newValue) => inputBacktesterFormik.setFieldValue("commissionsOnOrderFillType", newValue.target.value)}
-              >
-                {toggleButtons}
-              </ToggleButtonGroup>
-              <FormikTextField
-                fullWidth
-                size="small"
-                formikInstance={inputBacktesterFormik}
-                id="commissionsOnOrderFillAmount"
-                label={t("backtester.commissionsPerOrder")}
-                type="number"
-                disabled={!inputBacktesterFormik.values.commissionsOnOrderFillEnabled}
-                InputProps={{
-                  endAdornment:
-                    <InputAdornment position="end">
-                      <span className={inputBacktesterFormik.values.commissionsOnOrderFillType == "percentage" ? "opacity-100" : "opacity-0"}>%</span>
-                    </InputAdornment>
-                }}
-              />
-            </div>
-            <Divider variant="middle" />
+        <FinancialInstruments formikInstance={inputBacktesterFormik} />
+        <Portfolio formikInstance={inputBacktesterFormik} />
+        <ExogenVariables formikInstance={inputBacktesterFormik} />
+        <Strategy
+          formikInstance={inputBacktesterFormik}
+          setValidationTrigger={setValidationTrigger}
+          setStrategySelected={setStrategySelected}
+          setInitialValues={setInitialValues}
+          validationSchema={validationSchema}
+          setDisableButton={setDisableButton}
+          strategies={strategies}
+          strategySelected={strategySelected}
+        />
 
 
-            <FormControlLabel
-              id="commissionsOvernightEnabled"
-              control={<Checkbox />}
-              label={t("backtester.overnight")}
-              checked={inputBacktesterFormik.values.commissionsOvernightEnabled}
-              onChange={newValue => inputBacktesterFormik.setFieldValue("commissionsOvernightEnabled", newValue.target.checked)}
-            />
-            <div className="flex items-center">
-              <ToggleButtonGroup
-                id="commissionsOvernightType"
-                color="primary"
-                value={inputBacktesterFormik.values.commissionsOvernightEnabled ? inputBacktesterFormik.values.commissionsOvernightType : ""}
-                exclusive
-                size="small"
-                disabled={!inputBacktesterFormik.values.commissionsOvernightEnabled}
-                onChange={(newValue) => inputBacktesterFormik.setFieldValue("commissionsOvernightType", newValue.target.value)}
-              >
-                {toggleButtons}
-              </ToggleButtonGroup>
-              <FormikTextField
-                fullWidth
-                size="small"
-                formikInstance={inputBacktesterFormik}
-                id="commissionsOvernightAmount"
-                label={t("backtester.commissionsPerOrder")}
-                type="number"
-                disabled={!inputBacktesterFormik.values.commissionsOvernightEnabled}
-                InputProps={{
-                  endAdornment:
-                    <InputAdornment position="end">
-                      <span className={inputBacktesterFormik.values.commissionsOvernightType == "percentage" ? "opacity-100" : "opacity-0"}>%</span>
-                    </InputAdornment>
-                }}
-              />
-            </div>
-          </span>
-        </GenericCard>}
-        {advancedSettings && <GenericCard title="backtester.brokerSettings" margin={{
-          margin: "0px",
-          marginTop: "10px",
-          marginBottom: "10px",
-        }}>
-          <span className="tbd">
-            <div className="flex flex-col">
-              <TextField
-                select
-                id="orderFractioning"
-                size="small"
-                onChange={(newValue) => inputBacktesterFormik.setFieldValue("orderFractioning", newValue.target.value)}
-                value={inputBacktesterFormik.values.orderFractioning}
-                label={t("backtester.orderFractioning")}
-              >
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={0.1}>0.1</MenuItem>
-                <MenuItem value={0.01}>0.01</MenuItem>
-                <MenuItem value={0}>{t("backtester.fluidFractioning")}</MenuItem>
-              </TextField>
 
-              <TextField
-                select
-                id="minimumOrderSize"
-                size="small"
-                onChange={(newValue) => inputBacktesterFormik.setFieldValue("minimumOrderSize", newValue.target.value)}
-                value={inputBacktesterFormik.values.minimumOrderSize}
-                label={t("backtester.minimumOrderSize")}
-              >
-                <MenuItem value={100}>100</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={0.1}>0.1</MenuItem>
-                <MenuItem value={0.01}>0.01</MenuItem>
-                <MenuItem value={0}>{t("backtester.noMinimumSize")}</MenuItem>
-              </TextField>
-            </div>
-          </span>
-        </GenericCard>
-        }
-        <GenericCard title="backtester.stopLossAndTakeProfit" margin={{
-          margin: "0px",
-          marginTop: "10px",
-          marginBottom: "10px",
-        }}>
-
-          <FormControlLabel
-            id="takeProfitEnabled"
-            control={<Checkbox />}
-            label={t("backtester.takeProfitEnabled")}
-            checked={inputBacktesterFormik.values.takeProfitEnabled}
-            onChange={newValue => inputBacktesterFormik.setFieldValue("takeProfitEnabled", newValue.target.checked)}
-          />
-
-          <div className="flex items-center">
-            <ToggleButtonGroup
-              id="takeProfitType"
-              color="primary"
-              value={inputBacktesterFormik.values.takeProfitEnabled ? inputBacktesterFormik.values.takeProfitType : ""}
-              exclusive
-              size="small"
-              disabled={!inputBacktesterFormik.values.takeProfitEnabled}
-              onChange={(newValue) => inputBacktesterFormik.setFieldValue("takeProfitType", newValue.target.value)}
-            >
-              {toggleButtons}
-            </ToggleButtonGroup>
-            <FormikTextField
-              fullWidth
-              size="small"
-              formikInstance={inputBacktesterFormik}
-              id="takeProfitAmount"
-              label={t("backtester.takeProfitAmount")}
-              type="number"
-              disabled={!inputBacktesterFormik.values.takeProfitEnabled}
-              InputProps={{
-                endAdornment:
-                  <InputAdornment position="end">
-                    <span className={inputBacktesterFormik.values.takeProfitType == "percentage" ? "opacity-100" : "opacity-0"}>%</span>
-                  </InputAdornment>
-              }}
-            />
-          </div>
-          <FormControlLabel
-
-            id="stopLossEnabled"
-            control={<Checkbox />}
-            label={t("backtester.stopLossEnabled")}
-            checked={inputBacktesterFormik.values.stopLossEnabled}
-            onChange={newValue => inputBacktesterFormik.setFieldValue("stopLossEnabled", newValue.target.checked)}
-          />
-
-          <div className="flex items-center">
-            <ToggleButtonGroup
-              id="stopLossType"
-              color="primary"
-              value={inputBacktesterFormik.values.stopLossEnabled ? inputBacktesterFormik.values.stopLossType : ""}
-              exclusive
-              size="small"
-              disabled={!inputBacktesterFormik.values.stopLossEnabled}
-              onChange={(newValue) => inputBacktesterFormik.setFieldValue("stopLossType", newValue.target.value)}
-            >
-              {toggleButtons}
-            </ToggleButtonGroup>
-            <FormikTextField
-              fullWidth
-              size="small"
-              formikInstance={inputBacktesterFormik}
-              id="stopLossAmount"
-              label={t("backtester.stopLossAmount")}
-              type="number"
-              disabled={!inputBacktesterFormik.values.stopLossEnabled}
-              InputProps={{
-                endAdornment:
-                  <InputAdornment position="end">
-                    <span className={inputBacktesterFormik.values.stopLossType == "percentage" ? "opacity-100" : "opacity-0"}>%</span>
-                  </InputAdornment>
-              }}
-            />
-          </div>
-          {/*            <span className={classnames(showRewardRiskRatio ? "visible" : "invisible")}>*/}
-          {showRewardRiskRatio &&
-            <Typography align="center" variant="body1" >
-              {t("backtester.rewardToRiskRatio") + ": " + (-inputBacktesterFormik.values.takeProfitAmount / inputBacktesterFormik.values.stopLossAmount).toFixed(2)}
-            </Typography>}
-          {/*</span>*/}
-        </GenericCard>
+        {advancedSettings && <Commissions formikInstance={inputBacktesterFormik} />}
+        {advancedSettings && <Broker formikInstance={inputBacktesterFormik} />}
+        <StopLossAndTakeProfit formikInstance={inputBacktesterFormik} />
       </Masonry>
     </form >
   )

@@ -7,25 +7,31 @@ import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
 import RawOnOutlinedIcon from '@mui/icons-material/RawOnOutlined';
 import ShowChartOutlinedIcon from '@mui/icons-material/ShowChartOutlined';
 import RestorePageOutlinedIcon from '@mui/icons-material/RestorePageOutlined';
+import ScienceOutlinedIcon from '@mui/icons-material/ScienceOutlined';
+
+
+
 const SidebarMenu = [
   {
+    type: "item",
+    id: "backtester.input",
+    to: "/p/backtester/input",
+    icon: <InputOutlinedIcon />,
+    exact: true,
+  },
+  process.env.NODE_ENV === "development" && {
+    type: "item",
+    id: "backtester.backtests",
+    to: "/p/backtester/backtests",
+    icon: <RestorePageOutlinedIcon />,
+    exact: true,
+  },
+  {
     type: "group",
-    id: "backtester.backtester",
+    id: "backtester.backtesterResults",
     children: [
-      {
-        type: "item",
-        id: "backtester.input",
-        to: "/p/backtester/input",
-        icon: <InputOutlinedIcon />,
-        exact: true,
-      },
-      process.env.NODE_ENV === "development" && {
-        type: "item",
-        id: "backtester.backtests",
-        to: "/p/backtester/backtests",
-        icon: <RestorePageOutlinedIcon />,
-        exact: true,
-      },
+
+
       {
         type: "item",
         id: "backtester.benchmark",
@@ -82,6 +88,18 @@ const SidebarMenu = [
       }
     ]
   },
+  process.env.NODE_ENV === "development" && {
+    type: "group",
+    id: "backtester.optimization",
+    children: [
+      {
+        type: "item",
+        id: "backtester.strategy",
+        to: "/p/backtester/strategy-optimizer",
+        icon: <ScienceOutlinedIcon />,
+        exact: true,
+      },]
+  }
   /*{
     type: "group",
     id: "backtester.lab",

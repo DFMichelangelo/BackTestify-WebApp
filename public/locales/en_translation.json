@@ -174,7 +174,7 @@
 		"timeframe": "Timeframe",
 		"strategy": "Strategy",
 		"exogenVariables": "Exogen Variables",
-		"dataInput": "Data Input",
+		"financialInstruments": "Financial Instruments",
 		"rawData": "Raw Data",
 		"durationType": "Duration Type",
 		"date": "Date",
@@ -249,7 +249,7 @@
 		"overnight": "Overnight",
 		"orderSize": "Position Sizing",
 		"stopLossAndTakeProfit": "Stop Loss and Take Profit",
-		"brokerSettings": "Broker Settings",
+		"broker": "Broker",
 		"orderFractioning": "Order Fractioning",
 		"fluidFractioning": "Fluid Fractioning",
 		"minimumOrderSize": "Minimum Order Size",
@@ -290,6 +290,18 @@
 		"sharpeRatioAnnualized": "Sharpe Ratio (Annualized)",
 		"correlationWithBenchmark": "Correlation With Benchmark",
 		"kestnerRatio": "Kestner Ratio",
-		"beta": "Beta"
+		"beta": "Beta",
+		"backtesterResults": "Backtester Results",
+		"optimization": "Optimization",
+		"strategyOptimizer": "Strategy Optimizer",
+		"initialValue": "Initial Value",
+		"finalValue": "Final Value",
+		"stepValue": "Step Value",
+		"optimizeStrategy": "Optimize Strategy",
+		"staticInput": "Static Input",
+		"selectFitnessFunction": "Select Fitness Function",
+		"fitnessFunction": "Fitness Function",
+		"staticParameters": "Static Parameters",
+		"parametersToOptimize": "Parameters to Optimize"
 	}
 }

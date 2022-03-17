@@ -15,12 +15,12 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 let locale = window.navigator.userLanguage || window.navigator.language;
 
 function App() {
-  Settings.defaultLocale = localStorage.getItem("i18nextLng").split("-")[0] || locale
+  Settings.defaultLocale = localStorage.getItem("i18nextLng")?.split("-")[0] || locale
   yupConfig();
   return (
     <ErrorBoundary>
       <Provider>
-        <LocalizationProvider dateAdapter={AdapterLuxon} locale={localStorage.getItem("i18nextLng").split("-")[0] || locale}>
+        <LocalizationProvider dateAdapter={AdapterLuxon} locale={localStorage.getItem("i18nextLng")?.split("-")[0] || locale}>
           <MUIThemeHandler>
             <React.Suspense fallback={<RoundLoader />}>
               <Router>

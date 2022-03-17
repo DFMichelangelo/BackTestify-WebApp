@@ -51,8 +51,12 @@ function NavVerticalItem(props) {
     <ListItem
       button
       className={classnames(classes.listItem)}
+      onAuxClick={event => window.open(item.to, "_blank")}
       onClick={(event) => {
-        if (item.to) history.push(item.to);
+
+        if (event.ctrlKey) window.open(item.to, "_blank");
+
+        else if (item.to) history.push(item.to);
         else if (item.redirectUrl) window.open(item.redirectUrl);
         if (matches || themeContext.sidebarOpenedEvent === "click")
           navBarCloseMobile();
@@ -81,7 +85,7 @@ function NavVerticalItem(props) {
         classes={{ primary: "text-14" }}
       />
       {item.badge && <NavBadge badge={item.badge} />}
-    </ListItem>
+    </ListItem >
   );
 }
 
