@@ -2,9 +2,14 @@ import React, { useContext } from "react";
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import config from "configuration/config";
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { ThemeContext } from "contexts/Providers/ThemeProvider";
+import AdapterLuxon from '@mui/lab/AdapterLuxon';
+import { Settings } from "luxon";
+
 function MUIThemeHandler(props) {
   const themeContext = useContext(ThemeContext);
+
   let muithemeConfig = {
     typography: {
       //fontFamily: `"Comfortaa", "Roboto", "Helvetica", "Arial", sans-serif`,
@@ -25,12 +30,14 @@ function MUIThemeHandler(props) {
   };
 
   const theme = createTheme(muithemeConfig);
-
+  Settings.defaultLocale = themeContext.i18nextLng?.split("-")[0]
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {props.children}
-    </ThemeProvider>
+    <LocalizationProvider dateAdapter={AdapterLuxon} locale={themeContext.i18nextLng?.split("-")[0]}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {props.children}
+      </ThemeProvider>
+    </LocalizationProvider>
   );
 }
 

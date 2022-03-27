@@ -21,6 +21,7 @@ function LanguageBox(props) {
         });
       else {
         try {
+          themeContext.setI18nextLng(e.target.value);
           await fetch({
             url: Endpoints.user.editProfile,
             data: {

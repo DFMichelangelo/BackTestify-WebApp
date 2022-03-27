@@ -108,6 +108,9 @@ class ThemeProvider extends Component {
     this.setState({ sidebarOpenedEvent });
 
   state = {
+
+    i18nextLng: localStorage.getItem("i18nextLng") || (window.navigator.userLanguage || window.navigator.language),
+    setI18nextLng: (i18nextLng) => this.setState({ i18nextLng }),
     muiType: localStorage.getItem("theme") || "light", // ? mui theme
     toggleMuiType: this.toggleMuiType, // ? mui theme
     setMuiType: this.setMuiType,
