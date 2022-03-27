@@ -6,8 +6,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import FormikTextField from "components/FormikComponents/FormikTextField";
 import InputAdornment from '@mui/material/InputAdornment';
+import ToggleButton from '@mui/material/ToggleButton';
 import { Typography } from "@mui/material";
-import PercentageAbsoluteValueToggleButtons from "components/PercentageAbsoluteValueToggleButtons";
 function StopLossAndTakeProfit(props) {
     const { formikInstance } = props;
     const { t } = useTranslation();
@@ -37,7 +37,8 @@ function StopLossAndTakeProfit(props) {
                     disabled={!formikInstance.values.takeProfitEnabled}
                     onChange={(newValue) => formikInstance.setFieldValue("takeProfitType", newValue.target.value)}
                 >
-                    {PercentageAbsoluteValueToggleButtons}
+                    <ToggleButton key="absolute_value" value="absolute_value">123</ToggleButton>
+                    <ToggleButton key="percentage" value="percentage">%</ToggleButton>
                 </ToggleButtonGroup>
                 <FormikTextField
                     fullWidth
@@ -74,7 +75,8 @@ function StopLossAndTakeProfit(props) {
                     disabled={!formikInstance.values.stopLossEnabled}
                     onChange={(newValue) => formikInstance.setFieldValue("stopLossType", newValue.target.value)}
                 >
-                    {PercentageAbsoluteValueToggleButtons}
+                    <ToggleButton key="absolute_value" value="absolute_value">123</ToggleButton>
+                    <ToggleButton key="percentage" value="percentage">%</ToggleButton>
                 </ToggleButtonGroup>
                 <FormikTextField
                     fullWidth

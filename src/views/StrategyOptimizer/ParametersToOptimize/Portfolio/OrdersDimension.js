@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import PercentageAbsoluteValueToggleButtons from "components/PercentageAbsoluteValueToggleButtons/index";
+import ToggleButton from '@mui/material/ToggleButton';
 function OrdersDimension(props) {
     const { formikInstance } = props
     const { t } = useTranslation();
@@ -18,7 +18,8 @@ function OrdersDimension(props) {
                     size="small"
                     onChange={(newValue) => formikInstance.setFieldValue("orderSizeType", newValue.target.value)}
                 >
-                    {PercentageAbsoluteValueToggleButtons}
+                    <ToggleButton key="absolute_value" value="absolute_value">123</ToggleButton>
+                    <ToggleButton key="percentage" value="percentage">%</ToggleButton>
                 </ToggleButtonGroup>
                 <FormikTextField
                     fullWidth

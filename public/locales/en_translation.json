@@ -176,6 +176,7 @@
 		"exogenVariables": "Exogen Variables",
 		"financialInstruments": "Financial Instruments",
 		"rawData": "Raw Data",
+		"duration": "Duration",
 		"durationType": "Duration Type",
 		"date": "Date",
 		"years": "Years",

@@ -23,8 +23,7 @@ import ExogenVariables from "./ExogenVariables";
 import Commissions from "./Commissions";
 import StopLossAndTakeProfit from "./StopLossAndTakeProfit";
 import Strategy from "./Strategy";
-import PercentageAbsoluteValueToggleButtons from "components/PercentageAbsoluteValueToggleButtons";
-
+import ToggleButton from '@mui/material/ToggleButton';
 function Input(props) {
   const themeContext = useContext(ThemeContext);
   const userContext = useContext(UserContext);

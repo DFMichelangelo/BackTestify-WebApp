@@ -7,7 +7,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormikTextField from "components/FormikComponents/FormikTextField";
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import PercentageAbsoluteValueToggleButtons from "components/PercentageAbsoluteValueToggleButtons/index";
+import ToggleButton from '@mui/material/ToggleButton';
 function Commissions(props) {
     const { formikInstance } = props
     const { t } = useTranslation();
@@ -32,7 +32,8 @@ function Commissions(props) {
                         disabled={!formikInstance.values.commissionsOnOrderFillEnabled}
                         onChange={(newValue) => formikInstance.setFieldValue("commissionsOnOrderFillType", newValue.target.value)}
                     >
-                        {PercentageAbsoluteValueToggleButtons}
+                        <ToggleButton key="absolute_value" value="absolute_value">123</ToggleButton>
+                        <ToggleButton key="percentage" value="percentage">%</ToggleButton>
                     </ToggleButtonGroup>
                     <FormikTextField
                         fullWidth
@@ -70,7 +71,8 @@ function Commissions(props) {
                         disabled={!formikInstance.values.commissionsOvernightEnabled}
                         onChange={(newValue) => formikInstance.setFieldValue("commissionsOvernightType", newValue.target.value)}
                     >
-                        {PercentageAbsoluteValueToggleButtons}
+                        <ToggleButton key="absolute_value" value="absolute_value">123</ToggleButton>
+                        <ToggleButton key="percentage" value="percentage">%</ToggleButton>
                     </ToggleButtonGroup>
                     <FormikTextField
                         fullWidth
